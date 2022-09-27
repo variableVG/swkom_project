@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
