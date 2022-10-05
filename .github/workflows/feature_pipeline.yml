@@ -26,5 +26,3 @@ jobs:
         with:
           name: artifact
           path: target/swkom_project-0.0.1-SNAPSHOT.jar
-
-  
