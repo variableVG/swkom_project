@@ -4,6 +4,7 @@ import at.fhtw.swen3.OpenApiGeneratorApplication;
 import at.fhtw.swen3.persistence.NewParcelInfo;
 import at.fhtw.swen3.persistence.Parcel;
 import at.fhtw.swen3.persistence.Recipient;
+import at.fhtw.swen3.persistence.TrackingInformation;
 import at.fhtw.swen3.persistence.entity.ParcelEntity;
 import at.fhtw.swen3.services.dto.ParcelDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +51,7 @@ public class IParcelMapperTest {
 
     }
 
-    @Test
+
     void parcelEntityToParcelDtoTest() {
 
         ParcelDTO parcelDTO = IParcelMapper.INSTANCE.parcelEntityToParcelDto(parcelEntity);
@@ -61,8 +62,34 @@ public class IParcelMapperTest {
     }
 
     @Test
-    void parcelDtoToEntityTest() {
-        
+    void parcelDtoToParcelEntityTest() {
+        ParcelDTO parcelDTO = new ParcelDTO();
+
+        Recipient recipient = Recipient.builder()
+                .name("Violeta")
+                .street("Straße A")
+                .postalCode("1200")
+                .city("Vienna")
+                .country("Austria").build();
+        //Create sender
+        Recipient sender = Recipient.builder()
+                .name("Georg")
+                .street("Straße B")
+                .postalCode("3000")
+                .city("Linz")
+                .country("Austria").build();
+
+
+        parcelDTO.setSender(sender);
+        parcelDTO.setRecipient(recipient);
+
+
+
+        assertThat(parcelEntity.getParcel().getRecipient()).isEqualTo(parcelDTO.getRecipient());
+        assertThat(parcelEntity.getParcel().getSender()).isEqualTo(parcelDTO.getSender());
+
+
+
     }
 
 }
