@@ -15,12 +15,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(classes = {OpenApiGeneratorApplication.class})
 public class IParcelMapperTest {
-    ParcelEntity parcelEntity;
 
 
     @BeforeEach
     void setUp() {
-        parcelEntity = new ParcelEntity();
+    }
+
+
+    @Test
+    void parcelEntityToParcelDtoTest() {
+        ParcelEntity parcelEntity = new ParcelEntity();
         //Create recipient
         Recipient recipient = Recipient.builder()
                 .name("Violeta")
@@ -49,13 +53,11 @@ public class IParcelMapperTest {
         parcelEntity.setNewParcelInfo(newParcelInfo);
         //TODO add TrackingInformation instance to the parcelEntity.
 
-    }
-
-
-    void parcelEntityToParcelDtoTest() {
-
+        //Run Mapper
         ParcelDTO parcelDTO = IParcelMapper.INSTANCE.parcelEntityToParcelDto(parcelEntity);
         //IParcelMapper gives back already a JSON!
+
+        //Test
         assertThat(parcelDTO.getWeight()).isEqualTo(parcelEntity.getParcel().getWeight());
         assertThat(parcelDTO.getRecipient()).isEqualTo(parcelEntity.getParcel().getRecipient());
         assertThat(parcelDTO.getSender()).isEqualTo(parcelEntity.getParcel().getSender());
@@ -64,7 +66,6 @@ public class IParcelMapperTest {
     @Test
     void parcelDtoToParcelEntityTest() {
         ParcelDTO parcelDTO = new ParcelDTO();
-
         Recipient recipient = Recipient.builder()
                 .name("Violeta")
                 .street("Straße A")
@@ -79,16 +80,17 @@ public class IParcelMapperTest {
                 .city("Linz")
                 .country("Austria").build();
 
-
         parcelDTO.setSender(sender);
         parcelDTO.setRecipient(recipient);
+        parcelDTO.setWeight(56.8F);
 
+        //Run Mapper
+        ParcelEntity parcelEntity = IParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcelDTO);
 
-
+        //Test
         assertThat(parcelEntity.getParcel().getRecipient()).isEqualTo(parcelDTO.getRecipient());
         assertThat(parcelEntity.getParcel().getSender()).isEqualTo(parcelDTO.getSender());
-
-
+        assertThat(parcelEntity.getParcel().getWeight()).isEqualTo(parcelDTO.getWeight());
 
     }
 

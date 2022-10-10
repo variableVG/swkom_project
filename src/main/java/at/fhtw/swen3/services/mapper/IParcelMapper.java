@@ -21,10 +21,10 @@ public interface IParcelMapper {
     @Mapping(source = "parcelEntity.parcel.recipient", target = "recipient")
     ParcelDTO parcelEntityToParcelDto(ParcelEntity parcelEntity);
 
-    @Mapping(source="parcel.weight", target="parcel.weight")
-    @Mapping(source="parcel.recipient", target="parcel.recipient")
-    @Mapping(source="parcel.sender", target="parcel.sender")
-    ParcelEntity parcelDtoToEntity(Parcel parcel);
+    @Mapping(source="parceldto.weight", target="parcel.weight")
+    @Mapping(source="parceldto.recipient", target="parcel.recipient")
+    @Mapping(source="parceldto.sender", target="parcel.sender")
+    ParcelEntity parcelDtoToParcelEntity(ParcelDTO parceldto);
 
     //@Mapping(source= "parcel", target="parcel")
     //ParcelEntity parcelToEntity(Parcel parcel);
