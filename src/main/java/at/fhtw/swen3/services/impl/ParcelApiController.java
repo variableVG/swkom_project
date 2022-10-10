@@ -84,11 +84,10 @@ public class ParcelApiController implements ParcelApi {
         System.out.println("submitParcel has been called.");
         System.out.println("recipient is " + parcel.getRecipient());
 
-
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"trackingId\" : \"GLobsi\" }";
+                    String exampleString = "{ \"trackingId\" : \"Hallo Rawan\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -18,8 +18,6 @@ public class ParcelDTO {
     private Recipient recipient;
     private Recipient sender;
 
-    private String trackingId;
-
     public ParcelDTO() {
 
     }
