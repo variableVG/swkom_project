@@ -25,4 +25,10 @@ public class WarehouseApiController implements WarehouseApi {
         return Optional.ofNullable(request);
     }
 
+    //there is a getWareHouse machen
+
+
+    // importWarehouse(
+    // @Parameter( ... )
+
 }
