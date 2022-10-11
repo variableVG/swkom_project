@@ -15,6 +15,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+@SpringBootTest
 public class RecipientTest {
     private static final Logger log = LoggerFactory.getLogger(RecipientTest.class);
     @Test
