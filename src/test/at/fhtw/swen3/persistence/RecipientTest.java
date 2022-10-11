@@ -21,7 +21,7 @@ public class RecipientTest {
     @Test
     public void validationTest_recipient() {
         log.info("TEST validationTest");
-        final Recipient recipient = new Recipient("Rawan", "spenger", "1130", "Wien", "Austria");
+        final Recipient recipient = new Recipient("Rawan", "Spenger", "A-1120", "Wien", "Austria");
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -36,7 +36,7 @@ public class RecipientTest {
     @Test
     public void validationTest_recipient_shouldFail() {
         log.info("TEST validationTest");
-        final Recipient recipient = new Recipient("Rawan", "spenger", "113", "Wien", "Austria");
+        final Recipient recipient = new Recipient("Rawan123", "spenger", "113", "Wien4", "Austria");
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
