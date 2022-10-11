@@ -47,4 +47,4 @@ jobs:
           environment_name: Swkomprojectopenapicontracts-env
           version_label: ${{github.SHA}}
           region: us-east-1
-          deployment_package: target/swkom_project-0.0.1-SNAPSHOT.jar
+          deployment_package: swkom_project-0.0.1-SNAPSHOT.jar
