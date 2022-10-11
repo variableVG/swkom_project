@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 
 import javax.annotation.Generated;
@@ -13,20 +14,26 @@ import javax.annotation.Generated;
 /**
  * Recipient
  */
-
+@Builder
 @JsonTypeName("recipient")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 public class Recipient {
 
+  @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")
   @JsonProperty("name")
   private String name;
 
+  @NotBlank
   @JsonProperty("street")
   private String street;
 
   @JsonProperty("postalCode")
+  @NotNull(message = "PostalCode cannot be null")
+  @Size(min = 4, max = 6, message = "A valid PostalCode must contain (A-, 4 digits, 0000-9999) ")
   private String postalCode;
 
+
+  @Pattern(regexp = "[a-zA-Z]+", message = "cityname must have only upper & lowercase letters")
   @JsonProperty("city")
   private String city;
 

@@ -20,6 +20,7 @@ import javax.annotation.Generated;
 
 
 @JsonTypeName("warehouse")
+//@Pattern(regexp = "[a-zA-Z]+", message = "cityname must have only upper & lowercase letters")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 public class Warehouse extends Hop {
 
