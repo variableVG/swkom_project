@@ -2,7 +2,9 @@ package at.fhtw.swen3.services.mapper;
 
 import at.fhtw.swen3.persistence.Parcel;
 import at.fhtw.swen3.persistence.entity.ParcelEntity;
+import at.fhtw.swen3.services.dto.NewParcelInfoDTO;
 import at.fhtw.swen3.services.dto.ParcelDTO;
+import at.fhtw.swen3.services.dto.TrackingInformationDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ValueMapping;
@@ -26,8 +28,11 @@ public interface IParcelMapper {
     @Mapping(source="parceldto.sender", target="parcel.sender")
     ParcelEntity parcelDtoToParcelEntity(ParcelDTO parceldto);
 
-    //@Mapping(source= "parcel", target="parcel")
-    //ParcelEntity parcelToEntity(Parcel parcel);
+    @Mapping(source="parceldto.weight", target="parcel.weight")
+    @Mapping(source="parceldto.recipient", target="parcel.recipient")
+    @Mapping(source="parceldto.sender", target="parcel.sender")
+    @Mapping(source="newParcelInfoDTO.trackingId", target="newParcelInfo.trackingId")
+    ParcelEntity dtoToToParcelEntity(ParcelDTO parceldto, NewParcelInfoDTO newParcelInfoDTO, TrackingInformationDTO trackingInformationDTO);
 
 }
 
