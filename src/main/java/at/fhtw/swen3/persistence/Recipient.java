@@ -26,6 +26,8 @@ public class Recipient {
   private String street;
 
   @JsonProperty("postalCode")
+  @NotNull(message = "PostalCode cannot be null")
+  @Size(min = 4, max = 4, message = "A valid PostalCode must contain (A-, 4 digits, 0000-9999) ")
   private String postalCode;
 
   @JsonProperty("city")

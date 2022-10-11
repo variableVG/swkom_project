@@ -17,14 +17,11 @@ public class ParcelEntity {
     private TrackingInformation trackingInformation;
     private NewParcelInfo newParcelInfo;
 
-    @NotNull(message = "PostalCode cannot be null")
-    @Size(min = 4, max = 4, message = "A valid PostalCode must contain (A-, 4 digits, 0000-9999) ")
-    private int PostalCode;
 
     //private ParcelDTO parcelDTO;
 
     public ParcelEntity() {
-        //this.parcelDTO = parcelDTO;
+        // this.parcel = parcel;
 
     }
 
