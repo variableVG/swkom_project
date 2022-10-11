@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static at.fhtw.swen3.persistence.TrackingInformation.StateEnum.PICKUP;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(classes = {OpenApiGeneratorApplication.class})
@@ -66,6 +67,8 @@ public class IParcelMapperTest {
 
         //Create trackingInformationDTO
         trackingInformationDTO = new TrackingInformationDTO();
+        trackingInformationDTO.setState(PICKUP);
+        //TODO complete trackingInformataion DTO about visitedLoops and futureLoops
 
     }
 
@@ -105,6 +108,7 @@ public class IParcelMapperTest {
         assertThat(parcelEntityTest.getParcel().getSender()).isEqualTo(parcelDTO.getSender());
         assertThat(parcelEntityTest.getParcel().getWeight()).isEqualTo(parcelDTO.getWeight());
         assertThat(parcelEntityTest.getNewParcelInfo().getTrackingId()).isEqualTo(newParcelInfoDTO.getTrackingId());
+        assertThat(parcelEntityTest.getTrackingInformation().getState()).isEqualTo(trackingInformationDTO.getState());
 
 
     }

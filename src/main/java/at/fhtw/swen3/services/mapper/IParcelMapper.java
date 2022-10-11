@@ -32,6 +32,9 @@ public interface IParcelMapper {
     @Mapping(source="parceldto.recipient", target="parcel.recipient")
     @Mapping(source="parceldto.sender", target="parcel.sender")
     @Mapping(source="newParcelInfoDTO.trackingId", target="newParcelInfo.trackingId")
+    @Mapping(source="trackingInformationDTO.state", target="trackingInformation.state")
+    @Mapping(source="trackingInformationDTO.visitedHops", target="trackingInformation.visitedHops")
+    @Mapping(source="trackingInformationDTO.futureHops", target="trackingInformation.futureHops")
     ParcelEntity dtoToToParcelEntity(ParcelDTO parceldto, NewParcelInfoDTO newParcelInfoDTO, TrackingInformationDTO trackingInformationDTO);
 
 }
