@@ -1,5 +1,6 @@
 package at.fhtw.swen3.persistence;
 
+import at.fhtw.swen3.services.dto.Recipient;
 import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
@@ -10,7 +11,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -21,7 +21,13 @@ public class RecipientTest {
     @Test
     public void validationTest_recipient() {
         log.info("TEST validationTest");
-        final Recipient recipient = new Recipient("Rawan", "Spenger", "A-1120", "Wien", "Austria");
+        final Recipient recipient = Recipient.builder()
+                .name("Rawan")
+                .street("Spenger")
+                .postalCode("A-1120")
+                .city("Wien")
+                .country("Austria")
+                .build();
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -36,7 +42,13 @@ public class RecipientTest {
     @Test
     public void validationTest_recipient_shouldFail() {
         log.info("TEST validationTest");
-        final Recipient recipient = new Recipient("Rawan123", "spenger", "113", "Wien4", "Austria");
+        final Recipient recipient = Recipient.builder()
+                .name("Rawan123")
+                .street("Spenger")
+                .postalCode("A-113")
+                .city("Wien4")
+                .country("Austria")
+                .build();
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();

@@ -1,14 +1,11 @@
 package at.fhtw.swen3.services.mapper;
 
-import at.fhtw.swen3.persistence.Parcel;
 import at.fhtw.swen3.persistence.entity.ParcelEntity;
-import at.fhtw.swen3.services.dto.NewParcelInfoDTO;
-import at.fhtw.swen3.services.dto.ParcelDTO;
-import at.fhtw.swen3.services.dto.TrackingInformationDTO;
+import at.fhtw.swen3.services.dto.NewParcelInfo;
+import at.fhtw.swen3.services.dto.Parcel;
+import at.fhtw.swen3.services.dto.TrackingInformation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ValueMapping;
-import org.mapstruct.ValueMappings;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "parcel")
@@ -18,24 +15,24 @@ public interface IParcelMapper {
 
 
 
-    @Mapping(source = "parcelEntity.parcel.weight", target = "weight")
-    @Mapping(source = "parcelEntity.parcel.sender", target = "sender")
-    @Mapping(source = "parcelEntity.parcel.recipient", target = "recipient")
-    ParcelDTO parcelEntityToParcelDto(ParcelEntity parcelEntity);
+    @Mapping(source = "parcelEntity.parcelModelEntity.weight", target = "weight")
+    @Mapping(source = "parcelEntity.parcelModelEntity.sender", target = "sender")
+    @Mapping(source = "parcelEntity.parcelModelEntity.recipient", target = "recipient")
+    Parcel parcelEntityToParcelDto(ParcelEntity parcelEntity);
 
-    @Mapping(source="parceldto.weight", target="parcel.weight")
-    @Mapping(source="parceldto.recipient", target="parcel.recipient")
-    @Mapping(source="parceldto.sender", target="parcel.sender")
-    ParcelEntity parcelDtoToParcelEntity(ParcelDTO parceldto);
+    @Mapping(source="parcel.weight", target="parcelModelEntity.weight")
+    @Mapping(source="parcel.recipient", target="parcelModelEntity.recipient")
+    @Mapping(source="parcel.sender", target="parcelModelEntity.sender")
+    ParcelEntity parcelDtoToParcelEntity(Parcel parcel);
 
-    @Mapping(source="parceldto.weight", target="parcel.weight")
-    @Mapping(source="parceldto.recipient", target="parcel.recipient")
-    @Mapping(source="parceldto.sender", target="parcel.sender")
-    @Mapping(source="newParcelInfoDTO.trackingId", target="newParcelInfo.trackingId")
-    @Mapping(source="trackingInformationDTO.state", target="trackingInformation.state")
-    @Mapping(source="trackingInformationDTO.visitedHops", target="trackingInformation.visitedHops")
-    @Mapping(source="trackingInformationDTO.futureHops", target="trackingInformation.futureHops")
-    ParcelEntity dtoToToParcelEntity(ParcelDTO parceldto, NewParcelInfoDTO newParcelInfoDTO, TrackingInformationDTO trackingInformationDTO);
+    @Mapping(source="parcel.weight", target="parcelModelEntity.weight")
+    @Mapping(source="parcel.recipient", target="parcelModelEntity.recipient")
+    @Mapping(source="parcel.sender", target="parcelModelEntity.sender")
+    @Mapping(source="newParcelInfo.trackingId", target="newParcelInfoEntity.trackingId")
+    @Mapping(source="trackingInformation.state", target="trackingInformationEntity.state")
+    @Mapping(source="trackingInformation.visitedHops", target="trackingInformationEntity.visitedHops")
+    @Mapping(source="trackingInformation.futureHops", target="trackingInformationEntity.futureHops")
+    ParcelEntity dtoToToParcelEntity(Parcel parcel, NewParcelInfo newParcelInfo, TrackingInformation trackingInformation);
 
 }
 
