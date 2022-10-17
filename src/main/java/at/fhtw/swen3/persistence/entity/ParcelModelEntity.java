@@ -1,26 +1,27 @@
-package at.fhtw.swen3.persistence;
+package at.fhtw.swen3.persistence.entity;
 
-import java.util.Objects;
-
+import at.fhtw.swen3.services.dto.Recipient;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-
+import lombok.Data;
 
 import javax.annotation.Generated;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * Parcel
  */
 @Builder
+@Data
 @JsonTypeName("parcel")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
-public class Parcel {
+public class ParcelModelEntity {
 
+  //For validation, we validate the features in the entity, and the validation
   @JsonProperty("weight")
   private Float weight;
 
@@ -30,7 +31,7 @@ public class Parcel {
   @JsonProperty("sender")
   private Recipient sender;
 
-  public Parcel weight(Float weight) {
+  public ParcelModelEntity weight(Float weight) {
     this.weight = weight;
     return this;
   }
@@ -49,7 +50,7 @@ public class Parcel {
     this.weight = weight;
   }
 
-  public Parcel recipient(Recipient recipient) {
+  public ParcelModelEntity recipient(Recipient recipient) {
     this.recipient = recipient;
     return this;
   }
@@ -68,7 +69,7 @@ public class Parcel {
     this.recipient = recipient;
   }
 
-  public Parcel sender(Recipient sender) {
+  public ParcelModelEntity sender(Recipient sender) {
     this.sender = sender;
     return this;
   }
@@ -95,10 +96,10 @@ public class Parcel {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Parcel parcel = (Parcel) o;
-    return Objects.equals(this.weight, parcel.weight) &&
-        Objects.equals(this.recipient, parcel.recipient) &&
-        Objects.equals(this.sender, parcel.sender);
+    ParcelModelEntity parcelModelEntity = (ParcelModelEntity) o;
+    return Objects.equals(this.weight, parcelModelEntity.weight) &&
+        Objects.equals(this.recipient, parcelModelEntity.recipient) &&
+        Objects.equals(this.sender, parcelModelEntity.sender);
   }
 
   @Override

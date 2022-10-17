@@ -1,9 +1,9 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.persistence.Error;
-import at.fhtw.swen3.persistence.NewParcelInfo;
-import at.fhtw.swen3.persistence.Parcel;
+import at.fhtw.swen3.services.dto.Error;
+import at.fhtw.swen3.services.dto.NewParcelInfo;
+import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.ApiUtil;
 import at.fhtw.swen3.services.ParcelApi;
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,7 +87,7 @@ public class ParcelApiController implements ParcelApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"trackingId\" : \"Hallo Rawan\" }";
+                    String exampleString = "{ \"trackingId\" : \"We made it!\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

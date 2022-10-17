@@ -1,4 +1,4 @@
-package at.fhtw.swen3.persistence;
+package at.fhtw.swen3.services.dto;
 
 import java.util.Objects;
 

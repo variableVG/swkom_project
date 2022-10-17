@@ -1,23 +1,26 @@
-package at.fhtw.swen3.persistence;
+package at.fhtw.swen3.persistence.entity;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-
+import lombok.Data;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.Objects;
 
 /**
  * Recipient
  */
 @Builder
+@Data
 @JsonTypeName("recipient")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
-public class Recipient {
+public class RecipientEntity {
 
   @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")
   @JsonProperty("name")
@@ -40,7 +43,7 @@ public class Recipient {
   @JsonProperty("country")
   private String country;
 
-  public Recipient name(String name) {
+  public RecipientEntity name(String name) {
     this.name = name;
     return this;
   }
@@ -59,7 +62,7 @@ public class Recipient {
     this.name = name;
   }
 
-  public Recipient street(String street) {
+  public RecipientEntity street(String street) {
     this.street = street;
     return this;
   }
@@ -78,7 +81,7 @@ public class Recipient {
     this.street = street;
   }
 
-  public Recipient postalCode(String postalCode) {
+  public RecipientEntity postalCode(String postalCode) {
     this.postalCode = postalCode;
     return this;
   }
@@ -97,7 +100,7 @@ public class Recipient {
     this.postalCode = postalCode;
   }
 
-  public Recipient city(String city) {
+  public RecipientEntity city(String city) {
     this.city = city;
     return this;
   }
@@ -116,7 +119,7 @@ public class Recipient {
     this.city = city;
   }
 
-  public Recipient country(String country) {
+  public RecipientEntity country(String country) {
     this.country = country;
     return this;
   }
@@ -143,12 +146,12 @@ public class Recipient {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Recipient recipient = (Recipient) o;
-    return Objects.equals(this.name, recipient.name) &&
-        Objects.equals(this.street, recipient.street) &&
-        Objects.equals(this.postalCode, recipient.postalCode) &&
-        Objects.equals(this.city, recipient.city) &&
-        Objects.equals(this.country, recipient.country);
+    RecipientEntity recipientEntity = (RecipientEntity) o;
+    return Objects.equals(this.name, recipientEntity.name) &&
+        Objects.equals(this.street, recipientEntity.street) &&
+        Objects.equals(this.postalCode, recipientEntity.postalCode) &&
+        Objects.equals(this.city, recipientEntity.city) &&
+        Objects.equals(this.country, recipientEntity.country);
   }
 
   @Override

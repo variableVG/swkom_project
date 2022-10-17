@@ -1,27 +1,26 @@
-package at.fhtw.swen3.persistence;
+package at.fhtw.swen3.persistence.entity;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
+import lombok.Data;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
 /**
  * NewParcelInfo
  */
-
+@Data
 @JsonTypeName("newParcelInfo")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
-public class NewParcelInfo {
+public class NewParcelInfoEntity {
 
   @JsonProperty("trackingId")
   private String trackingId;
 
-  public NewParcelInfo trackingId(String trackingId) {
+  public NewParcelInfoEntity trackingId(String trackingId) {
     this.trackingId = trackingId;
     return this;
   }
@@ -48,8 +47,8 @@ public class NewParcelInfo {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NewParcelInfo newParcelInfo = (NewParcelInfo) o;
-    return Objects.equals(this.trackingId, newParcelInfo.trackingId);
+    NewParcelInfoEntity newParcelInfoEntity = (NewParcelInfoEntity) o;
+    return Objects.equals(this.trackingId, newParcelInfoEntity.trackingId);
   }
 
   @Override

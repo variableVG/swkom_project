@@ -1,27 +1,27 @@
-package at.fhtw.swen3.persistence;
+package at.fhtw.swen3.persistence.entity;
 
-import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import at.fhtw.swen3.services.dto.HopArrival;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
-import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
+import lombok.Data;
 
 import javax.annotation.Generated;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * TrackingInformation
  */
-
+@Data
 @JsonTypeName("trackingInformation")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
-public class TrackingInformation {
+public class TrackingInformationEntity {
 
   /**
    * State of the parcel.
@@ -75,7 +75,7 @@ public class TrackingInformation {
   @Valid
   private List<HopArrival> futureHops = new ArrayList<>();
 
-  public TrackingInformation state(StateEnum state) {
+  public TrackingInformationEntity state(StateEnum state) {
     this.state = state;
     return this;
   }
@@ -94,12 +94,12 @@ public class TrackingInformation {
     this.state = state;
   }
 
-  public TrackingInformation visitedHops(List<HopArrival> visitedHops) {
+  public TrackingInformationEntity visitedHops(List<HopArrival> visitedHops) {
     this.visitedHops = visitedHops;
     return this;
   }
 
-  public TrackingInformation addVisitedHopsItem(HopArrival visitedHopsItem) {
+  public TrackingInformationEntity addVisitedHopsItem(HopArrival visitedHopsItem) {
     this.visitedHops.add(visitedHopsItem);
     return this;
   }
@@ -118,12 +118,12 @@ public class TrackingInformation {
     this.visitedHops = visitedHops;
   }
 
-  public TrackingInformation futureHops(List<HopArrival> futureHops) {
+  public TrackingInformationEntity futureHops(List<HopArrival> futureHops) {
     this.futureHops = futureHops;
     return this;
   }
 
-  public TrackingInformation addFutureHopsItem(HopArrival futureHopsItem) {
+  public TrackingInformationEntity addFutureHopsItem(HopArrival futureHopsItem) {
     this.futureHops.add(futureHopsItem);
     return this;
   }
@@ -150,10 +150,10 @@ public class TrackingInformation {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TrackingInformation trackingInformation = (TrackingInformation) o;
-    return Objects.equals(this.state, trackingInformation.state) &&
-        Objects.equals(this.visitedHops, trackingInformation.visitedHops) &&
-        Objects.equals(this.futureHops, trackingInformation.futureHops);
+    TrackingInformationEntity trackingInformationEntity = (TrackingInformationEntity) o;
+    return Objects.equals(this.state, trackingInformationEntity.state) &&
+        Objects.equals(this.visitedHops, trackingInformationEntity.visitedHops) &&
+        Objects.equals(this.futureHops, trackingInformationEntity.futureHops);
   }
 
   @Override
