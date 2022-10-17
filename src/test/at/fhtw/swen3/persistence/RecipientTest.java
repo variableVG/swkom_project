@@ -1,5 +1,6 @@
 package at.fhtw.swen3.persistence;
 
+import at.fhtw.swen3.persistence.entity.RecipientEntity;
 import at.fhtw.swen3.services.dto.Recipient;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ public class RecipientTest {
     @Test
     public void validationTest_recipient() {
         log.info("TEST validationTest");
-        final Recipient recipient = Recipient.builder()
+        final RecipientEntity recipient = RecipientEntity.builder()
                 .name("Rawan")
                 .street("Spenger")
                 .postalCode("A-1120")
@@ -32,8 +33,8 @@ public class RecipientTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
-        Set<ConstraintViolation<Recipient>> violations = validator.validate(recipient);
-        for (ConstraintViolation<Recipient> violation : violations)
+        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(recipient);
+        for (ConstraintViolation<RecipientEntity> violation : violations)
         {
             log.error(violation.getMessage());
             fail(violation.getMessage());
@@ -42,7 +43,7 @@ public class RecipientTest {
     @Test
     public void validationTest_recipient_shouldFail() {
         log.info("TEST validationTest");
-        final Recipient recipient = Recipient.builder()
+        final RecipientEntity recipient = RecipientEntity.builder()
                 .name("Rawan123")
                 .street("Spenger")
                 .postalCode("A-113")
@@ -53,8 +54,8 @@ public class RecipientTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
-        Set<ConstraintViolation<Recipient>> violations = validator.validate(recipient);
-        for (ConstraintViolation<Recipient> violation : violations)
+        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(recipient);
+        for (ConstraintViolation<RecipientEntity> violation : violations)
         {
             log.error(violation.getMessage());
             return;
