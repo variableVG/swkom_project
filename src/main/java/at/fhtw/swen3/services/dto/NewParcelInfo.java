@@ -2,11 +2,9 @@ package at.fhtw.swen3.services.dto;
 
 import java.util.Objects;
 
-import at.fhtw.swen3.persistence.entity.NewParcelInfoEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
