@@ -1,13 +1,12 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.persistence.entity.NewParcelInfoEntity;
 import at.fhtw.swen3.persistence.entity.ParcelEntity;
+import at.fhtw.swen3.services.BusinessLayer;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
-import at.fhtw.swen3.services.ApiUtil;
-import at.fhtw.swen3.services.ParcelApi;
+import at.fhtw.swen3.services.api.ParcelApi;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.mapper.IParcelMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -39,8 +37,14 @@ public class ParcelApiController implements ParcelApi {
 
     private final NativeWebRequest request;
 
+    private BusinessLayer businessLayer;
+
     @Autowired
-    public ParcelApiController(NativeWebRequest request) { this.request = request; }
+    public ParcelApiController(NativeWebRequest request) {
+        this.request = request;
+        this.businessLayer = new BusinessLayer();
+
+    }
 
     @Override
     public Optional<NativeWebRequest> getRequest() {
@@ -83,12 +87,8 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
-
-        ParcelEntity parcelEntity = IParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
-        parcelEntity.submitParcel();
-        NewParcelInfo newParcelInfoDto = IParcelMapper.INSTANCE.parcelEntityToNewParcelInfoDto(parcelEntity);
-
-        return new ResponseEntity<NewParcelInfo>(newParcelInfoDto, HttpStatus.NOT_IMPLEMENTED);
+        NewParcelInfo newParcelInfo = businessLayer.submitParcel(parcel);
+        return new ResponseEntity<NewParcelInfo>(newParcelInfo, HttpStatus.NOT_IMPLEMENTED);
 
     }
 
@@ -127,11 +127,7 @@ public class ParcelApiController implements ParcelApi {
             @PathVariable("trackingId") String trackingId
     ) {
 
-        NewParcelInfo newParcelInfoDto = new NewParcelInfo(trackingId);
-        ParcelEntity parcelEntity = IParcelMapper.INSTANCE.newParcelInfoDtoToParcelEntity(newParcelInfoDto);
-        parcelEntity.trackParcel(trackingId);
-        TrackingInformation trackingInformationDto = IParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
-
+        TrackingInformation trackingInformationDto = businessLayer.trackParcel(trackingId);
         return new ResponseEntity<TrackingInformation>(trackingInformationDto, HttpStatus.NOT_IMPLEMENTED);
     }
 }
