@@ -3,6 +3,7 @@ package at.fhtw.swen3.services.impl;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.Recipient;
+import at.fhtw.swen3.services.dto.TrackingInformation;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,27 @@ public class ParcelApiControllerTest {
         //Check results
         //TODO: the NewParcelInfo trackingId is hardcoded in the Controller function. This should be changed in the future.
         assertEquals(answer.getBody().getTrackingId(), "PYJRB4HZ7");
+
+    }
+
+    @Test
+    void trackParcelTest() {
+        //Input: trackingId
+        String trackingId = "PYJRB4HZ6";
+
+        //Generate request with a mock.
+        HttpServletRequest request = new MockHttpServletRequest("GET", "/parcel/"+trackingId);
+        NativeWebRequest webRequest = new ServletWebRequest(request);
+        parcelApiController = new ParcelApiController(webRequest);
+
+        //Call Method
+        ResponseEntity<TrackingInformation> answer = parcelApiController.trackParcel(trackingId);
+
+        //Check results
+        //TODO: the TrackingInformation is hardcoded in the Controller function. This should be changed in the future.
+        assertEquals(answer.getBody().getState().getValue(), "Pickup");
+        assertEquals(answer.getBody().getFutureHops().size(), 1);
+        assertEquals(answer.getBody().getVisitedHops().size(), 1);
 
     }
 
