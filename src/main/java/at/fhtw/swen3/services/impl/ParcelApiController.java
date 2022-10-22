@@ -85,19 +85,6 @@ public class ParcelApiController implements ParcelApi {
         parcelEntity.submitParcel();
         NewParcelInfo newParcelInfoDto = IParcelMapper.INSTANCE.parcelEntityToNewParcelInfoDto(parcelEntity);
 
-        /*
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", newParcelInfoDto.toString());
-                    break;
-                }
-            }
-        });
-        ResponseEntity<NewParcelInfo> answer = new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-         */
-
         return new ResponseEntity<NewParcelInfo>(newParcelInfoDto, HttpStatus.NOT_IMPLEMENTED);
 
     }

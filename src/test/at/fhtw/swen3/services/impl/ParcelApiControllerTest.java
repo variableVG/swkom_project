@@ -23,9 +23,6 @@ import static org.mockito.internal.util.MockUtil.createStaticMock;
 public class ParcelApiControllerTest {
     ParcelApiController parcelApiController;
 
-
-    /*
-
     @Test
     void submitParcelTest() {
         // Input: parceldto
@@ -49,7 +46,7 @@ public class ParcelApiControllerTest {
         assertEquals(answer.getBody().getTrackingId(), "PYJRB4HZ7");
 
     }
-    */
+
 
 
 }
