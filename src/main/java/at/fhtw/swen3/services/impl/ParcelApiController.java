@@ -1,11 +1,14 @@
 package at.fhtw.swen3.services.impl;
 
 
+import at.fhtw.swen3.persistence.entity.NewParcelInfoEntity;
+import at.fhtw.swen3.persistence.entity.ParcelEntity;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.ApiUtil;
 import at.fhtw.swen3.services.ParcelApi;
+import at.fhtw.swen3.services.mapper.IParcelMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,14 +37,10 @@ public class ParcelApiController implements ParcelApi {
     private final NativeWebRequest request;
 
     @Autowired
-    public ParcelApiController(NativeWebRequest request) {
-        this.request = request;
-    }
+    public ParcelApiController(NativeWebRequest request) { this.request = request; }
 
     @Override
     public Optional<NativeWebRequest> getRequest() {
-        System.out.println("getRequest has been called.");
-
         return Optional.ofNullable(request);
     }
 
@@ -81,19 +80,25 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
-        System.out.println("submitParcel has been called.");
-        System.out.println("recipient is " + parcel.getRecipient());
 
+        ParcelEntity parcelEntity = IParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
+        parcelEntity.submitParcel();
+        NewParcelInfo newParcelInfoDto = IParcelMapper.INSTANCE.parcelEntityToNewParcelInfoDto(parcelEntity);
+
+        /*
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"trackingId\" : \"We made it!\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    ApiUtil.setExampleResponse(request, "application/json", newParcelInfoDto.toString());
                     break;
                 }
             }
         });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        ResponseEntity<NewParcelInfo> answer = new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+         */
+
+        return new ResponseEntity<NewParcelInfo>(newParcelInfoDto, HttpStatus.NOT_IMPLEMENTED);
 
     }
 }

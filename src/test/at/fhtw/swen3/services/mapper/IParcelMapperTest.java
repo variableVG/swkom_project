@@ -13,10 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static at.fhtw.swen3.services.dto.TrackingInformation.StateEnum.PICKUP;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static at.fhtw.swen3.services.dto.TrackingInformation.StateEnum.PICKUP;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = {OpenApiGeneratorApplication.class})
 public class IParcelMapperTest {
 
     ParcelEntity parcelEntity;
@@ -72,10 +73,8 @@ public class IParcelMapperTest {
         //TODO complete trackingInformataion DTO about visitedLoops and futureLoops
 
         Recipient a = parcelEntity.getParcelModelEntity().getRecipient();
-        System.out.println("Recipient name is " + a.getName());
 
     }
-
 
     @Test
     void parcelEntityToParcelDtoTest() {
@@ -99,12 +98,10 @@ public class IParcelMapperTest {
         assertThat(parcelEntityTest.getParcelModelEntity().getRecipient()).isEqualTo(parcelDTO.getRecipient());
         assertThat(parcelEntityTest.getParcelModelEntity().getSender()).isEqualTo(parcelDTO.getSender());
         assertThat(parcelEntityTest.getParcelModelEntity().getWeight()).isEqualTo(parcelDTO.getWeight());
-
     }
 
     @Test
     void dtoToToParcelEntityTest() {
-
         //Run Mapper
         ParcelEntity parcelEntityTest = IParcelMapper.INSTANCE.dtoToToParcelEntity(parcelDTO, newParcelInfoDTO, trackingInformationDTO);
 
@@ -112,9 +109,15 @@ public class IParcelMapperTest {
         assertThat(parcelEntityTest.getParcelModelEntity().getSender()).isEqualTo(parcelDTO.getSender());
         assertThat(parcelEntityTest.getParcelModelEntity().getWeight()).isEqualTo(parcelDTO.getWeight());
         assertThat(parcelEntityTest.getNewParcelInfoEntity().getTrackingId()).isEqualTo(newParcelInfoDTO.getTrackingId());
-        assertThat(parcelEntityTest.getTrackingInformationEntity().getState()).isEqualTo(trackingInformationDTO.getState());
+        assertEquals(parcelEntityTest.getTrackingInformationEntity().getState().name(), trackingInformationDTO.getState().name());
 
+    }
 
+    @Test
+    void parcelEntityToNewParcelInfoDtoTest() {
+        NewParcelInfo newParcelInfoDto = IParcelMapper.INSTANCE.parcelEntityToNewParcelInfoDto(parcelEntity);
+
+        assertEquals(newParcelInfoDto.getTrackingId(), parcelEntity.getNewParcelInfoEntity().getTrackingId());
     }
 
 }
