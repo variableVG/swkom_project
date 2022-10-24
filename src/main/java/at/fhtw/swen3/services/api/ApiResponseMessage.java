@@ -1,4 +1,4 @@
-package at.fhtw.swen3.services;
+package at.fhtw.swen3.services.api;
 
 import javax.xml.bind.annotation.XmlTransient;
 
