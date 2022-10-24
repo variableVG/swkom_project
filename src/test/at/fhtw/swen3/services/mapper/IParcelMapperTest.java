@@ -27,14 +27,14 @@ public class IParcelMapperTest {
     void setUp() {
         parcelEntity = new ParcelEntity();
         //Create recipient
-        Recipient recipient = Recipient.builder()
+        RecipientEntity recipient = RecipientEntity.builder()
                 .name("Violeta")
                 .street("Straße A")
                 .postalCode("1200")
                 .city("Vienna")
                 .country("Austria").build();
         //Create sender
-        Recipient sender = Recipient.builder()
+        RecipientEntity sender = RecipientEntity.builder()
                 .name("Georg")
                 .street("Straße B")
                 .postalCode("3000")
@@ -86,12 +86,24 @@ public class IParcelMapperTest {
         parcelEntity.setFutureHops(futureHops);
         parcelEntity.setState(ParcelEntity.StateEnum.fromValue("Pickup"));
 
+        Recipient recipientDto = Recipient.builder()
+                .name("Violeta")
+                .street("Straße A")
+                .postalCode("1200")
+                .city("Vienna")
+                .country("Austria").build();
+        Recipient senderDto= Recipient.builder()
+                .name("Georg")
+                .street("Straße B")
+                .postalCode("3000")
+                .city("Linz")
+                .country("Austria").build();
 
         //Create ParcelDTO
         parcelDTO = Parcel.builder()
                 .weight(56.8F)
-                .recipient(recipient)
-                .sender(sender)
+                .recipient(recipientDto)
+                .sender(senderDto)
                 .build();
 
         //Create ParcelInfoDTO
@@ -103,7 +115,6 @@ public class IParcelMapperTest {
         trackingInformationDTO.setState(TrackingInformation.StateEnum.fromValue("Pickup"));
         //TODO complete trackingInformataion DTO about visitedLoops and futureLoops
 
-        Recipient a = parcelEntity.getRecipient();
 
     }
 
@@ -116,8 +127,14 @@ public class IParcelMapperTest {
 
         //Test
         assertThat(parcelDTOTest.getWeight()).isEqualTo(parcelEntity.getWeight());
-        assertThat(parcelDTOTest.getRecipient()).isEqualTo(parcelEntity.getRecipient());
-        assertThat(parcelDTOTest.getSender()).isEqualTo(parcelEntity.getSender());
+        assertThat(parcelDTOTest.getRecipient().getName()).isEqualTo(parcelEntity.getRecipient().getName());
+        assertThat(parcelDTOTest.getSender().getName()).isEqualTo(parcelEntity.getSender().getName());
+        assertThat(parcelDTOTest.getRecipient().getCity()).isEqualTo(parcelEntity.getRecipient().getCity());
+        assertThat(parcelDTOTest.getSender().getCity()).isEqualTo(parcelEntity.getSender().getCity());
+        assertThat(parcelDTOTest.getRecipient().getCountry()).isEqualTo(parcelEntity.getRecipient().getCountry());
+        assertThat(parcelDTOTest.getSender().getCountry()).isEqualTo(parcelEntity.getSender().getCountry());
+        assertThat(parcelDTOTest.getRecipient().getPostalCode()).isEqualTo(parcelEntity.getRecipient().getPostalCode());
+        assertThat(parcelDTOTest.getSender().getPostalCode()).isEqualTo(parcelEntity.getSender().getPostalCode());
     }
 
     @Test
@@ -126,8 +143,8 @@ public class IParcelMapperTest {
         ParcelEntity parcelEntityTest = IParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcelDTO);
 
         //Test
-        assertThat(parcelEntityTest.getRecipient()).isEqualTo(parcelDTO.getRecipient());
-        assertThat(parcelEntityTest.getSender()).isEqualTo(parcelDTO.getSender());
+        assertThat(parcelEntityTest.getRecipient().getName()).isEqualTo(parcelDTO.getRecipient().getName());
+        assertThat(parcelEntityTest.getSender().getName()).isEqualTo(parcelDTO.getSender().getName());
         assertThat(parcelEntityTest.getWeight()).isEqualTo(parcelDTO.getWeight());
     }
 
@@ -136,8 +153,8 @@ public class IParcelMapperTest {
         //Run Mapper
         ParcelEntity parcelEntityTest = IParcelMapper.INSTANCE.dtoToToParcelEntity(parcelDTO, newParcelInfoDTO, trackingInformationDTO);
 
-        assertThat(parcelEntityTest.getRecipient()).isEqualTo(parcelDTO.getRecipient());
-        assertThat(parcelEntityTest.getSender()).isEqualTo(parcelDTO.getSender());
+        assertThat(parcelEntityTest.getRecipient().getName()).isEqualTo(parcelDTO.getRecipient().getName());
+        assertThat(parcelEntityTest.getSender().getName()).isEqualTo(parcelDTO.getSender().getName());
         assertThat(parcelEntityTest.getWeight()).isEqualTo(parcelDTO.getWeight());
         assertThat(parcelEntityTest.getTrackingId()).isEqualTo(newParcelInfoDTO.getTrackingId());
         assertEquals(parcelEntityTest.getState().name(), trackingInformationDTO.getState().name());
@@ -153,26 +170,26 @@ public class IParcelMapperTest {
 
     @Test
     void parcelEntityToTrackingInformationDtoTest() {
-        TrackingInformation trackingInformation = IParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
+        TrackingInformation trackingInformationTest = IParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
 
         //Check state
-        assertEquals(trackingInformation.getState().name(), parcelEntity.getState().name());
+        assertEquals(trackingInformationTest.getState().name(), parcelEntity.getState().name());
 
         //Check future hoops
-        assertEquals(trackingInformation.getFutureHops().size(), parcelEntity.getFutureHops().size());
+        assertEquals(trackingInformationTest.getFutureHops().size(), parcelEntity.getFutureHops().size());
 
         //Check visited hoops
-        assertEquals(trackingInformation.getVisitedHops().size(), parcelEntity.getVisitedHops().size());
+        assertEquals(trackingInformationTest.getVisitedHops().size(), parcelEntity.getVisitedHops().size());
 
     }
 
     @Test
     void newParcelInfoDtoToParcelEntityTest() {
-        NewParcelInfo newParcelInfo = new NewParcelInfo("BYJRB4HZ6");
+        NewParcelInfo newParcelInfoTest = new NewParcelInfo("BYJRB4HZ6");
 
-        ParcelEntity parcelEntity = IParcelMapper.INSTANCE.newParcelInfoDtoToParcelEntity(newParcelInfo);
+        ParcelEntity parcelEntity = IParcelMapper.INSTANCE.newParcelInfoDtoToParcelEntity(newParcelInfoTest);
 
-        assertEquals(newParcelInfo.getTrackingId(), parcelEntity.getTrackingId());
+        assertEquals(newParcelInfoTest.getTrackingId(), parcelEntity.getTrackingId());
 
     }
 
