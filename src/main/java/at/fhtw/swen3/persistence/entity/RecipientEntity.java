@@ -23,10 +23,13 @@ import java.util.Objects;
 public class RecipientEntity {
 
   @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")
+  @NotNull(message = "name cannot be null")
+  @NotBlank(message = "name cannot be blank")
   @JsonProperty("name")
   private String name;
 
-  @NotBlank
+  @NotBlank(message = "streetname cannot be blank")
+  @NotNull(message = "streetname cannot be null")
   @JsonProperty("street")
   private String street;
 
@@ -37,9 +40,12 @@ public class RecipientEntity {
 
 
   @Pattern(regexp = "[a-zA-Z]+", message = "cityname must have only upper & lowercase letters")
+  @NotNull(message = "cityname cannot be null")
+  @NotBlank(message = "cityname cannot be blank")
   @JsonProperty("city")
   private String city;
 
+  @NotNull(message = "countryname cannot be null")
   @JsonProperty("country")
   private String country;
 
