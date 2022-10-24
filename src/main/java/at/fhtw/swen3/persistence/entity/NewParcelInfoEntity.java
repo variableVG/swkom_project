@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.annotation.Generated;
+import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ import java.util.Objects;
 @Data
 @JsonTypeName("newParcelInfo")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
+@Entity
 public class NewParcelInfoEntity {
 
   @JsonProperty("trackingId")

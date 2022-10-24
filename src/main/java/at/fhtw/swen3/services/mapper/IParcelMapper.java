@@ -10,15 +10,16 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "parcel")
 public interface IParcelMapper {
-
     IParcelMapper INSTANCE = Mappers.getMapper(IParcelMapper.class);
-
-
 
     @Mapping(source = "parcelEntity.parcelModelEntity.weight", target = "weight")
     @Mapping(source = "parcelEntity.parcelModelEntity.sender", target = "sender")
     @Mapping(source = "parcelEntity.parcelModelEntity.recipient", target = "recipient")
     Parcel parcelEntityToParcelDto(ParcelEntity parcelEntity);
+    @Mapping(source = "parcelEntity.newParcelInfoEntity.trackingId", target = "trackingId")
+    NewParcelInfo parcelEntityToNewParcelInfoDto(ParcelEntity parcelEntity);
+    @Mapping(source="newParcelInfo.trackingId", target="newParcelInfoEntity.trackingId")
+    ParcelEntity newParcelInfoDtoToParcelEntity(NewParcelInfo newParcelInfo);
 
     @Mapping(source="parcel.weight", target="parcelModelEntity.weight")
     @Mapping(source="parcel.recipient", target="parcelModelEntity.recipient")
@@ -33,6 +34,14 @@ public interface IParcelMapper {
     @Mapping(source="trackingInformation.visitedHops", target="trackingInformationEntity.visitedHops")
     @Mapping(source="trackingInformation.futureHops", target="trackingInformationEntity.futureHops")
     ParcelEntity dtoToToParcelEntity(Parcel parcel, NewParcelInfo newParcelInfo, TrackingInformation trackingInformation);
+
+    @Mapping(source= "parcelEntity.trackingInformationEntity.state", target="state")
+    @Mapping(source= "parcelEntity.trackingInformationEntity.visitedHops", target="visitedHops")
+    @Mapping(source= "parcelEntity.trackingInformationEntity.futureHops", target="futureHops")
+    TrackingInformation parcelEntityToTrackingInformationDto(ParcelEntity parcelEntity);
+
+
+
 
 }
 

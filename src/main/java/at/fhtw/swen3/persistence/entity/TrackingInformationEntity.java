@@ -1,6 +1,6 @@
 package at.fhtw.swen3.persistence.entity;
 
-import at.fhtw.swen3.services.dto.HopArrival;
+import at.fhtw.swen3.services.dto.TrackingInformation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -22,6 +22,7 @@ import java.util.Objects;
 @JsonTypeName("trackingInformation")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 public class TrackingInformationEntity {
+
 
   /**
    * State of the parcel.
@@ -69,11 +70,11 @@ public class TrackingInformationEntity {
 
   @JsonProperty("visitedHops")
   @Valid
-  private List<HopArrival> visitedHops = new ArrayList<>();
+  private List<HopArrivalEntity> visitedHops = new ArrayList<>();
 
   @JsonProperty("futureHops")
   @Valid
-  private List<HopArrival> futureHops = new ArrayList<>();
+  private List<HopArrivalEntity> futureHops = new ArrayList<>();
 
   public TrackingInformationEntity state(StateEnum state) {
     this.state = state;
@@ -90,16 +91,17 @@ public class TrackingInformationEntity {
     return state;
   }
 
+
   public void setState(StateEnum state) {
     this.state = state;
   }
 
-  public TrackingInformationEntity visitedHops(List<HopArrival> visitedHops) {
+  public TrackingInformationEntity visitedHops(List<HopArrivalEntity> visitedHops) {
     this.visitedHops = visitedHops;
     return this;
   }
 
-  public TrackingInformationEntity addVisitedHopsItem(HopArrival visitedHopsItem) {
+  public TrackingInformationEntity addVisitedHopsItem(HopArrivalEntity visitedHopsItem) {
     this.visitedHops.add(visitedHopsItem);
     return this;
   }
@@ -110,20 +112,20 @@ public class TrackingInformationEntity {
   */
   @NotNull @Valid 
   @Schema(name = "visitedHops", description = "Hops visited in the past.", required = true)
-  public List<HopArrival> getVisitedHops() {
+  public List<HopArrivalEntity> getVisitedHops() {
     return visitedHops;
   }
 
-  public void setVisitedHops(List<HopArrival> visitedHops) {
+  public void setVisitedHops(List<HopArrivalEntity> visitedHops) {
     this.visitedHops = visitedHops;
   }
 
-  public TrackingInformationEntity futureHops(List<HopArrival> futureHops) {
+  public TrackingInformationEntity futureHops(List<HopArrivalEntity> futureHops) {
     this.futureHops = futureHops;
     return this;
   }
 
-  public TrackingInformationEntity addFutureHopsItem(HopArrival futureHopsItem) {
+  public TrackingInformationEntity addFutureHopsItem(HopArrivalEntity futureHopsItem) {
     this.futureHops.add(futureHopsItem);
     return this;
   }
@@ -134,11 +136,11 @@ public class TrackingInformationEntity {
   */
   @NotNull @Valid 
   @Schema(name = "futureHops", description = "Hops coming up in the future - their times are estimations.", required = true)
-  public List<HopArrival> getFutureHops() {
+  public List<HopArrivalEntity> getFutureHops() {
     return futureHops;
   }
 
-  public void setFutureHops(List<HopArrival> futureHops) {
+  public void setFutureHops(List<HopArrivalEntity> futureHops) {
     this.futureHops = futureHops;
   }
 

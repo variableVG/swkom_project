@@ -1,6 +1,8 @@
 package at.fhtw.swen3.services.dto;
 
 import java.util.Objects;
+
+import at.fhtw.swen3.persistence.entity.NewParcelInfoEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -21,6 +23,11 @@ public class NewParcelInfo {
   @JsonProperty("trackingId")
   private String trackingId;
 
+  public NewParcelInfo() {
+  }
+  public NewParcelInfo(String trackingId) {
+    this.trackingId = trackingId;
+  }
   public NewParcelInfo trackingId(String trackingId) {
     this.trackingId = trackingId;
     return this;

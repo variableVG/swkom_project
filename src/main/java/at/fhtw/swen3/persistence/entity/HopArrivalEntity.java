@@ -1,30 +1,27 @@
-package at.fhtw.swen3.services.dto;
+package at.fhtw.swen3.persistence.entity;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import java.time.OffsetDateTime;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-
 import javax.annotation.Generated;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
 /**
  * HopArrival
  */
-
 @Builder
 @Data
 @JsonTypeName("hopArrival")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
-public class HopArrival {
+public class HopArrivalEntity {
 
   @JsonProperty("code")
   private String code;
@@ -36,7 +33,7 @@ public class HopArrival {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime dateTime;
 
-  public HopArrival code(String code) {
+  public HopArrivalEntity code(String code) {
     this.code = code;
     return this;
   }
@@ -55,7 +52,7 @@ public class HopArrival {
     this.code = code;
   }
 
-  public HopArrival description(String description) {
+  public HopArrivalEntity description(String description) {
     this.description = description;
     return this;
   }
@@ -74,7 +71,7 @@ public class HopArrival {
     this.description = description;
   }
 
-  public HopArrival dateTime(OffsetDateTime dateTime) {
+  public HopArrivalEntity dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -101,10 +98,10 @@ public class HopArrival {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    HopArrival hopArrival = (HopArrival) o;
-    return Objects.equals(this.code, hopArrival.code) &&
-        Objects.equals(this.description, hopArrival.description) &&
-        Objects.equals(this.dateTime, hopArrival.dateTime);
+    HopArrivalEntity hopArrivalEntity = (HopArrivalEntity) o;
+    return Objects.equals(this.code, hopArrivalEntity.code) &&
+        Objects.equals(this.description, hopArrivalEntity.description) &&
+        Objects.equals(this.dateTime, hopArrivalEntity.dateTime);
   }
 
   @Override

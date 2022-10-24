@@ -5,10 +5,17 @@ import org.openapitools.jackson.nullable.JsonNullableModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+//@SpringBootApplication
+/** I had some problems after creating function submitParcel() in the ParcelApiController and ParcelEntity.
+ * The programm gave me an error that I solved excluding the DataSrouceAutoConfiguration class following this:
+ * https://stackoverflow.com/questions/51221777/failed-to-configure-a-datasource-url-attribute-is-not-specified-and-no-embedd
+ * This might have to be solved in the feature.
+ */
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @SpringBootConfiguration
 @ComponentScan(basePackages = {"org.openapitools", "at.fhtw.swen3.services" , "at.fhtw.swen3.configuration"})
 public class OpenApiGeneratorApplication {
