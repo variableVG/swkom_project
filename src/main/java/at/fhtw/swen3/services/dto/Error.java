@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.annotation.Generated;
@@ -13,7 +15,7 @@ import javax.annotation.Generated;
 /**
  * Error
  */
-
+@Data
 @JsonTypeName("error")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 public class Error {
