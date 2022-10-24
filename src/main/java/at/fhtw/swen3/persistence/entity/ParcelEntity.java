@@ -1,8 +1,8 @@
 package at.fhtw.swen3.persistence.entity;
 
 
-import at.fhtw.swen3.services.dto.Recipient;
-import at.fhtw.swen3.services.dto.TrackingInformation;
+//import at.fhtw.swen3.services.dto.Recipient;
+// import at.fhtw.swen3.services.dto.TrackingInformation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -26,8 +26,8 @@ public class ParcelEntity {
     //private NewParcelInfoEntity newParcelInfoEntity;
 
     private Float weight;
-    private Recipient recipient;
-    private Recipient sender;
+    private RecipientEntity recipient;
+    private RecipientEntity sender;
     private String trackingId;
 
     private List<HopArrivalEntity> visitedHops = new ArrayList<>();
