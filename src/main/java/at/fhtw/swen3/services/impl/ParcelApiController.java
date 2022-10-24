@@ -1,14 +1,12 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.persistence.entity.ParcelEntity;
 import at.fhtw.swen3.services.BusinessLayer;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.api.ParcelApi;
 import at.fhtw.swen3.services.dto.TrackingInformation;
-import at.fhtw.swen3.services.mapper.IParcelMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

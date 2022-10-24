@@ -6,8 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "hopArrival")
-public interface IHopArrivalMapper {
-    IHopArrivalMapper INSTANCE = Mappers.getMapper(IHopArrivalMapper.class);
+public interface HopArrivalMapper {
+    HopArrivalMapper INSTANCE = Mappers.getMapper(HopArrivalMapper.class);
 
     @Mapping(source= "hopArrival.code", target="code")
     @Mapping(source= "hopArrival.description", target="description")
