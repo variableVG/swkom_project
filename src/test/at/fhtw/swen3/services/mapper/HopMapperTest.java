@@ -13,31 +13,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class HopMapperTest {
     HopEntity hopEntity;
     Hop hopDto;
-    GeoCoordinate geoCoordinatedto;
+    // GeoCoordinate geoCoordinatedto;
 
     @BeforeEach
     void setUp(){
         hopDto = new Hop();
         hopEntity = new HopEntity();
-        geoCoordinatedto = new GeoCoordinate();
+        // geoCoordinatedto = new GeoCoordinate();
 
         hopDto.setHopType("FirstHoptype");
         hopDto.setCode("RM123");
         hopDto.setDescription("fast123");
         hopDto.setProcessingDelayMins(23);
         hopDto.setLocationName("Homs");
-        geoCoordinatedto.setLon(12.3);
-        geoCoordinatedto.setLat(34.4);
-        hopDto.setLocationCoordinates(geoCoordinatedto);
+        // geoCoordinatedto.setLon(12.3);
+        // geoCoordinatedto.setLat(34.4);
+        // hopDto.setLocationCoordinates(geoCoordinatedto);
 
     }
 
     @Test
     void dtoToEntityTest(){
-        /*
-        ErrorEntity errorEntityTest = ErrorMapper.INSTANCE.dtoToEntity(errorDto);
-        assertEquals(errorDto.getErrorMessage(), errorEntityTest.getErrorMessage());
-         */
+
         HopEntity hopEntityTest = HopMapper.INSTANCE.dtoToEntity(hopDto);
         assertEquals(hopDto.getHopType(), hopEntityTest.getHopType());
         assertEquals(hopDto.getCode(), hopEntityTest.getCode());
@@ -50,11 +47,7 @@ public class HopMapperTest {
     }
     @Test
     void entityToDtoTest(){
-        /*
-        Error errorTest = ErrorMapper.INSTANCE.entityToDto(errorEntity);
-        assertEquals(errorEntity.getErrorMessage(), errorTest.getErrorMessage());
 
-         */
         Hop hopTest = HopMapper.INSTANCE.entityToDto(hopEntity);
         assertEquals(hopEntity.getHopType(), hopTest.getHopType());
         assertEquals(hopEntity.getCode(), hopTest.getCode());
