@@ -1,13 +1,15 @@
 package at.fhtw.swen3.persistence.entity;
 import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
-// import at.fhtw.swen3.services.dto.GeoCoordinate;
+import at.fhtw.swen3.services.dto.GeoCoordinate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Objects;
+
 
 public class HopEntity {
 

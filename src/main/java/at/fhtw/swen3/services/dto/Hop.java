@@ -2,6 +2,7 @@ package at.fhtw.swen3.services.dto;
 
 import java.util.Objects;
 
+import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
