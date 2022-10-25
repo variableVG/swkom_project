@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @SpringBootTest
 public class GeoCoordinateMapperTest {
     GeoCoordinateEntity geoCoordinateEntity;
@@ -27,8 +26,6 @@ public class GeoCoordinateMapperTest {
         and -180 to 180 for longitude.
         For example, Washington DC has a latitude 38.8951 and longitude -77.0364 .
          */
-
-
     }
     @Test
     void dtoToEntityTest(){
