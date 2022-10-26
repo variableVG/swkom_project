@@ -114,7 +114,6 @@ public class IParcelMapperTest {
         trackingInformationDTO.setState(TrackingInformation.StateEnum.fromValue("Pickup"));
         //TODO complete trackingInformataion DTO about visitedLoops and futureLoops
 
-
     }
 
     @Test
