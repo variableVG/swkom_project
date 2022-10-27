@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class IHopArrivalMapperTest {
 
+
     @Test
     void dtoToEntityTest() {
 
