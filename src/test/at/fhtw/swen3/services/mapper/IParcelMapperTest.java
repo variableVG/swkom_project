@@ -76,7 +76,6 @@ public class IParcelMapperTest {
         trackingInformationEntity.setFutureHops(futureHops);
         */
 
-
         //Add Parcel, NewParcelInfo, TrackingInformation
         parcelEntity.setWeight(34.6F);
         parcelEntity.setSender(sender);
