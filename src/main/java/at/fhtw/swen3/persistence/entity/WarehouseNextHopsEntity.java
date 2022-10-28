@@ -4,19 +4,28 @@ import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jdk.jfr.Label;
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@Data
 public class WarehouseNextHopsEntity {
 
     @JsonProperty("traveltimeMins")
     private Integer traveltimeMins;
 
     @JsonProperty("hop")
-    private Hop hop;
+    private HopEntity hop;
 
+
+    public WarehouseNextHopsEntity() {
+
+    }
     public WarehouseNextHopsEntity traveltimeMins(Integer traveltimeMins) {
         this.traveltimeMins = traveltimeMins;
         return this;
@@ -36,7 +45,7 @@ public class WarehouseNextHopsEntity {
         this.traveltimeMins = traveltimeMins;
     }
 
-    public WarehouseNextHopsEntity hop(Hop hop) {
+    public WarehouseNextHopsEntity hop(HopEntity hop) {
         this.hop = hop;
         return this;
     }
@@ -47,11 +56,11 @@ public class WarehouseNextHopsEntity {
      */
     @NotNull @Valid
     @Schema(name = "hop", required = true)
-    public Hop getHop() {
+    public HopEntity getHop() {
         return hop;
     }
 
-    public void setHop(Hop hop) {
+    public void setHop(HopEntity hop) {
         this.hop = hop;
     }
 

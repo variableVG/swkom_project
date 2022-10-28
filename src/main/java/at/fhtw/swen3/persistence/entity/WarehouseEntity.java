@@ -3,6 +3,9 @@ package at.fhtw.swen3.persistence.entity;
 import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import lombok.Data;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -10,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Data
 @Pattern(regexp = "[a-zA-Z]+", message = "Warehousename must have only upper & lowercase letters")
 public class WarehouseEntity extends HopEntity {
 
@@ -18,7 +22,7 @@ public class WarehouseEntity extends HopEntity {
 
     @JsonProperty("nextHops")
     @Valid
-    private List<WarehouseNextHops> nextHops = new ArrayList<>();
+    private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
 
     public WarehouseEntity level(Integer level) {
         this.level = level;
@@ -39,12 +43,12 @@ public class WarehouseEntity extends HopEntity {
         this.level = level;
     }
 
-    public WarehouseEntity nextHops(List<WarehouseNextHops> nextHops) {
+    public WarehouseEntity nextHops(List<WarehouseNextHopsEntity> nextHops) {
         this.nextHops = nextHops;
         return this;
     }
 
-    public WarehouseEntity addNextHopsItem(WarehouseNextHops nextHopsItem) {
+    public WarehouseEntity addNextHopsItem(WarehouseNextHopsEntity nextHopsItem) {
         this.nextHops.add(nextHopsItem);
         return this;
     }
@@ -55,11 +59,11 @@ public class WarehouseEntity extends HopEntity {
      */
     @NotNull @Valid
     @Schema(name = "nextHops", description = "Next hops after this warehouse (warehouses or trucks).", required = true)
-    public List<WarehouseNextHops> getNextHops() {
+    public List<WarehouseNextHopsEntity> getNextHops() {
         return nextHops;
     }
 
-    public void setNextHops(List<WarehouseNextHops> nextHops) {
+    public void setNextHops(List<WarehouseNextHopsEntity> nextHops) {
         this.nextHops = nextHops;
     }
 

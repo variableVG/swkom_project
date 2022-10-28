@@ -10,11 +10,11 @@ import org.mapstruct.factory.Mappers;
 public interface TruckMapper {
     TruckMapper INSTANCE = Mappers.getMapper(TruckMapper.class);
 
-    @Mapping(source= "truckDto.numberPlate", target="numberPlate")
-    @Mapping(source= "truckDto.regionGeoJson", target="regionGeoJson")
+    @Mapping(source= "numberPlate", target="numberPlate")
+    @Mapping(source= "regionGeoJson", target="regionGeoJson")
     TruckEntity dtoToEntity(Truck truckDto);
 
-    @Mapping(source= "truckEntity.numberPlate", target="numberPlate")
-    @Mapping(source= "truckEntity.regionGeoJson", target="regionGeoJson")
+    @Mapping(source= "numberPlate", target="numberPlate")
+    @Mapping(source= "regionGeoJson", target="regionGeoJson")
     Truck entityToDto(TruckEntity truckEntity);
 }

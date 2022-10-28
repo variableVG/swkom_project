@@ -1,6 +1,7 @@
 package at.fhtw.swen3.services.mapper;
 
 import at.fhtw.swen3.persistence.entity.RecipientEntity;
+import at.fhtw.swen3.persistence.entity.TransferwarehouseEntity;
 import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.dto.Transferwarehouse;
 import org.junit.jupiter.api.Test;
@@ -12,22 +13,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TransferwarehouseMapperTest {
 
     @Test
-    void dtoToEntity(){
+    void dtoToEntityTest(){
         Transferwarehouse transferwarehouseDto = Transferwarehouse.builder()
+                .logisticsPartner("logistics Partner")
+                .logisticsPartnerUrl("logistics Partner url")
+                .regionGeoJson("Vienna?").build();
 
-                .build();
+        TransferwarehouseEntity transferwarehouseEntityTest = TransferwarehouseMapper.INSTANCE.dtoToEntity(transferwarehouseDto);
 
-        //RecipientEntity recipientEntityTest = TransferwarehouseMapper.INSTANCE.dtoToEntity(transferwarehouseDto);
-        //assertEquals(recipientDto.getName(), recipientEntityTest.getName());
-
-
+        assertEquals(transferwarehouseEntityTest.getLogisticsPartner(), transferwarehouseDto.getLogisticsPartner());
+        assertEquals(transferwarehouseEntityTest.getLogisticsPartnerUrl(), transferwarehouseDto.getLogisticsPartnerUrl());
+        assertEquals(transferwarehouseEntityTest.getRegionGeoJson(), transferwarehouseDto.getRegionGeoJson());
     }
     @Test
-    void entityToDto(){
+    void entityToDtoTest(){
+        TransferwarehouseEntity transferwarehouseEntity = TransferwarehouseEntity.builder()
+                .logisticsPartner("logistics Partner")
+                .logisticsPartnerUrl("logistics Partner url")
+                .regionGeoJson("Vienna?").build();
 
-        //Recipient recipientTest = RecipientMapper.INSTANCE.entityToDto(recipientEntity);
+        Transferwarehouse transferwarehouseDtoTest = TransferwarehouseMapper.INSTANCE.entityToDto(transferwarehouseEntity);
 
-
+        assertEquals(transferwarehouseEntity.getLogisticsPartner(), transferwarehouseDtoTest.getLogisticsPartner());
+        assertEquals(transferwarehouseEntity.getLogisticsPartnerUrl(), transferwarehouseDtoTest.getLogisticsPartnerUrl());
+        assertEquals(transferwarehouseEntity.getRegionGeoJson(), transferwarehouseDtoTest.getRegionGeoJson());
     }
 
 
