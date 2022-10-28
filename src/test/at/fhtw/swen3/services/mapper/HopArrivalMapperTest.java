@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class IHopArrivalMapperTest {
+public class HopArrivalMapperTest {
 
 
     @Test
