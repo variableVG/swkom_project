@@ -6,16 +6,13 @@ import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Builder
+
 @Data
-//@Pattern(regexp = "[a-zA-Z]+", message = "Warehousename must have only upper & lowercase letters")
-@Pattern(regexp = "[a-zA-Z0-9-]", message = "Warehousename must have only upper, lowercase letters, Numbers and -")
-@NotNull(message = "Warehouse cannot be null")
+
 public class WarehouseEntity extends HopEntity {
 
     @JsonProperty("level")
