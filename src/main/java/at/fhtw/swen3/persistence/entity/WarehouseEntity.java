@@ -1,9 +1,7 @@
 package at.fhtw.swen3.persistence.entity;
 
-import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -14,7 +12,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-@Pattern(regexp = "[a-zA-Z]+", message = "Warehousename must have only upper & lowercase letters")
+//@Pattern(regexp = "[a-zA-Z]+", message = "Warehousename must have only upper & lowercase letters")
+@Pattern(regexp = "[a-zA-Z0-9-]", message = "Warehousename must have only upper, lowercase letters, Numbers and -")
+@NotNull(message = "Warehouse cannot be null")
 public class WarehouseEntity extends HopEntity {
 
     @JsonProperty("level")
