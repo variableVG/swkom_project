@@ -1,7 +1,6 @@
 package at.fhtw.swen3.persistence;
 
 import at.fhtw.swen3.persistence.entity.RecipientEntity;
-import at.fhtw.swen3.services.dto.Recipient;
 import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
@@ -17,8 +16,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
-public class RecipientTest {
-    private static final Logger log = LoggerFactory.getLogger(RecipientTest.class);
+public class RecipientValidationTest {
+    private static final Logger log = LoggerFactory.getLogger(RecipientValidationTest.class);
     @Test
     public void validationTest_recipient() {
         log.info("TEST validationTest");
@@ -26,7 +25,7 @@ public class RecipientTest {
                 .name("Rawan")
                 .street("Spenger")
                 .postalCode("A-1120")
-                .city("Wien")
+                .city("vienna")
                 .country("Austria")
                 .build();
 
