@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Builder
 @Data
 @Pattern(regexp = "[a-zA-Z]+", message = "Warehousename must have only upper & lowercase letters")
 public class WarehouseEntity extends HopEntity {
