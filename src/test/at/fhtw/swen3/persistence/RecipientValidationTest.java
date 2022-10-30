@@ -23,8 +23,8 @@ public class RecipientValidationTest {
         log.info("TEST validationTest");
         final RecipientEntity recipient = RecipientEntity.builder()
                 .name("Rawan")
-                .street("Spenger")
-                .postalCode("A-1120")
+                .street("Gasse")
+                .postalCode("A-1020")
                 .city("vienna")
                 .country("Austria")
                 .build();

@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class WarehouseMapperTest {
 
-
     @Test
     void dtoToEntityTest(){
         GeoCoordinate geoCoordinate = new GeoCoordinate();

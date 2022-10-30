@@ -2,11 +2,9 @@ package at.fhtw.swen3.services.mapper;
 
 import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entity.HopEntity;
-import at.fhtw.swen3.persistence.entity.WarehouseEntity;
 import at.fhtw.swen3.persistence.entity.WarehouseNextHopsEntity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
 import at.fhtw.swen3.services.dto.Hop;
-import at.fhtw.swen3.services.dto.Warehouse;
 import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class WarehouseNextHopsMapperTest {
-
 
     @Test
     void dtoToEntityTest(){
@@ -45,7 +42,6 @@ public class WarehouseNextHopsMapperTest {
 
         //TODO test the attribute NextHops in more detail
     }
-
 
     @Test
     void entityToDtoTest(){

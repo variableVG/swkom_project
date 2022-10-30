@@ -1,8 +1,6 @@
 package at.fhtw.swen3.services.mapper;
 
-import at.fhtw.swen3.persistence.entity.RecipientEntity;
 import at.fhtw.swen3.persistence.entity.TransferwarehouseEntity;
-import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.dto.Transferwarehouse;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

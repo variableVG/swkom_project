@@ -55,7 +55,10 @@ public class ParcelValidationTest {
         parcel.setSender(recipientEntitySender);
         parcel.setRecipient(recipientEntityRecipient);
         List<HopArrivalEntity> nextHops = new ArrayList<>();
-        final HopArrivalEntity hopArrivalEntity = HopArrivalEntity.builder().code("ABCD12").description("Hallo").dateTime(OffsetDateTime.MIN).build();
+        final HopArrivalEntity hopArrivalEntity = HopArrivalEntity.builder()
+                .code("ABCD12")
+                .description("Hallo")
+                .dateTime(OffsetDateTime.MIN).build();
         nextHops.add(hopArrivalEntity);
         parcel.setFutureHops(nextHops);
         parcel.setVisitedHops(nextHops);
@@ -101,7 +104,10 @@ public class ParcelValidationTest {
         parcel.setSender(recipientEntitySender);
         parcel.setRecipient(recipientEntityRecipient);
         List<HopArrivalEntity> nextHops = new ArrayList<>();
-        final HopArrivalEntity hopArrivalEntity = HopArrivalEntity.builder().code("ABCD12").description("Hallo").dateTime(OffsetDateTime.MIN).build();
+        final HopArrivalEntity hopArrivalEntity = HopArrivalEntity.builder()
+                .code("ABCD12")
+                .description("Hallo")
+                .dateTime(OffsetDateTime.MIN).build();
         nextHops.add(hopArrivalEntity);
         parcel.setFutureHops(nextHops);
         parcel.setVisitedHops(nextHops);
