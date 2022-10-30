@@ -1,6 +1,6 @@
 package at.fhtw.swen3.persistence.entity;
 
-
+import javax.validation.constraints.Min;
 //import at.fhtw.swen3.services.dto.Recipient;
 // import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.dto.HopArrival;
@@ -13,6 +13,7 @@ import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Data
 public class ParcelEntity {
 
+    @Min(value= 0, message = "weight must be equal or greater than zero")
     @JsonProperty("weight")
     private Float weight;
     @JsonProperty("recipient")
