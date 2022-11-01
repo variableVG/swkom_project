@@ -27,6 +27,7 @@ import java.util.Objects;
 @JsonTypeName("recipient")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 @Entity
+@Table(name="Recipient")
 public class RecipientEntity {
 
   @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")

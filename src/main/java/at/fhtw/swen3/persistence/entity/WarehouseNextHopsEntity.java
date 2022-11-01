@@ -19,6 +19,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name="WarehouseNextHops")
 public class WarehouseNextHopsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
