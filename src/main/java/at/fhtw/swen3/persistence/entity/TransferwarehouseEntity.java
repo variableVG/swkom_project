@@ -5,13 +5,19 @@ import at.fhtw.swen3.services.dto.GeoCoordinate;
 import at.fhtw.swen3.services.dto.Transferwarehouse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+
 @Builder
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class TransferwarehouseEntity extends HopEntity {
 
     @JsonProperty("regionGeoJson")
@@ -22,6 +28,7 @@ public class TransferwarehouseEntity extends HopEntity {
 
     @JsonProperty("logisticsPartnerUrl")
     private String logisticsPartnerUrl;
+
 
     public TransferwarehouseEntity regionGeoJson(String regionGeoJson) {
         this.regionGeoJson = regionGeoJson;

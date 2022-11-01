@@ -1,5 +1,6 @@
 package at.fhtw.swen3.persistence.entity;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 //import at.fhtw.swen3.services.dto.Recipient;
 // import at.fhtw.swen3.services.dto.TrackingInformation;
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -19,24 +20,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
-@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class ParcelEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Min(value= 0, message = "weight must be equal or greater than zero")
     @JsonProperty("weight")
     private Float weight;
+    @ManyToOne
     @JsonProperty("recipient")
     private RecipientEntity recipient;
+    @ManyToOne
     @JsonProperty("sender")
     private RecipientEntity sender;
     @JsonProperty("trackingId")
     private String trackingId;
 
+    @ManyToMany
     @JsonProperty("visitedHops")
     @Valid
     private List<HopArrivalEntity> visitedHops = new ArrayList<>();
 
+    @ManyToMany
     @JsonProperty("futureHops")
     @Valid
     private List<HopArrivalEntity> futureHops = new ArrayList<>();
@@ -85,10 +98,8 @@ public class ParcelEntity {
 
     @JsonProperty("state")
     private StateEnum state;
-    public ParcelEntity() {
-        // this.parcel = parcel;
 
-    }
+
 
     @Schema(name = "trackingId", example = "PYJRB4HZ6", description = "The tracking ID of the parcel. ", required = false)
     public String getTrackingId() {

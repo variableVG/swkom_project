@@ -3,17 +3,25 @@ import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
-@Data
+
+
+@Getter
+@Setter
+@Entity
 public class HopEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @JsonProperty("hopType")
     private String hopType;
@@ -31,11 +39,17 @@ public class HopEntity {
     private String locationName;
 
     @JsonProperty("locationCoordinates")
+    @ManyToOne
     private GeoCoordinateEntity locationCoordinates;
 
-    public HopEntity() {
-
+    public Long getId() {
+        return id;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public HopEntity hopType(String hopType) {
         this.hopType = hopType;

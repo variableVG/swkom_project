@@ -3,10 +3,14 @@ package at.fhtw.swen3.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -17,9 +21,12 @@ import java.util.Objects;
  * Recipient
  */
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @JsonTypeName("recipient")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
+@Entity
 public class RecipientEntity {
 
   @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")

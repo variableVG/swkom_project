@@ -5,27 +5,43 @@ import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jdk.jfr.Label;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.LastModifiedBy;
 
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class WarehouseNextHopsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @JsonProperty("traveltimeMins")
     private Integer traveltimeMins;
 
+    @ManyToOne
     @JsonProperty("hop")
     private HopEntity hop;
 
-
-    public WarehouseNextHopsEntity() {
-
+    public Long getId() {
+        return id;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
     public WarehouseNextHopsEntity traveltimeMins(Integer traveltimeMins) {
         this.traveltimeMins = traveltimeMins;
         return this;

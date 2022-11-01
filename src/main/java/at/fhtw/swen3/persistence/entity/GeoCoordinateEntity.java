@@ -3,18 +3,39 @@ package at.fhtw.swen3.persistence.entity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
-@Data
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class GeoCoordinateEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @JsonProperty("lat")
+    @Column
     private Double lat;
 
     @JsonProperty("lon")
+    @Column
     private Double lon;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public GeoCoordinateEntity lat(Double lat) {
         this.lat = lat;

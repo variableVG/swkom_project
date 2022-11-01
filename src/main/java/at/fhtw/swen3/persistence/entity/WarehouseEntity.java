@@ -2,8 +2,10 @@ package at.fhtw.swen3.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.ManyToAny;
 
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -11,16 +13,23 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Data
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class WarehouseEntity extends HopEntity {
 
     @JsonProperty("level")
     private Integer level;
 
+    @OneToMany
     @JsonProperty("nextHops")
     @Valid
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
+
+
 
     public WarehouseEntity level(Integer level) {
         this.level = level;
