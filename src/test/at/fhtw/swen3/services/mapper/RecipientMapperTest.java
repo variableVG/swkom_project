@@ -30,7 +30,7 @@ public class RecipientMapperTest {
 
     }
     @Test
-    void dtoToEntity(){
+    void dtoToEntityTest(){
         RecipientEntity recipientEntityTest = RecipientMapper.INSTANCE.dtoToEntity(recipientDto);
         assertEquals(recipientDto.getName(), recipientEntityTest.getName());
         assertEquals(recipientDto.getCity(), recipientEntityTest.getCity());
@@ -40,7 +40,7 @@ public class RecipientMapperTest {
 
     }
     @Test
-    void entityToDto(){
+    void entityToDtoTest(){
 
         Recipient recipientTest = RecipientMapper.INSTANCE.entityToDto(recipientEntity);
         assertEquals(recipientEntity.getName(), recipientTest.getName());

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  postgres:
+    image: 'postgis/postgis:latest'
+
+    # The syntax is [port we want on our machine]:[port we want to retrieve in the container]
+    ports:
+      - 5432:5432
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: swkom

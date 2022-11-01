@@ -10,11 +10,11 @@ import org.mapstruct.factory.Mappers;
 public interface WarehouseMapper {
     WarehouseMapper INSTANCE = Mappers.getMapper(WarehouseMapper.class);
 
-    @Mapping(source= "warehouseDto.nextHops", target="nextHops")
-    @Mapping(source= "warehouseDto.level", target="level")
+    @Mapping(source= "nextHops", target="nextHops")
+    @Mapping(source= "level", target="level")
     WarehouseEntity dtoToEntity(Warehouse warehouseDto);
 
-    @Mapping(source= "warehouseEntity.nextHops", target="nextHops")
-    @Mapping(source= "warehouseEntity.level", target="level")
+    @Mapping(source= "nextHops", target="nextHops")
+    @Mapping(source= "level", target="level")
     Warehouse entityToDto(WarehouseEntity warehouseEntity);
 }

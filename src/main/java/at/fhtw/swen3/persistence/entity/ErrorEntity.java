@@ -3,17 +3,36 @@ package at.fhtw.swen3.persistence.entity;
 import at.fhtw.swen3.services.dto.Error;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
-@Data
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class ErrorEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @JsonProperty("errorMessage")
     private String errorMessage;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public ErrorEntity errorMessage(String errorMessage) {
         this.errorMessage = errorMessage;

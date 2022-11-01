@@ -2,10 +2,19 @@ package at.fhtw.swen3.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class TruckEntity extends HopEntity {
 
     @JsonProperty("regionGeoJson")
@@ -13,6 +22,7 @@ public class TruckEntity extends HopEntity {
 
     @JsonProperty("numberPlate")
     private String numberPlate;
+
 
     public TruckEntity regionGeoJson(String regionGeoJson) {
         this.regionGeoJson = regionGeoJson;
