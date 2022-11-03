@@ -18,6 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name="Transferwarehouse")
 public class TransferwarehouseEntity extends HopEntity {
 
     @JsonProperty("regionGeoJson")

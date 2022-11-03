@@ -26,6 +26,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name="Parcel")
 public class ParcelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

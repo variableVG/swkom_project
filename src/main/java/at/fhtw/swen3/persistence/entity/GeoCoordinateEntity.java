@@ -15,6 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name="GeoCoordinate")
 public class GeoCoordinateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

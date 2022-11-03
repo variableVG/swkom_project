@@ -17,6 +17,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name="Error")
 public class ErrorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
