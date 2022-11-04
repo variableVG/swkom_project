@@ -1,13 +1,11 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.persistence.entity.ParcelEntity;
 import at.fhtw.swen3.services.BusinessLayer;
-import at.fhtw.swen3.services.api.ApiUtil;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
-import at.fhtw.swen3.services.api.ParcelApi;
+import at.fhtw.swen3.controller.ParcelApi;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +14,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
