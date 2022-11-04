@@ -3,7 +3,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package at.fhtw.swen3.services.api;
+package at.fhtw.swen3.controller;
 
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.Hop;

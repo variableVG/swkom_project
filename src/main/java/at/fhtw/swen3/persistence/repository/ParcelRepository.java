@@ -10,4 +10,6 @@ public interface ParcelRepository extends JpaRepository<ParcelEntity, Long> {
      * */
 
 
+
+
 }
