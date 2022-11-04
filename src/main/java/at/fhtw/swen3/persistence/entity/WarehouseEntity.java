@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 
 @Builder
@@ -29,8 +31,6 @@ public class WarehouseEntity extends HopEntity {
     @JsonProperty("nextHops")
     @Valid
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
-
-
 
     public WarehouseEntity level(Integer level) {
         this.level = level;
