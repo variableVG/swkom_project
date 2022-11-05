@@ -9,8 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -30,18 +29,25 @@ import java.util.Objects;
 @Table(name="Recipient")
 public class RecipientEntity {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", nullable = false)
+  private Long id;
+
   @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")
   @NotNull(message = "name cannot be null")
   @NotBlank(message = "name cannot be blank")
   @JsonProperty("name")
   private String name;
 
+  // @Pattern(regexp = "[a-zA-Z0-9 / ]+", message = "streetname must have only upper, lowercase letters, Numbers and /")
   @NotBlank(message = "streetname cannot be blank")
   @NotNull(message = "streetname cannot be null")
   @JsonProperty("street")
   private String street;
 
   @JsonProperty("postalCode")
+  @Pattern(regexp = "[A0-9-]+", message = "username must have only upper & lowercase letters")
   @NotNull(message = "PostalCode cannot be null")
   @Size(min = 4, max = 6, message = "A valid PostalCode must contain (A-, 4 digits, 0000-9999) ")
   private String postalCode;

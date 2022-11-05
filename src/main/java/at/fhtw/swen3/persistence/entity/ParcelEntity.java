@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 //import at.fhtw.swen3.services.dto.Recipient;
 // import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.dto.HopArrival;
+import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +27,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="Parcel")
+@Table(name="parcel")
 public class ParcelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,23 +38,27 @@ public class ParcelEntity {
     @JsonProperty("weight")
     private Float weight;
     @ManyToOne
+    @JoinColumn(name="recipient_id", nullable=true)
     @JsonProperty("recipient")
     private RecipientEntity recipient;
     @ManyToOne
+    @JoinColumn(name="sender_id", nullable=true)
     @JsonProperty("sender")
     private RecipientEntity sender;
     @JsonProperty("trackingId")
     private String trackingId;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "parcelEntity")
+    //@JoinColumn(name="id")
     @JsonProperty("visitedHops")
     @Valid
-    private List<HopArrivalEntity> visitedHops = new ArrayList<>();
+    private List<HopArrivalEntity> visitedHops;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "parcelEntity")
+    //@JoinColumn(name="future_hops_id")
     @JsonProperty("futureHops")
     @Valid
-    private List<HopArrivalEntity> futureHops = new ArrayList<>();
+    private List<HopArrivalEntity> futureHops;
 
 
     /**
@@ -201,31 +206,8 @@ public class ParcelEntity {
     }
 
 
-    public void submitParcel() {
-        //TODO set real newParcelInfoEntity in the DB
-        this.setTrackingId("PYJRB4HZ7");
 
 
-    }
 
-    public void trackParcel(String trackingId) {
-        this.setTrackingId(trackingId);
-        //TODO get from DB trackingInformationEntity according to trackingID
-        //////////////////////// HARD CODED FOR TESTING //////////////////////////////////////////////
-        this.setState(StateEnum.fromValue("Pickup"));
-        HopArrivalEntity hopArrivalEntity1 = HopArrivalEntity.builder()
-                .code("XWZQ5").description("description 1")
-                .dateTime(OffsetDateTime.parse("2022-10-22T12:57:59.601Z")).build();
-        HopArrivalEntity hopArrivalEntity2 = HopArrivalEntity.builder()
-                .code("PXXS27").description("description 2")
-                .dateTime(OffsetDateTime.parse("2022-10-22T12:57:59.601Z")).build();
 
-        List<HopArrivalEntity> visitedHops = new ArrayList<>();
-        List<HopArrivalEntity> futureHops = new ArrayList<>();
-        visitedHops.add(hopArrivalEntity1);
-        futureHops.add(hopArrivalEntity2);
-        this.setFutureHops(futureHops);
-        this.setVisitedHops(visitedHops);
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-    }
 }

@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -31,6 +30,11 @@ import java.util.Objects;
 @Table(name="HopArrival")
 public class HopArrivalEntity {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", nullable = false)
+  private Long id;
+
   @JsonProperty("code")
   private String code;
 
@@ -40,6 +44,18 @@ public class HopArrivalEntity {
   @JsonProperty("dateTime")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime dateTime;
+
+  @ManyToOne(optional = true, fetch = FetchType.LAZY)
+  @JoinColumn(name = "parcel_id", nullable = true)
+  private ParcelEntity parcelEntity;
+
+  public ParcelEntity getParcelEntity() {
+    return parcelEntity;
+  }
+
+  public void setParcelEntity(ParcelEntity parcelEntity) {
+    this.parcelEntity = parcelEntity;
+  }
 
   public HopArrivalEntity code(String code) {
     this.code = code;
@@ -137,6 +153,17 @@ public class HopArrivalEntity {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @ManyToOne(optional = false)
+  private ParcelEntity parcelEntities;
+
+  public ParcelEntity getParcelEntities() {
+    return parcelEntities;
+  }
+
+  public void setParcelEntities(ParcelEntity parcelEntities) {
+    this.parcelEntities = parcelEntities;
   }
 }
 

@@ -1,4 +1,4 @@
-package at.fhtw.swen3.services.api;
+package at.fhtw.swen3.controller;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;

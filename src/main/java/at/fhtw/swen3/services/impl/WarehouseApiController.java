@@ -1,8 +1,7 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.services.api.ApiUtil;
-import at.fhtw.swen3.services.api.WarehouseApi;
+import at.fhtw.swen3.controller.WarehouseApi;
 import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.dto.Error;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,10 +9,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.hibernate.dialect.identity.HANAIdentityColumnSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

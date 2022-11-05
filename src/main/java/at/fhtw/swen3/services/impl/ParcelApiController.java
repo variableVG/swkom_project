@@ -1,13 +1,12 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.persistence.entity.ParcelEntity;
 import at.fhtw.swen3.services.BusinessLayer;
-import at.fhtw.swen3.services.api.ApiUtil;
+import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
-import at.fhtw.swen3.services.api.ParcelApi;
+import at.fhtw.swen3.controller.ParcelApi;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +15,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -33,8 +31,11 @@ import javax.validation.constraints.Pattern;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 @Controller
-@Component("parcel")
+//@Component("parcel")
 public class ParcelApiController implements ParcelApi {
+
+    @Autowired
+    private ParcelService parcelImpl;
 
     private final NativeWebRequest request;
 
@@ -89,7 +90,7 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
-        NewParcelInfo newParcelInfo = businessLayer.submitParcel(parcel);
+        NewParcelInfo newParcelInfo = parcelImpl.submitParcel(parcel);
         return new ResponseEntity<NewParcelInfo>(newParcelInfo, HttpStatus.CREATED);
 
     }
@@ -129,8 +130,8 @@ public class ParcelApiController implements ParcelApi {
             @PathVariable("trackingId") String trackingId
     ) {
         //TODO
-        TrackingInformation trackingInformationDto = businessLayer.trackParcel(trackingId);
-        return new ResponseEntity<TrackingInformation>(trackingInformationDto, HttpStatus.OK);
+
+        return new ResponseEntity<TrackingInformation>( HttpStatus.OK);
     }
 
 

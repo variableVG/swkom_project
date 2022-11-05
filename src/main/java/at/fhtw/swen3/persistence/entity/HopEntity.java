@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name="Hop")
+
 public class HopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +32,9 @@ public class HopEntity {
     @JsonProperty("code")
     private String code;
 
+    @Pattern(regexp = "[a-zA-Z0-9- ]+", message = "Warehouse-description must have only upper, lowercase letters, Numbers and -")
+    @NotNull(message = "Warehouse-description cannot be null")
+    @NotBlank(message = "Warehouse-description cannot be blank")
     @JsonProperty("description")
     private String description;
 
@@ -42,6 +47,8 @@ public class HopEntity {
     @JsonProperty("locationCoordinates")
     @ManyToOne
     private GeoCoordinateEntity locationCoordinates;
+
+
 
     public Long getId() {
         return id;
