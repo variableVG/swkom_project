@@ -5,7 +5,9 @@ import at.fhtw.swen3.services.dto.Transferwarehouse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
+@Component
 @Mapper
 public interface TransferwarehouseMapper {
     TransferwarehouseMapper INSTANCE = Mappers.getMapper(TransferwarehouseMapper.class);

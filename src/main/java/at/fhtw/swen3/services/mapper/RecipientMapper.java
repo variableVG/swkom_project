@@ -5,7 +5,9 @@ import at.fhtw.swen3.services.dto.Recipient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
+@Component
 @Mapper
 public interface RecipientMapper {
     RecipientMapper INSTANCE = Mappers.getMapper(RecipientMapper.class);
