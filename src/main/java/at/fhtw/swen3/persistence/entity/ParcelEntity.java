@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 //import at.fhtw.swen3.services.dto.Recipient;
 // import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.dto.HopArrival;
+import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -201,31 +202,8 @@ public class ParcelEntity {
     }
 
 
-    public void submitParcel() {
-        //TODO set real newParcelInfoEntity in the DB
-        this.setTrackingId("PYJRB4HZ7");
 
 
-    }
 
-    public void trackParcel(String trackingId) {
-        this.setTrackingId(trackingId);
-        //TODO get from DB trackingInformationEntity according to trackingID
-        //////////////////////// HARD CODED FOR TESTING //////////////////////////////////////////////
-        this.setState(StateEnum.fromValue("Pickup"));
-        HopArrivalEntity hopArrivalEntity1 = HopArrivalEntity.builder()
-                .code("XWZQ5").description("description 1")
-                .dateTime(OffsetDateTime.parse("2022-10-22T12:57:59.601Z")).build();
-        HopArrivalEntity hopArrivalEntity2 = HopArrivalEntity.builder()
-                .code("PXXS27").description("description 2")
-                .dateTime(OffsetDateTime.parse("2022-10-22T12:57:59.601Z")).build();
 
-        List<HopArrivalEntity> visitedHops = new ArrayList<>();
-        List<HopArrivalEntity> futureHops = new ArrayList<>();
-        visitedHops.add(hopArrivalEntity1);
-        futureHops.add(hopArrivalEntity2);
-        this.setFutureHops(futureHops);
-        this.setVisitedHops(visitedHops);
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-    }
 }

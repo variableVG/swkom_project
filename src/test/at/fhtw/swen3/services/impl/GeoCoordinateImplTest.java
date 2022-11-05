@@ -18,8 +18,5 @@ class GeoCoordinateImplTest {
         geoCoordinateImpl = new GeoCoordinateImpl();
     }
 
-    @Test
-    void submitGeoCoordinate() {
-        geoCoordinateImpl.submitGeoCoordinate(8.0, 9.0);
-    }
+
 }

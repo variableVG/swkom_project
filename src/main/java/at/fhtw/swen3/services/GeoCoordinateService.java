@@ -5,6 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public interface GeoCoordinateService {
 
-    public void submitGeoCoordinate(Double lat, Double lon);
+
 
 }

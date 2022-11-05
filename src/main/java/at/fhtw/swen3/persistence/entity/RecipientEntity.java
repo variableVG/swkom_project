@@ -9,8 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -29,6 +28,11 @@ import java.util.Objects;
 @Entity
 @Table(name="Recipient")
 public class RecipientEntity {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
   @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")
   @NotNull(message = "name cannot be null")

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HopRepository extends JpaRepository<HopEntity, Long> {
 
-    public boolean submitHop();
+
 
 
 }

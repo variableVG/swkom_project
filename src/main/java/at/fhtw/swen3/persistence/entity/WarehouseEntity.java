@@ -19,8 +19,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="Warehouse")
+//@Table(name="Warehouse")
 public class WarehouseEntity extends HopEntity {
+
 
     @JsonProperty("level")
     private Integer level;
