@@ -1,4 +1,4 @@
 package at.fhtw.swen3.services;
 
-public interface RecipientService {
+public class RecipientService {
 }

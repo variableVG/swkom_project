@@ -1,4 +1,4 @@
 package at.fhtw.swen3.services;
 
-public interface HopArrivalService {
+public class HopArrivalService {
 }

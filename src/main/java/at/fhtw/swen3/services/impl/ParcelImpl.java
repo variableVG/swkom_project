@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 @Service
 @Slf4j
-public class ParcelImpl implements ParcelService {
+public class ParcelImpl extends ParcelService {
 
 
     private final ParcelRepository repo;
@@ -29,7 +29,7 @@ public class ParcelImpl implements ParcelService {
         this.repo = repo;
     }
 
-    @Override
+
     public NewParcelInfo submitParcel(Parcel parcel) {
         //Map parcel to Entity
         ParcelEntity parcelEntity = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);

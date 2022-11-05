@@ -1,4 +1,4 @@
 package at.fhtw.swen3.services;
 
-public interface WarehouseService {
+public class WarehouseService {
 }

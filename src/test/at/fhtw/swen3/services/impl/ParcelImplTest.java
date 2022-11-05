@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParcelImplTest {
 
     @Autowired
-    private ParcelService parcelImpl;
+    private ParcelImpl parcelImpl;
 
     @Test
     void submitParcelTest() {
@@ -34,8 +34,6 @@ class ParcelImplTest {
 
         Parcel parcel = Parcel.builder().sender(sender).recipient(recipient).weight(23.5F)
                 .build();
-
-
 
         //2) TEST FUNCTION
         NewParcelInfo newparcelInfo = parcelImpl.submitParcel(parcel);

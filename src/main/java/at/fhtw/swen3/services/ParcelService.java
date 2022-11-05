@@ -5,7 +5,7 @@ import at.fhtw.swen3.services.dto.Parcel;
 import org.springframework.stereotype.Service;
 
 
-public interface ParcelService {
+public class ParcelService {
 
-    public NewParcelInfo submitParcel(Parcel parcel);
+    //public NewParcelInfo submitParcel(Parcel parcel);
 }
