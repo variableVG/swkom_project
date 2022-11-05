@@ -24,6 +24,20 @@ jobs:
         with:
           name: artifact
           path: target/swkom_project-0.0.1-SNAPSHOT.jar
+          
+  deployDB:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Upload Docker compose
+        uses: actions/upload-artifact@v3
+        with:
+          name: postgresql
+          path: docker-compose.yml
+      - name: Start Docker
+        run:
+          docker-compose up -d
 
   deploy:
     needs: build
