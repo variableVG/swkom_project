@@ -36,6 +36,7 @@ jobs:
           name: postgresql
           path: docker-compose.yml
       - name: Start Docker in GitHub # We need that for UnitTest
+        uses: actions/run-docker@v3
         run:
           docker-compose up -d
 
