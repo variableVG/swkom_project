@@ -5,4 +5,5 @@ import at.fhtw.swen3.services.dto.Warehouse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WarehouseRepository extends JpaRepository<WarehouseEntity, Long> {
+
 }
