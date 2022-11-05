@@ -50,8 +50,8 @@ jobs:
           version_label: ${{github.SHA}}
           region: us-east-1
           deployment_package: docker-compose.yml
-        run:
-          echo "Hallo"
+          run:
+            echo "Hallo"
 
 
   deploy:
