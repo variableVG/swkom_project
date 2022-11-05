@@ -36,13 +36,12 @@ jobs:
           name: postgresql
           path: docker-compose.yml
       - name: Start Docker in GitHub # We need that for UnitTest
-        uses: actions/run-docker@v3
         run:
           docker-compose up -d
 
       - name: deploy postgres in AWS
+        uses: einaregilsson/beanstalk-deploy@v13
         with:
-          uses: einaregilsson/beanstalk-deploy@v13
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
