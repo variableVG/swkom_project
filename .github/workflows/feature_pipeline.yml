@@ -4,7 +4,7 @@
 name: Test Develop
 on:
   push:
-    branches: [ "vioBranch" ]
+    branches: [ "develop" ]
 
 jobs:
   build:
