@@ -12,32 +12,32 @@ import org.mapstruct.factory.Mappers;
 public interface ParcelMapper {
     ParcelMapper INSTANCE = Mappers.getMapper(ParcelMapper.class);
 
-    @Mapping(source = "parcelEntity.weight", target = "weight")
-    @Mapping(source = "parcelEntity.sender", target = "sender")
-    @Mapping(source = "parcelEntity.recipient", target = "recipient")
+    @Mapping(source = "weight", target = "weight")
+    @Mapping(source = "sender", target = "sender")
+    @Mapping(source = "recipient", target = "recipient")
     Parcel parcelEntityToParcelDto(ParcelEntity parcelEntity);
-    @Mapping(source = "parcelEntity.trackingId", target = "trackingId")
+    @Mapping(source = "trackingId", target = "trackingId")
     NewParcelInfo parcelEntityToNewParcelInfoDto(ParcelEntity parcelEntity);
-    @Mapping(source="newParcelInfo.trackingId", target="trackingId")
+    @Mapping(source="trackingId", target="trackingId")
     ParcelEntity newParcelInfoDtoToParcelEntity(NewParcelInfo newParcelInfo);
 
-    @Mapping(source="parcel.weight", target="weight")
-    @Mapping(source="parcel.recipient", target="recipient")
-    @Mapping(source="parcel.sender", target="sender")
+    @Mapping(source="weight", target="weight")
+    @Mapping(source="recipient", target="recipient")
+    @Mapping(source="sender", target="sender")
     ParcelEntity parcelDtoToParcelEntity(Parcel parcel);
 
-    @Mapping(source="parcel.weight", target="weight")
-    @Mapping(source="parcel.recipient", target="recipient")
-    @Mapping(source="parcel.sender", target="sender")
-    @Mapping(source="newParcelInfo.trackingId", target="trackingId")
-    @Mapping(source="trackingInformation.state", target="state")
-    @Mapping(source="trackingInformation.visitedHops", target="visitedHops")
-    @Mapping(source="trackingInformation.futureHops", target="futureHops")
-    ParcelEntity dtoToToParcelEntity(Parcel parcel, NewParcelInfo newParcelInfo, TrackingInformation trackingInformation);
+    /*@Mapping(source="weight", target="weight")
+    @Mapping(source="recipient", target="recipient")
+    @Mapping(source="sender", target="sender")
+    @Mapping(source="trackingId", target="trackingId")
+    @Mapping(source="state", target="state")
+    @Mapping(source="visitedHops", target="visitedHops")
+    @Mapping(source="futureHops", target="futureHops")
+    ParcelEntity dtoToToParcelEntity(Parcel parcel, NewParcelInfo newParcelInfo, TrackingInformation trackingInformation);*/
 
-    @Mapping(source= "parcelEntity.state", target="state")
-    @Mapping(source= "parcelEntity.visitedHops", target="visitedHops")
-    @Mapping(source= "parcelEntity.futureHops", target="futureHops")
+    @Mapping(source= "state", target="state")
+    @Mapping(source= "visitedHops", target="visitedHops")
+    @Mapping(source= "futureHops", target="futureHops")
     TrackingInformation parcelEntityToTrackingInformationDto(ParcelEntity parcelEntity);
 
 

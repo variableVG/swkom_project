@@ -145,7 +145,7 @@ public class ParcelMapperTest {
         assertThat(parcelEntityTest.getWeight()).isEqualTo(parcelDTO.getWeight());
     }
 
-    @Test
+    /*@Test
     void dtoToToParcelEntityTest() {
         //Run Mapper
         ParcelEntity parcelEntityTest = ParcelMapper.INSTANCE.dtoToToParcelEntity(parcelDTO, newParcelInfoDTO, trackingInformationDTO);
@@ -156,7 +156,7 @@ public class ParcelMapperTest {
         assertThat(parcelEntityTest.getTrackingId()).isEqualTo(newParcelInfoDTO.getTrackingId());
         assertEquals(parcelEntityTest.getState().name(), trackingInformationDTO.getState().name());
 
-    }
+    }*/
 
     @Test
     void parcelEntityToNewParcelInfoDtoTest() {

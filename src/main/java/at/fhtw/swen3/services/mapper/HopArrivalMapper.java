@@ -9,14 +9,14 @@ import org.mapstruct.factory.Mappers;
 public interface HopArrivalMapper {
     HopArrivalMapper INSTANCE = Mappers.getMapper(HopArrivalMapper.class);
 
-    @Mapping(source= "hopArrival.code", target="code")
-    @Mapping(source= "hopArrival.description", target="description")
-    @Mapping(source= "hopArrival.dateTime", target="dateTime")
+    @Mapping(source= "code", target="code")
+    @Mapping(source= "description", target="description")
+    @Mapping(source= "dateTime", target="dateTime")
     HopArrivalEntity dtoToEntity(HopArrival hopArrival);
 
 
-    @Mapping(source= "hopArrivalEntity.code", target="code")
-    @Mapping(source= "hopArrivalEntity.description", target="description")
-    @Mapping(source= "hopArrivalEntity.dateTime", target="dateTime")
+    @Mapping(source= "code", target="code")
+    @Mapping(source= "description", target="description")
+    @Mapping(source= "dateTime", target="dateTime")
     HopArrival entityToDto(HopArrivalEntity hopArrivalEntity);
 }

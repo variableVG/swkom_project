@@ -10,17 +10,17 @@ import org.mapstruct.factory.Mappers;
 public interface RecipientMapper {
     RecipientMapper INSTANCE = Mappers.getMapper(RecipientMapper.class);
 
-    @Mapping(source= "recipientDto.country", target="country")
-    @Mapping(source= "recipientDto.city", target="city")
-    @Mapping(source= "recipientDto.postalCode", target="postalCode")
-    @Mapping(source= "recipientDto.street", target="street")
-    @Mapping(source= "recipientDto.name", target="name")
+    @Mapping(source= "country", target="country")
+    @Mapping(source= "city", target="city")
+    @Mapping(source= "postalCode", target="postalCode")
+    @Mapping(source= "street", target="street")
+    @Mapping(source= "name", target="name")
     RecipientEntity dtoToEntity(Recipient recipientDto);
 
-    @Mapping(source= "recipientEntity.country", target="country")
-    @Mapping(source= "recipientEntity.city", target="city")
-    @Mapping(source= "recipientEntity.postalCode", target="postalCode")
-    @Mapping(source= "recipientEntity.street", target="street")
-    @Mapping(source= "recipientEntity.name", target="name")
+    @Mapping(source= "country", target="country")
+    @Mapping(source= "city", target="city")
+    @Mapping(source= "postalCode", target="postalCode")
+    @Mapping(source= "street", target="street")
+    @Mapping(source= "name", target="name")
     Recipient entityToDto(RecipientEntity recipientEntity);
 }

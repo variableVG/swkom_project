@@ -7,8 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -18,7 +17,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="Transferwarehouse")
+//@Table(name="Transferwarehouse")
 public class TransferwarehouseEntity extends HopEntity {
 
     @JsonProperty("regionGeoJson")
