@@ -50,7 +50,7 @@ public class ParcelImpl implements ParcelService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        
+
 
         //Save parcel in DB (repository function gives back a new object of the same class)
         ParcelEntity newParcelEntity = null;
