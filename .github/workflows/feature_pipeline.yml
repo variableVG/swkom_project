@@ -39,20 +39,6 @@ jobs:
         run:
           docker-compose up -d
 
-      - name: deploy postgres in AWS
-        uses: einaregilsson/beanstalk-deploy@v13
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
-          use_existing_version_if_available: false
-          application_name: docker
-          environment_name: docker-env
-          version_label: ${{github.SHA}}
-          region: us-east-1
-          deployment_package: docker-compose.yml
-
-
   deploy:
     needs: build
     name: CD
