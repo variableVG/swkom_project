@@ -5,6 +5,9 @@ import at.fhtw.swen3.services.dto.HopArrival;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
+
+@Component
 @Mapper(componentModel = "hopArrival")
 public interface HopArrivalMapper {
     HopArrivalMapper INSTANCE = Mappers.getMapper(HopArrivalMapper.class);
