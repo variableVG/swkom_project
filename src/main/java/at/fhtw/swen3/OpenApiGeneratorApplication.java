@@ -12,13 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-//@SpringBootApplication
-/** I had some problems after creating function submitParcel() in the ParcelApiController and ParcelEntity.
- * The programm gave me an error that I solved excluding the DataSrouceAutoConfiguration class following this:
- * https://stackoverflow.com/questions/51221777/failed-to-configure-a-datasource-url-attribute-is-not-specified-and-no-embedd
- * This might have to be solved in the feature.
- */
-//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @SpringBootApplication
 @SpringBootConfiguration
 @EnableJpaRepositories
