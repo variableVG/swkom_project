@@ -13,12 +13,12 @@ import org.mapstruct.factory.Mappers;
 public interface GeoCoordinateMapper {
     GeoCoordinateMapper INSTANCE = Mappers.getMapper(GeoCoordinateMapper.class);
 
-    @Mapping(source= "geoCoordinate.lat", target="lat")
-    @Mapping(source= "geoCoordinate.lon", target="lon")
+    @Mapping(source= "lat", target="lat")
+    @Mapping(source= "lon", target="lon")
     GeoCoordinateEntity dtoToEntity(GeoCoordinate geoCoordinate);
 
 
-    @Mapping(source= "geoCoordinateEntity.lat", target="lat")
-    @Mapping(source= "geoCoordinateEntity.lon", target="lon")
+    @Mapping(source= "lat", target="lat")
+    @Mapping(source= "lon", target="lon")
     GeoCoordinate entityToDto(GeoCoordinateEntity geoCoordinateEntity);
 }

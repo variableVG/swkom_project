@@ -22,33 +22,29 @@ class ParcelImplTest {
 
     @Test
     void submitParcelTest() {
+
+        //1) PREPARE TEST
         //Create recipient
-        Recipient recipient = Recipient.builder()
-                .name("Violeta")
-                .street("Straße A")
-                .postalCode("1200")
-                .city("Vienna")
-                .country("Austria").build();
-        System.out.println(recipient.getName());
+        Recipient recipient = Recipient.builder().name("Violeta").street("Straße A")
+                .postalCode("A-1200").city("Vienna").country("Austria").build();
+
         //Create sender
-        Recipient sender = Recipient.builder()
-                .name("Ibo")
-                .street("Straße B")
-                .postalCode("3000")
-                .city("Frankfurt")
-                .country("Germany").build();
-        System.out.println(sender.getName());
-        Parcel parcel = Parcel.builder()
-                .sender(sender).recipient(recipient).weight(23.5F)
+        Recipient sender = Recipient.builder().name("Ibo").street("Straße B")
+                .postalCode("G-3000").city("Frankfurt").country("Germany").build();
+
+        Parcel parcel = Parcel.builder().sender(sender).recipient(recipient).weight(23.5F)
                 .build();
 
-        System.out.println(parcel.getWeight());
 
 
+        //2) TEST FUNCTION
         NewParcelInfo newparcelInfo = parcelImpl.submitParcel(parcel);
 
-        System.out.println(newparcelInfo.getTrackingId());
+        // 3) CHECK RESULTS
+        //System.out.println("Generated Id is " + newparcelInfo.getTrackingId());
+        assertNotNull(newparcelInfo.getTrackingId());
 
 
     }
+
 }

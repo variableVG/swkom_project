@@ -27,7 +27,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="Parcel")
+@Table(name="parcel")
 public class ParcelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,23 +38,27 @@ public class ParcelEntity {
     @JsonProperty("weight")
     private Float weight;
     @ManyToOne
+    @JoinColumn(name="recipient_id", nullable=true)
     @JsonProperty("recipient")
     private RecipientEntity recipient;
     @ManyToOne
+    @JoinColumn(name="sender_id", nullable=true)
     @JsonProperty("sender")
     private RecipientEntity sender;
     @JsonProperty("trackingId")
     private String trackingId;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "parcelEntity")
+    //@JoinColumn(name="id")
     @JsonProperty("visitedHops")
     @Valid
-    private List<HopArrivalEntity> visitedHops = new ArrayList<>();
+    private List<HopArrivalEntity> visitedHops;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "parcelEntity")
+    //@JoinColumn(name="future_hops_id")
     @JsonProperty("futureHops")
     @Valid
-    private List<HopArrivalEntity> futureHops = new ArrayList<>();
+    private List<HopArrivalEntity> futureHops;
 
 
     /**

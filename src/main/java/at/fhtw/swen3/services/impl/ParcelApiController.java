@@ -91,8 +91,6 @@ public class ParcelApiController implements ParcelApi {
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
         NewParcelInfo newParcelInfo = parcelImpl.submitParcel(parcel);
-        System.out.println("NewparcelInfo is");
-        System.out.println(newParcelInfo.getTrackingId());
         return new ResponseEntity<NewParcelInfo>(newParcelInfo, HttpStatus.CREATED);
 
     }
