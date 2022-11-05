@@ -24,7 +24,7 @@ jobs:
         with:
           name: artifact
           path: target/swkom_project-0.0.1-SNAPSHOT.jar
-          
+
   deployDB:
     runs-on: ubuntu-latest
     steps:
@@ -35,9 +35,24 @@ jobs:
         with:
           name: postgresql
           path: docker-compose.yml
-      - name: Start Docker
+      - name: Start Docker in GitHub # We need that for UnitTest
         run:
           docker-compose up -d
+
+      - name: deploy postgres in AWS
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
+          use_existing_version_if_available: false
+          application_name: swkom_project_openApiContracts
+          environment_name: Swkomprojectopenapicontracts-env
+          version_label: ${{github.SHA}}
+          region: us-east-1
+          deployment_package: docker-compose.yml
+        run:
+          echo "Hallo"
+
 
   deploy:
     needs: build
