@@ -1,8 +1,6 @@
 package at.fhtw.swen3.persistence.repository;
 
 import at.fhtw.swen3.persistence.entity.ErrorEntity;
-import at.fhtw.swen3.services.ParcelService;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,8 @@ class ErrorRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        errorEntity = ErrorEntity.builder().errorMessage("This is a message").build();
+        errorEntity = ErrorEntity.builder()
+                .errorMessage("This is a message").build();
     }
 
     @Test
@@ -28,9 +27,5 @@ class ErrorRepositoryTest {
         ErrorEntity errorEntityTest = repo.save(errorEntity);
         assertEquals(errorEntity.getErrorMessage(), errorEntityTest.getErrorMessage());
     }
-
-
-
-
 
 }

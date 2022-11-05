@@ -32,7 +32,7 @@ public class HopEntity {
     @JsonProperty("code")
     private String code;
 
-    @Pattern(regexp = "[a-zA-Z0-9- ]+", message = "Warehouse-description must have only upper, lowercase letters, Numbers and -")
+    @Pattern(regexp = "[a-zA-ZÄÖÜäöüß0-9- ]+", message = "Warehouse-description must have only upper, lowercase letters, Numbers and -")
     @NotNull(message = "Warehouse-description cannot be null")
     @NotBlank(message = "Warehouse-description cannot be blank")
     @JsonProperty("description")

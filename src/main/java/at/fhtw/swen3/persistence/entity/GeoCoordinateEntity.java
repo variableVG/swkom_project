@@ -24,11 +24,13 @@ public class GeoCoordinateEntity {
     private Long id;
 
     @JsonProperty("lat")
-    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "lat", nullable = false)
     private Double lat;
 
     @JsonProperty("lon")
-    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "lon", nullable = false)
     private Double lon;
 
     public Long getId() {

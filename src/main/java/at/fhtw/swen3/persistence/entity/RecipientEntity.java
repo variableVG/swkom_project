@@ -40,7 +40,7 @@ public class RecipientEntity {
   @JsonProperty("name")
   private String name;
 
-  // @Pattern(regexp = "[a-zA-Z0-9 / ]+", message = "streetname must have only upper, lowercase letters, Numbers and /")
+  @Pattern(regexp = "[a-zA-Z0-9ÄÖÜäöüß / ]+", message = "streetname must have only upper, lowercase letters, Numbers and /")
   @NotBlank(message = "streetname cannot be blank")
   @NotNull(message = "streetname cannot be null")
   @JsonProperty("street")
@@ -53,7 +53,7 @@ public class RecipientEntity {
   private String postalCode;
 
 
-  @Pattern(regexp = "[a-zA-Z]+", message = "cityname must have only upper & lowercase letters")
+  @Pattern(regexp = "[a-zA-ZÄÖÜäöüß]+", message = "cityname must have only upper & lowercase letters")
   @NotNull(message = "cityname cannot be null")
   @NotBlank(message = "cityname cannot be blank")
   @JsonProperty("city")
