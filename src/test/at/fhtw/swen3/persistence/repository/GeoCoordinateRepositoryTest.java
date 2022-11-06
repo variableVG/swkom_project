@@ -17,13 +17,22 @@ class GeoCoordinateRepositoryTest {
 
     @Test
     void setUp() {
-        geoCoordinateEntity = GeoCoordinateEntity.builder().lon(56.3).lat(45.6).build();
+        geoCoordinateEntity = GeoCoordinateEntity.builder()
+                .id(Long.valueOf(12))
+                .lon(56.3)
+                .lat(45.6).build();
     }
 
     @Test
     void saveTest_checkIdIsNotNull() {
-        //GeoCoordinateEntity geoCoordinateEntityTest = repo.save(geoCoordinateEntity);
-        //assertNotNull(geoCoordinateEntityTest.getId());
+        /*
+        GeoCoordinateEntity geoCoordinateEntityTest = repo.save(geoCoordinateEntity);
+        assertEquals(geoCoordinateEntity.getId(), geoCoordinateEntityTest.getId());
+        assertEquals(geoCoordinateEntity.getLat(), geoCoordinateEntityTest.getLat());
+        assertEquals(geoCoordinateEntity.getLon(), geoCoordinateEntityTest.getLon());
+
+         */
+
     }
 
 }

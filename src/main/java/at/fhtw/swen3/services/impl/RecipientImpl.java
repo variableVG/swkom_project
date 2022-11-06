@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class RecipientImpl implements RecipientService {
+public class RecipientImpl extends RecipientService {
     private final RecipientRepository repo;
 
     public RecipientImpl(RecipientRepository repo) {

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 @Service
 @Slf4j
-public class ParcelImpl implements ParcelService {
+public class ParcelImpl extends ParcelService {
 
 
     private final ParcelRepository repo;
@@ -29,10 +29,11 @@ public class ParcelImpl implements ParcelService {
         this.repo = repo;
     }
 
-    @Override
+
     public NewParcelInfo submitParcel(Parcel parcel) {
         //Map parcel to Entity
         ParcelEntity parcelEntity = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
+
         //generate TrackingId:
         String trackingId = RandomStringUtils.randomAlphabetic(9);
         parcelEntity.setTrackingId(trackingId.toUpperCase());
@@ -43,13 +44,14 @@ public class ParcelImpl implements ParcelService {
 
 
         //Sender and Recipient must first be saved.
-        try {
-            RecipientEntity sender = recipientRepository.save(parcelEntity.getSender());
-            RecipientEntity recipient = recipientRepository.save(parcelEntity.getRecipient());
-            System.out.println("Recipient and sender were stored.");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+
+        System.out.println("Recipient is "  + parcelEntity.getRecipient().getName());
+        RecipientEntity recipient = recipientRepository.save(parcelEntity.getRecipient());
+        System.out.println("Recipient is "  + recipient.getName());
+        System.out.println("Sender is "  + parcelEntity.getSender().getName());
+        RecipientEntity sender = recipientRepository.save(parcelEntity.getSender());
+        System.out.println("Recipient and sender were stored.");
+
 
 
         //Save parcel in DB (repository function gives back a new object of the same class)

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class HopArrivalImpl implements HopArrivalService {
+public class HopArrivalImpl extends HopArrivalService {
 }

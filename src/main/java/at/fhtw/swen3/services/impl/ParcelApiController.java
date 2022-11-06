@@ -35,7 +35,7 @@ import javax.validation.constraints.Pattern;
 public class ParcelApiController implements ParcelApi {
 
     @Autowired
-    private ParcelService parcelImpl;
+    private ParcelImpl parcelImpl;
 
     private final NativeWebRequest request;
 

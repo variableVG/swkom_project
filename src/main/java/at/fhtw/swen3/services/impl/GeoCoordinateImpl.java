@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.function.Function;
 @Service
 @Slf4j
-public class GeoCoordinateImpl implements GeoCoordinateService {
+public class GeoCoordinateImpl extends GeoCoordinateService {
 
 
 

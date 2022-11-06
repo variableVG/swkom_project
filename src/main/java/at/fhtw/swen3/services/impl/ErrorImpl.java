@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class ErrorImpl implements ErrorService {
+public class ErrorImpl extends ErrorService {
 }
