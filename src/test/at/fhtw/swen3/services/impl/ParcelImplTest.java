@@ -30,10 +30,11 @@ class ParcelImplTest {
 
         //Create sender
         Recipient sender = Recipient.builder().name("Ibo").street("Straße B")
-                .postalCode("G-3000").city("Frankfurt").country("Germany").build();
+                .postalCode("A-1200").city("Vienna").country("Austria").build();
 
         Parcel parcel = Parcel.builder().sender(sender).recipient(recipient).weight(23.5F)
                 .build();
+
 
         //2) TEST FUNCTION
         NewParcelInfo newparcelInfo = parcelImpl.submitParcel(parcel);

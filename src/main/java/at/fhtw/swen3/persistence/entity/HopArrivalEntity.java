@@ -155,15 +155,5 @@ public class HopArrivalEntity {
     return o.toString().replace("\n", "\n    ");
   }
 
-  @ManyToOne(optional = false)
-  private ParcelEntity parcelEntities;
-
-  public ParcelEntity getParcelEntities() {
-    return parcelEntities;
-  }
-
-  public void setParcelEntities(ParcelEntity parcelEntities) {
-    this.parcelEntities = parcelEntities;
-  }
 }
 

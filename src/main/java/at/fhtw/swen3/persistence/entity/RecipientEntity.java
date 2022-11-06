@@ -63,6 +63,7 @@ public class RecipientEntity {
   @JsonProperty("country")
   private String country;
 
+
   public RecipientEntity name(String name) {
     this.name = name;
     return this;

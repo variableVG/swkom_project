@@ -1,5 +1,6 @@
 package at.fhtw.swen3.persistence.repository;
 
+import at.fhtw.swen3.persistence.entity.RecipientEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,12 @@ class RecipientRepositoryTest {
 
     @Test
     void saveTest() {
+
+        RecipientEntity recipient = RecipientEntity.builder().name("Violeta").street("Straße A")
+                .postalCode("A-1200").city("Vienna").country("Austria").build();
+
+        RecipientEntity recipientTest = repo.save(recipient);
+        assertNotNull(recipientTest.getId());
 
     }
 
