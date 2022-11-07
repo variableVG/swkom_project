@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class WarehouseNextHopsImpl extends WarehouseNextHopsService {
+public class WarehouseNextHopsImpl implements WarehouseNextHopsService {
 }
