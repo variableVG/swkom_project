@@ -1,5 +1,5 @@
 package at.fhtw.swen3.services;
 
-public class HopService {
+public interface HopService {
 
 }

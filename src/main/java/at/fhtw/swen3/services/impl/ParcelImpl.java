@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 @Service
 @Slf4j
-public class ParcelImpl extends ParcelService {
+public class ParcelImpl implements ParcelService {
 
 
     private final ParcelRepository repo;
