@@ -20,8 +20,4 @@ public class GeoCoordinateImpl implements GeoCoordinateService {
 
 
 
-
-
-
-
 }
