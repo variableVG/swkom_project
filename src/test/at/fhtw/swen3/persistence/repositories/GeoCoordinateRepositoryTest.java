@@ -1,6 +1,7 @@
-package at.fhtw.swen3.persistence.repository;
+package at.fhtw.swen3.persistence.repositories;
 
 import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,23 +16,17 @@ class GeoCoordinateRepositoryTest {
 
     GeoCoordinateEntity geoCoordinateEntity;
 
-    @Test
+    @BeforeEach
     void setUp() {
         geoCoordinateEntity = GeoCoordinateEntity.builder()
-                .id(Long.valueOf(12))
                 .lon(56.3)
                 .lat(45.6).build();
     }
 
     @Test
     void saveTest_checkIdIsNotNull() {
-        /*
         GeoCoordinateEntity geoCoordinateEntityTest = repo.save(geoCoordinateEntity);
-        assertEquals(geoCoordinateEntity.getId(), geoCoordinateEntityTest.getId());
-        assertEquals(geoCoordinateEntity.getLat(), geoCoordinateEntityTest.getLat());
-        assertEquals(geoCoordinateEntity.getLon(), geoCoordinateEntityTest.getLon());
-
-         */
+        assertNotNull(geoCoordinateEntityTest.getId());
 
     }
 
