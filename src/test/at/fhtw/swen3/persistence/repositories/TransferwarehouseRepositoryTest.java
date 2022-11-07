@@ -1,17 +1,14 @@
-package at.fhtw.swen3.persistence.repository;
+package at.fhtw.swen3.persistence.repositories;
 
-import at.fhtw.swen3.services.dto.Truck;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class TruckRepositoryTest {
+class TransferwarehouseRepositoryTest {
 
     @Autowired
-    TruckRepository repo;
+    TransferwarehouseRepository repo;
 
     @Test
     void setUp() {

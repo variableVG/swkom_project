@@ -1,24 +1,23 @@
-package at.fhtw.swen3.persistence.repository;
+package at.fhtw.swen3.persistence.repositories;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class WarehouseNextHopsRepositoryTest {
+class HopRepositoryTest {
 
     @Autowired
-    WarehouseNextHopsRepository repo;
+    HopRepository repo;
 
     @Test
-    void SetUp() {
+    void setUp() {
 
     }
 
     @Test
-    void save() {
+    void saveTest() {
 
     }
 
