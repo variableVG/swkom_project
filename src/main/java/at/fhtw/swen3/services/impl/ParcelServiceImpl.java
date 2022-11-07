@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 @Service
 @Slf4j
-public class ParcelImpl implements ParcelService {
+public class ParcelServiceImpl implements ParcelService {
 
 
     private final ParcelRepository repo;
@@ -25,7 +25,7 @@ public class ParcelImpl implements ParcelService {
     @Autowired
     public RecipientRepository recipientRepository;
 
-    public ParcelImpl(ParcelRepository repo) {
+    public ParcelServiceImpl(ParcelRepository repo) {
         this.repo = repo;
     }
 
