@@ -24,7 +24,6 @@ import javax.validation.constraints.Pattern;
 //@Table(name="Warehouse")
 public class WarehouseEntity extends HopEntity {
 
-
     @JsonProperty("level")
     private Integer level;
 
