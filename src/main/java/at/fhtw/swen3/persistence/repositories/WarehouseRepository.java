@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WarehouseRepository extends JpaRepository<WarehouseEntity, Long> {
     WarehouseEntity findById(long id);
+
+    WarehouseEntity save(WarehouseEntity warehouseEntity);
 }

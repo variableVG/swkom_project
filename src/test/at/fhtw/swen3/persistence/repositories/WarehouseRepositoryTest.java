@@ -9,11 +9,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @SpringBootTest
 class WarehouseRepositoryTest {
 
     @Autowired
     private WarehouseRepository repo;
+
+    @Autowired
+    private HopRepository hopRepository;
+
+    @Autowired
+    private GeoCoordinateRepository geoCoordinateRepository;
 
     WarehouseEntity warehouseEntity;
 
@@ -21,11 +30,15 @@ class WarehouseRepositoryTest {
     void setUp() {
 
         GeoCoordinateEntity geoCoordinate = GeoCoordinateEntity.builder().lat(23.5).lon(56.9).build();
+        GeoCoordinateEntity newGeoCoordinateEntity = geoCoordinateRepository.save(geoCoordinate);
         HopEntity hop = new HopEntity();
         hop.setCode("VIGG59"); hop.setDescription("Description of Hop");
         hop.setProcessingDelayMins(3); hop.setLocationName("Vienna");
-        hop.setLocationCoordinates(geoCoordinate); hop.setHopType("Rawan");
-        WarehouseNextHopsEntity warehouseNextHopsEntity = WarehouseNextHopsEntity.builder().hop(hop).traveltimeMins(15).build();
+        hop.setLocationCoordinates(newGeoCoordinateEntity); hop.setHopType("Rawan");
+
+        HopEntity newHop = hopRepository.save(hop);
+
+        WarehouseNextHopsEntity warehouseNextHopsEntity = WarehouseNextHopsEntity.builder().hop(newHop).traveltimeMins(15).build();
         List<WarehouseNextHopsEntity> hops = new ArrayList<>();
         hops.add(warehouseNextHopsEntity);
 
@@ -33,11 +46,8 @@ class WarehouseRepositoryTest {
     }
 
     @Test
-    void saveTest() {
-        //WarehouseEntity warehouseEntityTest = repo.save(warehouseEntity);
-        //assertNotNull(warehouseEntityTest.getId());
-        //assertEquals(warehouseEntity.getLevel(), warehouseEntityTest.getLevel());
+    void saveTest_checkId() {
+        WarehouseEntity warehouseEntityTest = repo.save(warehouseEntity);
+        assertNotNull(warehouseEntityTest.getId());
     }
-
-
 }

@@ -21,8 +21,13 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Entity
-//@Table(name="Warehouse")
+@Table(name="Warehouse")
 public class WarehouseEntity extends HopEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @JsonProperty("level")
     private Integer level;

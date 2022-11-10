@@ -18,7 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="Hop")
+//@Table(name="Hop")
 
 public class HopEntity {
     @Id
