@@ -2,6 +2,7 @@ package at.fhtw.swen3.services.mapper;
 
 import at.fhtw.swen3.persistence.entity.*;
 import at.fhtw.swen3.services.dto.*;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,12 +11,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@Slf4j
 @SpringBootTest
 public class WarehouseMapperTest {
-
     @Test
     void dtoToEntityTest(){
+        log.info("TEST dtoToEntityTest in WarehouseMapperTest");
         GeoCoordinate geoCoordinate = new GeoCoordinate();
         geoCoordinate.setLat(0.1); geoCoordinate.setLon(0.2);
         Hop hop = new Hop();
@@ -40,6 +41,7 @@ public class WarehouseMapperTest {
 
     @Test
     void entityToDtoTest(){
+        log.info("TEST entityToDtoTest in WarehouseMapperTest");
         GeoCoordinateEntity geoCoordinate = new GeoCoordinateEntity();
         geoCoordinate.setLat(0.1); geoCoordinate.setLon(0.2);
         HopEntity hop = new HopEntity();

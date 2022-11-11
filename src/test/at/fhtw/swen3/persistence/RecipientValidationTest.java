@@ -1,6 +1,7 @@
 package at.fhtw.swen3.persistence;
 
 import at.fhtw.swen3.persistence.entity.RecipientEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
@@ -14,13 +15,13 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
+@Slf4j
 @SpringBootTest
 public class RecipientValidationTest {
-    private static final Logger log = LoggerFactory.getLogger(RecipientValidationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RecipientValidationTest.class);
     @Test
     public void validationTest_recipient() {
-        log.info("TEST validationTest");
+        log.info("TEST validationTest_recipient");
         final RecipientEntity recipient = RecipientEntity.builder()
                 .name("Rawan")
                 .street("Hauptstraße 12/12/12")
@@ -41,7 +42,7 @@ public class RecipientValidationTest {
     }
     @Test
     public void validationTest_recipient_shouldFail() {
-        log.info("TEST validationTest");
+        log.info("TEST validationTest_recipient_shouldFail");
         final RecipientEntity recipient = RecipientEntity.builder()
                 .name("Rawan123")
                 .street("Spenger")

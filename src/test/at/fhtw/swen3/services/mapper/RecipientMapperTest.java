@@ -1,12 +1,13 @@
 package at.fhtw.swen3.services.mapper;
 import at.fhtw.swen3.persistence.entity.RecipientEntity;
 import at.fhtw.swen3.services.dto.Recipient;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@Slf4j
 @SpringBootTest
 public class RecipientMapperTest {
     Recipient recipientDto;
@@ -31,6 +32,7 @@ public class RecipientMapperTest {
     }
     @Test
     void dtoToEntityTest(){
+        log.info("TEST dtoToEntityTest in RecipientMapperTest");
         RecipientEntity recipientEntityTest = RecipientMapper.INSTANCE.dtoToEntity(recipientDto);
         assertEquals(recipientDto.getName(), recipientEntityTest.getName());
         assertEquals(recipientDto.getCity(), recipientEntityTest.getCity());
@@ -41,7 +43,7 @@ public class RecipientMapperTest {
     }
     @Test
     void entityToDtoTest(){
-
+        log.info("TEST entityToDtoTest in RecipientMapperTest");
         Recipient recipientTest = RecipientMapper.INSTANCE.entityToDto(recipientEntity);
         assertEquals(recipientEntity.getName(), recipientTest.getName());
         assertEquals(recipientEntity.getCity(), recipientTest.getCity());

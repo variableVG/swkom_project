@@ -3,12 +3,13 @@ package at.fhtw.swen3.services.mapper;
 
 import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@Slf4j
 @SpringBootTest
 public class GeoCoordinateMapperTest {
     GeoCoordinateEntity geoCoordinateEntity;
@@ -28,7 +29,7 @@ public class GeoCoordinateMapperTest {
     }
     @Test
     void dtoToEntityTest(){
-
+        log.info("TEST dtoToEntityTest in GeoCoordinateMapperTest");
         GeoCoordinateEntity geoCoordinateEntityTest = GeoCoordinateMapper.INSTANCE.dtoToEntity(geoCoordinateDto);
         assertEquals(geoCoordinateDto.getLat(), geoCoordinateEntityTest.getLat());
         assertEquals(geoCoordinateDto.getLon(), geoCoordinateEntityTest.getLon());
@@ -37,6 +38,7 @@ public class GeoCoordinateMapperTest {
 
     @Test
     void entityToDtoTest(){
+        log.info("TEST entityToDtoTest in GeoCoordinateMapperTest");
 
         GeoCoordinate geoCoordinateTest = GeoCoordinateMapper.INSTANCE.entityToDto(geoCoordinateEntity);
         assertEquals(geoCoordinateEntity.getLat(), geoCoordinateTest.getLat());

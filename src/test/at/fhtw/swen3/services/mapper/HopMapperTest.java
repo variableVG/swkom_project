@@ -1,13 +1,15 @@
 package at.fhtw.swen3.services.mapper;
 
 import at.fhtw.swen3.persistence.entity.HopEntity;
+import at.fhtw.swen3.services.dto.GeoCoordinate;
 import at.fhtw.swen3.services.dto.Hop;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@Slf4j
 @SpringBootTest
 public class HopMapperTest {
     HopEntity hopEntity;
@@ -18,7 +20,7 @@ public class HopMapperTest {
     void setUp(){
         hopDto = new Hop();
         hopEntity = new HopEntity();
-        // geoCoordinatedto = new GeoCoordinate();
+        //geoCoordinatedto = new GeoCoordinate();
 
         hopDto.setHopType("FirstHoptype");
         hopDto.setCode("RM123");
@@ -33,20 +35,21 @@ public class HopMapperTest {
 
     @Test
     void dtoToEntityTest(){
-
+        log.info("TEST dtoToEntityTest in HopMapperTest");
         HopEntity hopEntityTest = HopMapper.INSTANCE.dtoToEntity(hopDto);
         assertEquals(hopDto.getHopType(), hopEntityTest.getHopType());
         assertEquals(hopDto.getCode(), hopEntityTest.getCode());
         assertEquals(hopDto.getDescription(), hopEntityTest.getDescription());
         assertEquals(hopDto.getLocationName(), hopEntityTest.getLocationName());
-        //assertEquals(hopDto.getLocationCoordinates(), hopEntityTest.getLocationCoordinates());
+        // assertEquals(hopDto.getLocationCoordinates(), hopEntityTest.getLocationCoordinates());
         assertEquals(hopDto.getProcessingDelayMins(), hopEntityTest.getProcessingDelayMins());
 
 
     }
+
     @Test
     void entityToDtoTest(){
-
+        log.info("TEST entityToDtoTest in HopMapperTest");
         Hop hopTest = HopMapper.INSTANCE.entityToDto(hopEntity);
         assertEquals(hopEntity.getHopType(), hopTest.getHopType());
         assertEquals(hopEntity.getCode(), hopTest.getCode());

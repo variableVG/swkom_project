@@ -2,6 +2,7 @@ package at.fhtw.swen3.services.mapper;
 
 import at.fhtw.swen3.persistence.entity.*;
 import at.fhtw.swen3.services.dto.*;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@Slf4j
 @SpringBootTest
 public class ParcelMapperTest {
 
@@ -117,6 +118,7 @@ public class ParcelMapperTest {
 
     @Test
     void parcelEntityToParcelDtoTest() {
+        log.info("TEST parcelEntityToParcelDtoTest in ParcelMapperTest");
 
         //Run Mapper
         Parcel parcelDTOTest = ParcelMapper.INSTANCE.parcelEntityToParcelDto(parcelEntity);
@@ -136,6 +138,7 @@ public class ParcelMapperTest {
 
     @Test
     void parcelDtoToParcelEntityTest() {
+        log.info("TEST parcelDtoToParcelEntityTest in ParcelMapperTest");
         //Run Mapper
         ParcelEntity parcelEntityTest = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcelDTO);
 
@@ -160,6 +163,7 @@ public class ParcelMapperTest {
 
     @Test
     void parcelEntityToNewParcelInfoDtoTest() {
+        log.info("TEST parcelEntityToNewParcelInfoDtoTest in ParcelMapperTest");
         NewParcelInfo newParcelInfoDto = ParcelMapper.INSTANCE.parcelEntityToNewParcelInfoDto(parcelEntity);
 
         assertEquals(newParcelInfoDto.getTrackingId(), parcelEntity.getTrackingId());
@@ -167,6 +171,7 @@ public class ParcelMapperTest {
 
     @Test
     void parcelEntityToTrackingInformationDtoTest() {
+        log.info("TEST parcelEntityToTrackingInformationDtoTest in ParcelMapperTest");
         TrackingInformation trackingInformationTest = ParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
 
         //Check state
@@ -182,6 +187,7 @@ public class ParcelMapperTest {
 
     @Test
     void newParcelInfoDtoToParcelEntityTest() {
+        log.info("TEST newParcelInfoDtoToParcelEntityTest in ParcelMapperTest");
         NewParcelInfo newParcelInfoTest = new NewParcelInfo("BYJRB4HZ6");
 
         ParcelEntity parcelEntity = ParcelMapper.INSTANCE.newParcelInfoDtoToParcelEntity(newParcelInfoTest);

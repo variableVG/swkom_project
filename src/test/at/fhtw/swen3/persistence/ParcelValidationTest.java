@@ -5,6 +5,7 @@ import at.fhtw.swen3.persistence.entity.ParcelEntity;
 import at.fhtw.swen3.persistence.entity.RecipientEntity;
 import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import at.fhtw.swen3.services.mapper.HopArrivalMapperTest;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +21,14 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
+@Slf4j
 @SpringBootTest
 public class ParcelValidationTest {
-    private static final Logger log = LoggerFactory.getLogger(ParcelValidationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ParcelValidationTest.class);
 
     @Test
     public void validationTest_parcel() {
-        log.info("TEST validationTest");
+        log.info("TEST validationTest_parcel");
         final ParcelEntity parcel = new ParcelEntity();
         final RecipientEntity recipientEntity = RecipientEntity.builder()
                 .name("Rawan")
@@ -76,7 +77,7 @@ public class ParcelValidationTest {
     }
     @Test
     public void validationTest_parcel_shouldFail() {
-        log.info("TEST validationTest");
+        log.info("TEST validationTest_parcel_shouldFail");
         final ParcelEntity parcel = new ParcelEntity();
         final RecipientEntity recipientEntity = RecipientEntity.builder()
                 .name("Rawan")
