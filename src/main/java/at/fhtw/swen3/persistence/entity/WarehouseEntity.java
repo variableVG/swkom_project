@@ -32,9 +32,10 @@ public class WarehouseEntity extends HopEntity {
     @JsonProperty("level")
     private Integer level;
 
-    @OneToMany
+    @OneToMany (mappedBy = "hop")
     @JsonProperty("nextHops")
     @Valid
+    @NotNull
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
 
     public WarehouseEntity level(Integer level) {

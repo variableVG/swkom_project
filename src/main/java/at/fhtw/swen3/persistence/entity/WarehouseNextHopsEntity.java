@@ -30,8 +30,10 @@ public class WarehouseNextHopsEntity {
     private Integer traveltimeMins;
 
     @ManyToOne
+    @JoinColumn(name = "hop_id")
     @JsonProperty("hop")
     private HopEntity hop;
+
 
     public Long getId() {
         return id;
