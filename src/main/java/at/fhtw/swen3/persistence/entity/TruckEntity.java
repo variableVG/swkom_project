@@ -17,7 +17,6 @@ import java.util.Objects;
 //@Table(name="Truck")
 public class TruckEntity extends HopEntity {
 
-
     @JsonProperty("regionGeoJson")
     private String regionGeoJson;
 

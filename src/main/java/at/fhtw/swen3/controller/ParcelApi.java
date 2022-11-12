@@ -227,7 +227,8 @@ public interface ParcelApi {
     )
     default ResponseEntity<NewParcelInfo> transitionParcel(
         @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId,
-        @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
+        @Parameter(name = "Parcel", description = "", required = true)
+        @Valid @RequestBody Parcel parcel
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
