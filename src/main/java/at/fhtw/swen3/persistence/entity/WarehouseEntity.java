@@ -22,7 +22,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 @Entity
 //@DiscriminatorValue("warehouse")
-@Table(name="Warehouse")
+//@Table(name="Warehouse")
 public class WarehouseEntity extends HopEntity {
 
     @Id

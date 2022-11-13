@@ -27,7 +27,7 @@ import java.util.Objects;
 @JsonTypeName("hopArrival")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 @Entity
-@Table(name="HopArrival")
+//@Table(name="HopArrival")
 public class HopArrivalEntity {
 
   @Id

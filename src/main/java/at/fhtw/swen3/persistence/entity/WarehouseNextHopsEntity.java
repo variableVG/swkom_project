@@ -19,7 +19,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="WarehouseNextHops") // why is it not created/resolved? makes no sense
+//@Table(name="WarehouseNextHops") // why is it not created/resolved? makes no sense
 public class WarehouseNextHopsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
