@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class TransferwarehouseImpl implements TransferwarehouseService {
+public class TransferwarehouseServiceImpl implements TransferwarehouseService {
 }

@@ -1,7 +1,6 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.services.BusinessLayer;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
@@ -39,14 +38,10 @@ public class ParcelApiController implements ParcelApi {
 
     private final NativeWebRequest request;
 
-    private BusinessLayer businessLayer;
-
     
     @Autowired
     public ParcelApiController(NativeWebRequest request) {
         this.request = request;
-        this.businessLayer = new BusinessLayer();
-
     }
 
     @Override

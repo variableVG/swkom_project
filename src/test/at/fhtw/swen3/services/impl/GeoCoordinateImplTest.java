@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class GeoCoordinateImplTest {
 
     @Autowired
-    GeoCoordinateImpl geoCoordinateImpl;
+    GeoCoordinateServiceImpl geoCoordinateServiceImpl;
 
 
 

@@ -8,7 +8,7 @@ public class ApiException extends Exception {
     private int code;
     public ApiException (int code, String msg) {
         super(msg);
-        log.info("This massage is form class ApiException {}", msg);
+        log.info("This message is from class ApiException {}", msg);
         this.code = code;
     }
 }

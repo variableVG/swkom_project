@@ -20,6 +20,7 @@ import java.util.Objects;
 //@Table(name="Transferwarehouse")
 public class TransferwarehouseEntity extends HopEntity {
 
+
     @JsonProperty("regionGeoJson")
     private String regionGeoJson;
 

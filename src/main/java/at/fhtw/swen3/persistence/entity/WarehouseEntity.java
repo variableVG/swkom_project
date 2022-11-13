@@ -21,6 +21,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Entity
+//@DiscriminatorValue("warehouse")
 @Table(name="Warehouse")
 public class WarehouseEntity extends HopEntity {
 
