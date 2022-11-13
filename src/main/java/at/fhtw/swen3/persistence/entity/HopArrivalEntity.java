@@ -31,6 +31,7 @@ import java.util.Objects;
 public class HopArrivalEntity {
 
   @Id
+  @JoinColumn //added because it was an issue, no idea if it is needed
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
@@ -47,14 +48,14 @@ public class HopArrivalEntity {
 
   @ManyToOne(optional = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "parcel_id", nullable = true)
-  private ParcelEntity parcelEntity;
+  private ParcelEntity parcel; //renamed this from parcelEntity to parcel, since the script didn't detect this field.
 
-  public ParcelEntity getParcelEntity() {
-    return parcelEntity;
+  public ParcelEntity getParcel() {
+    return parcel;
   }
 
-  public void setParcelEntity(ParcelEntity parcelEntity) {
-    this.parcelEntity = parcelEntity;
+  public void setParcel(ParcelEntity parcelEntity) {
+    this.parcel = parcelEntity;
   }
 
   public HopArrivalEntity code(String code) {

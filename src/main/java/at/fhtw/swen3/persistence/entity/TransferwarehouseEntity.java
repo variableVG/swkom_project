@@ -17,9 +17,14 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-//@Table(name="Transferwarehouse")
+@Table(name="TransferWarehouse") //this might cause issues, but it was an error in the script run of the lecturer, so its a solution for now
+//@DiscriminatorValue("transferwarehouse")
 public class TransferwarehouseEntity extends HopEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @JsonProperty("regionGeoJson")
     private String regionGeoJson;

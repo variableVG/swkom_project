@@ -4,9 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 //import at.fhtw.swen3.services.dto.Recipient;
 // import at.fhtw.swen3.services.dto.TrackingInformation;
-import at.fhtw.swen3.services.dto.HopArrival;
-import at.fhtw.swen3.services.dto.NewParcelInfo;
-import at.fhtw.swen3.services.dto.Parcel;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -15,9 +12,6 @@ import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,13 +42,13 @@ public class ParcelEntity {
     @JsonProperty("trackingId")
     private String trackingId;
 
-    @OneToMany(mappedBy = "parcelEntity")
+    @OneToMany(mappedBy = "parcel")
     //@JoinColumn(name="id")
     @JsonProperty("visitedHops")
     @Valid
     private List<HopArrivalEntity> visitedHops;
 
-    @OneToMany(mappedBy = "parcelEntity")
+    @OneToMany(mappedBy = "parcel")
     //@JoinColumn(name="future_hops_id")
     @JsonProperty("futureHops")
     @Valid
