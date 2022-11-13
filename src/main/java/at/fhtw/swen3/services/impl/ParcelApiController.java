@@ -1,7 +1,6 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.services.BusinessLayer;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
@@ -12,6 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +30,7 @@ import javax.validation.constraints.Pattern;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 @Controller
 //@Component("parcel")
+@Slf4j
 public class ParcelApiController implements ParcelApi {
 
     @Autowired
@@ -37,14 +38,10 @@ public class ParcelApiController implements ParcelApi {
 
     private final NativeWebRequest request;
 
-    private BusinessLayer businessLayer;
-
     
     @Autowired
     public ParcelApiController(NativeWebRequest request) {
         this.request = request;
-        this.businessLayer = new BusinessLayer();
-
     }
 
     @Override
@@ -164,8 +161,11 @@ public class ParcelApiController implements ParcelApi {
     )
     @Override
     public ResponseEntity<NewParcelInfo> transitionParcel(
-            @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId,
-            @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
+            @Pattern(regexp = "^[A-Z0-9]{9}$")
+            @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true)
+            @PathVariable("trackingId") String trackingId,
+            @Parameter(name = "Parcel", description = "", required = true)
+            @Valid @RequestBody Parcel parcel
     ) {
         //TODO
         NewParcelInfo newParcelInfo = new NewParcelInfo();

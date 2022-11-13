@@ -4,6 +4,7 @@ import at.fhtw.swen3.services.dto.Error;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name="Error")
+@Slf4j
 public class ErrorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,10 +49,13 @@ public class ErrorEntity {
     @NotNull
     @Schema(name = "errorMessage", description = "The error message.", required = true)
     public String getErrorMessage() {
-        return errorMessage;
+        // log.error("Exist an error {} ",getErrorMessage());
+       return errorMessage;
+
     }
 
     public void setErrorMessage(String errorMessage) {
+
         this.errorMessage = errorMessage;
     }
 

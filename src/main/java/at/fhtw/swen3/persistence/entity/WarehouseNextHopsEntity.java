@@ -19,7 +19,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="WarehouseNextHops")
+//@Table(name="WarehouseNextHops") // why is it not created/resolved? makes no sense
 public class WarehouseNextHopsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,8 +30,10 @@ public class WarehouseNextHopsEntity {
     private Integer traveltimeMins;
 
     @ManyToOne
+    @JoinColumn(name = "hop_id")
     @JsonProperty("hop")
     private HopEntity hop;
+
 
     public Long getId() {
         return id;

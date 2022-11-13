@@ -8,22 +8,23 @@ import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
+import at.fhtw.swen3.services.validation.MyValidator;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-@Service
 @Slf4j
+@AllArgsConstructor
 public class ParcelServiceImpl implements ParcelService {
 
 
     private final ParcelRepository repo;
 
-    @Autowired
+    //@Autowired
     public RecipientRepository recipientRepository;
+    private MyValidator myValidator;
 
     public ParcelServiceImpl(ParcelRepository repo) {
         this.repo = repo;
@@ -45,12 +46,16 @@ public class ParcelServiceImpl implements ParcelService {
 
         //Sender and Recipient must first be saved.
 
-        System.out.println("Recipient is "  + parcelEntity.getRecipient().getName());
+        // System.out.println("Recipient is "  + parcelEntity.getRecipient().getName());
+        log.info("Recipient is "  + parcelEntity.getRecipient().getName());
         RecipientEntity recipient = recipientRepository.save(parcelEntity.getRecipient());
-        System.out.println("Recipient is "  + recipient.getName());
-        System.out.println("Sender is "  + parcelEntity.getSender().getName());
+        // System.out.println("Recipient is "  + recipient.getName());
+        log.info("Recipient is "  + recipient.getName());
+        //System.out.println("Sender is "  + parcelEntity.getSender().getName());
+        log.info("Sender is "  + parcelEntity.getSender().getName());
         RecipientEntity sender = recipientRepository.save(parcelEntity.getSender());
-        System.out.println("Recipient and sender were stored.");
+        // System.out.println("Recipient and sender were stored.");
+        log.info("Recipient and sender were stored.");
 
 
 
@@ -61,7 +66,8 @@ public class ParcelServiceImpl implements ParcelService {
 
             newParcelEntity = repo.save(parcelEntity);
         } catch (Exception e){
-            e.printStackTrace();
+            log.error("class ParcelServiceImpl, submitParcel {}" ,e.getMessage());
+            // e.printStackTrace();
         }
 
         //return what the API wants for us

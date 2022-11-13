@@ -34,7 +34,7 @@ public class RecipientEntity {
   @Column(name = "id", nullable = false)
   private Long id;
 
-  @Pattern(regexp = "[a-zA-Z]+", message = "username must have only upper & lowercase letters")
+  @Pattern(regexp = "[a-zA-ZÄÖÜäöüß]+", message = "username must have only upper & lowercase letters")
   @NotNull(message = "name cannot be null")
   @NotBlank(message = "name cannot be blank")
   @JsonProperty("name")

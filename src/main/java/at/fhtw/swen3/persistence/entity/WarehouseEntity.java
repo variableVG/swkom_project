@@ -21,16 +21,22 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Entity
+//@DiscriminatorValue("warehouse")
 //@Table(name="Warehouse")
 public class WarehouseEntity extends HopEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @JsonProperty("level")
     private Integer level;
 
-    @OneToMany
+    @OneToMany (mappedBy = "hop")
     @JsonProperty("nextHops")
     @Valid
+    @NotNull
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
 
     public WarehouseEntity level(Integer level) {

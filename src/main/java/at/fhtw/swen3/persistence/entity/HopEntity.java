@@ -18,6 +18,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE) //this solves the issue of not being able to create a warehouse table, but adds a "dtype" column to differentiate between the classes
+//@DiscriminatorValue("hop") //this is needed because of @Inheritance, we can differentiate with this value, which class enters data in the table. May be added/changed for inheriting classes later.
+// see: https://vladmihalcea.com/the-best-way-to-map-the-discriminatorcolumn-with-jpa-and-hibernate/
 @Table(name="Hop")
 
 public class HopEntity {

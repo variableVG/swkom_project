@@ -14,10 +14,14 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-//@Table(name="Truck")
+@Table(name="Truck")
+//@DiscriminatorValue("truck")
 public class TruckEntity extends HopEntity {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
     @JsonProperty("regionGeoJson")
     private String regionGeoJson;
 

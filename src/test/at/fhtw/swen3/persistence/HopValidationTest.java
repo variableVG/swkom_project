@@ -1,6 +1,7 @@
 package at.fhtw.swen3.persistence;
 
 import at.fhtw.swen3.persistence.entity.*;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,18 +11,17 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
+@Slf4j
 @SpringBootTest
 public class HopValidationTest {
-    private static final Logger log = LoggerFactory.getLogger(HopValidationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(HopValidationTest.class);
     @Test
     public void validationTest_warehouse() {
-        log.info("TEST validationTest");
+        log.info("TEST validationTest_warehouse");
         final GeoCoordinateEntity geoCoordinateEntity = GeoCoordinateEntity.builder()
                 .id(Long.valueOf(12))
                 .lat(12.3)
@@ -49,7 +49,7 @@ public class HopValidationTest {
     }
     @Test
     public void validationTest_warehouse_shouldFail() {
-        log.info("TEST validationTest");
+        log.info("TEST validationTest_warehouse_shouldFail");
         final GeoCoordinateEntity geoCoordinateEntity = GeoCoordinateEntity.builder()
                 .id(Long.valueOf(12))
                 .lat(12.3)
