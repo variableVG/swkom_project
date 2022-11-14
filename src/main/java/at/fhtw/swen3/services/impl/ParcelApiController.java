@@ -1,6 +1,7 @@
 package at.fhtw.swen3.services.impl;
 
 
+import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
@@ -34,7 +35,7 @@ import javax.validation.constraints.Pattern;
 public class ParcelApiController implements ParcelApi {
 
     @Autowired
-    private ParcelServiceImpl parcelImpl;
+    private ParcelService parcelImpl;
 
     private final NativeWebRequest request;
 

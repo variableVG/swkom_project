@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 
 public interface ParcelService {
 
-    //public NewParcelInfo submitParcel(Parcel parcel);
+    public NewParcelInfo submitParcel(Parcel parcel);
 }
