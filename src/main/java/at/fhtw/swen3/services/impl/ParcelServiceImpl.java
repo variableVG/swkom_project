@@ -42,8 +42,6 @@ public class ParcelServiceImpl implements ParcelService {
         parcelEntity.setFutureHops(new ArrayList<>());
         parcelEntity.setVisitedHops(new ArrayList<>());
 
-
-
         //Sender and Recipient must first be saved.
 
         // System.out.println("Recipient is "  + parcelEntity.getRecipient().getName());
@@ -56,8 +54,6 @@ public class ParcelServiceImpl implements ParcelService {
         RecipientEntity sender = recipientRepository.save(parcelEntity.getSender());
         // System.out.println("Recipient and sender were stored.");
         log.info("Recipient and sender were stored.");
-
-
 
         //Save parcel in DB (repository function gives back a new object of the same class)
         ParcelEntity newParcelEntity = null;
