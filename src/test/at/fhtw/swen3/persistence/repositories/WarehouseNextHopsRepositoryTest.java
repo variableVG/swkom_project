@@ -3,7 +3,6 @@ package at.fhtw.swen3.persistence.repositories;
 import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entity.HopEntity;
 import at.fhtw.swen3.persistence.entity.WarehouseNextHopsEntity;
-import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ class WarehouseNextHopsRepositoryTest {
         GeoCoordinateEntity newGeoCoordinateEntity = geoCoordinateRepository.save(geoCoordinate);
 
         HopEntity hop = new HopEntity();
-        hop.setCode("VIGG59"); hop.setDescription("Description of Hop");
+        hop.setCode("ABCD12"); hop.setDescription("Description of Hop");
         hop.setProcessingDelayMins(3); hop.setLocationName("Vienna");
         hop.setLocationCoordinates(newGeoCoordinateEntity); hop.setHopType("V");
 

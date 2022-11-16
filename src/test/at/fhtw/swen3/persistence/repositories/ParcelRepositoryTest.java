@@ -21,7 +21,6 @@ class ParcelRepositoryTest {
     ParcelRepository repo;
     @Autowired
     RecipientRepository recipientRepository;
-
     ParcelEntity parcel;
 
     @BeforeEach
@@ -44,7 +43,6 @@ class ParcelRepositoryTest {
                 .build();
 
     }
-
     @Test
     void saveTest_checkIdIsNotNull() {
         System.out.println("Setting parcel with weight" + parcel.getWeight());

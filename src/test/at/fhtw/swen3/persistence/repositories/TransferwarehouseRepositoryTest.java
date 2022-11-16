@@ -23,7 +23,6 @@ class TransferwarehouseRepositoryTest {
 
     @Autowired
     WarehouseNextHopsRepository warehouseNextHopsRepository;
-
     TransferwarehouseEntity transferwarehouseEntity;
 
     @Test
