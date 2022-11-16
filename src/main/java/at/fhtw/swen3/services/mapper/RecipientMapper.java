@@ -12,12 +12,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper
-// @Slf4j // @lombok.extern.slf4j.Slf4j is legal only on classes and enums
 public interface RecipientMapper {
-    org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RecipientMapper.class);
     RecipientMapper INSTANCE = Mappers.getMapper(RecipientMapper.class);
 
-    // log.info("RecipientMapper between RecipientEntity and Recipient");
     @Mapping(source= "country", target="country")
     @Mapping(source= "city", target="city")
     @Mapping(source= "postalCode", target="postalCode")

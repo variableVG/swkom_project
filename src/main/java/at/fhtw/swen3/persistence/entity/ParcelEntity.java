@@ -100,30 +100,6 @@ public class ParcelEntity {
     private StateEnum state;
 
 
-
-    @Schema(name = "trackingId", example = "PYJRB4HZ6", description = "The tracking ID of the parcel. ", required = false)
-    public String getTrackingId() {
-        return trackingId;
-    }
-
-    public void setTrackingId(String trackingId) {
-        this.trackingId = trackingId;
-    }
-
-    @NotNull @Valid
-    @Schema(name = "sender", required = true)
-    public RecipientEntity getSender() {
-        return sender;
-    }
-
-    public void setSender(RecipientEntity sender) {
-        this.sender = sender;
-    }
-
-    public void setState(ParcelEntity.StateEnum state) {
-        this.state = state;
-    }
-
     public List<HopArrivalEntity> visitedHops(List<HopArrivalEntity> visitedHops) {
         this.visitedHops = visitedHops;
         return this.visitedHops;
@@ -138,15 +114,6 @@ public class ParcelEntity {
      * Hops visited in the past.
      * @return visitedHops
      */
-    @NotNull @Valid
-    @Schema(name = "visitedHops", description = "Hops visited in the past.", required = true)
-    public List<HopArrivalEntity> getVisitedHops() {
-        return visitedHops;
-    }
-
-    public void setVisitedHops(List<HopArrivalEntity> visitedHops) {
-        this.visitedHops = visitedHops;
-    }
 
     public ParcelEntity futureHops(List<HopArrivalEntity> futureHops) {
         this.futureHops = futureHops;
@@ -168,40 +135,10 @@ public class ParcelEntity {
         return futureHops;
     }
 
-    public void setFutureHops(List<HopArrivalEntity> futureHops) {
-        this.futureHops = futureHops;
-    }
-
-
 
     @Override
     public int hashCode() {
         return Objects.hash(trackingId);
     }
-
-    @NotNull
-    @Schema(name = "weight", required = true)
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
-    }
-
-    @NotNull @Valid
-    @Schema(name = "recipient", required = true)
-    public RecipientEntity getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(RecipientEntity recipient) {
-        this.recipient = recipient;
-    }
-
-
-
-
-
 
 }
