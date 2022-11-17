@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @SpringBootConfiguration
 @EnableJpaRepositories
-@ComponentScan(basePackages = {"org.openapitools", "at.fhtw.swen3.services" , "at.fhtw.swen3.configuration"})
+@ComponentScan(basePackages = {"org.openapitools", "at.fhtw.swen3.services", "at.fhtw.swen3.controller" , "at.fhtw.swen3.configuration"})
 @EntityScan(basePackages = {"at.fhtw.swen3.persistence" })
 @Slf4j
 public class OpenApiGeneratorApplication {
