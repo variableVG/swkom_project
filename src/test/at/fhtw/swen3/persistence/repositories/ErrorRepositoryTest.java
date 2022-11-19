@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
@@ -17,10 +18,13 @@ class ErrorRepositoryTest {
 
     ErrorEntity errorEntity;
 
+
     @BeforeEach
     void setUp() {
+
         errorEntity = ErrorEntity.builder()
-                .errorMessage("This is a message").build();
+                .errorMessage("This is a message 3").build();
+
     }
 
     @Test
@@ -29,5 +33,15 @@ class ErrorRepositoryTest {
         ErrorEntity errorEntityTest = repo.save(errorEntity);
         assertEquals(errorEntity.getErrorMessage(), errorEntityTest.getErrorMessage());
     }
+
+    /*
+    @Test
+
+    void findById() {
+        var actualError = repo.findById(errorEntity.getId());
+        assertEquals(errorEntity, actualError);
+    }
+
+     */
 
 }

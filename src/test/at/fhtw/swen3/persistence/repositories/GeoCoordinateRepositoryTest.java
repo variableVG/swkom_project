@@ -16,6 +16,8 @@ class GeoCoordinateRepositoryTest {
 
     GeoCoordinateEntity geoCoordinateEntity;
 
+
+
     @BeforeEach
     void setUp() {
         geoCoordinateEntity = GeoCoordinateEntity.builder()
@@ -29,5 +31,12 @@ class GeoCoordinateRepositoryTest {
         assertNotNull(geoCoordinateEntityTest.getId());
 
     }
+    /*
+    @Test
+    void findById() {
+        var actualGeoCoordinate = repo.findById(geoCoordinateEntity.getId());
+        assertEquals(geoCoordinateEntity, actualError);
+    }
 
+*/
 }
