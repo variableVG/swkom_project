@@ -1,6 +1,4 @@
-package at.fhtw.swen3.persistence.entity;
-import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
-import at.fhtw.swen3.services.dto.GeoCoordinate;
+package at.fhtw.swen3.persistence.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;

@@ -1,7 +1,7 @@
 package at.fhtw.swen3.services.mapper;
 
 
-import at.fhtw.swen3.persistence.entity.GeoCoordinateEntity;
+import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
