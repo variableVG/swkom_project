@@ -6,7 +6,7 @@ services:
 
     # The syntax is [port we want on our machine]:[port we want to retrieve in the container]
     ports:
-      - 5432:5432
+      - "5432:5432"
 
     environment:
       POSTGRES_USER: postgres
