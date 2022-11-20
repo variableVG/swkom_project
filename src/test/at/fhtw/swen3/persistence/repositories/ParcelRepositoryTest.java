@@ -43,9 +43,7 @@ class ParcelRepositoryTest {
     }
     @Test
     void saveTest_checkIdIsNotNull() {
-        System.out.println("Setting parcel with weight" + parcel.getWeight());
         ParcelEntity parcelTest = repo.save(parcel);
-        System.out.println("Parcel test has id " + parcelTest.getId());
         assertNotNull(parcelTest.getId());
     }
 
