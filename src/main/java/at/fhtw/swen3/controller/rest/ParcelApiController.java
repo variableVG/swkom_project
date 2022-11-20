@@ -86,8 +86,8 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
-        NewParcelInfo newParcelInfo = parcelImpl.submitParcel(parcel);
-        return new ResponseEntity<NewParcelInfo>(newParcelInfo, HttpStatus.CREATED);
+        //NewParcelInfo newParcelInfo = parcelImpl.submitParcel(parcel);
+        return new ResponseEntity<NewParcelInfo>(HttpStatus.CREATED);
 
     }
 
@@ -169,9 +169,9 @@ public class ParcelApiController implements ParcelApi {
             @Valid @RequestBody Parcel parcel
     ) {
         //TODO
-        NewParcelInfo newParcelInfo = new NewParcelInfo();
-        newParcelInfo.setTrackingId("VYORB4HZ6");
-        return new ResponseEntity<NewParcelInfo>(newParcelInfo, HttpStatus.OK);
+        //NewParcelInfo newParcelInfo = new NewParcelInfo();
+        //newParcelInfo.setTrackingId("VYORB4HZ6");
+        return new ResponseEntity<NewParcelInfo>(HttpStatus.OK);
 
     }
 
