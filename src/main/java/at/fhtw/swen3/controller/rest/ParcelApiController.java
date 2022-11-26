@@ -1,12 +1,15 @@
 package at.fhtw.swen3.controller.rest;
 
 
+import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.persistence.repositories.RecipientRepository;
 import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.controller.ParcelApi;
 import at.fhtw.swen3.services.dto.TrackingInformation;
+import at.fhtw.swen3.services.mapper.ParcelMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,6 +39,8 @@ public class ParcelApiController implements ParcelApi {
 
     @Autowired
     private ParcelService parcelImpl;
+    @Autowired
+    public RecipientRepository recipientRepository;
 
     private final NativeWebRequest request;
 
@@ -86,7 +91,27 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
-        //NewParcelInfo newParcelInfo = parcelImpl.submitParcel(parcel);
+        NewParcelInfo newParcelInfo = null;
+        long recipient_id = -1;
+        long sender_id = -1;
+        try {
+            recipient_id = parcelImpl.submitRecipient(parcel.getRecipient());
+            sender_id = parcelImpl.submitRecipient(parcel.getSender());
+        } catch (Exception e) {
+            log.error("The address of sender or receiver was not found: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        try {
+            ParcelEntity parcelEntity = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
+            parcelEntity.getRecipient().setId(recipient_id);
+            parcelEntity.getSender().setId(sender_id);
+            newParcelInfo = parcelImpl.submitParcel(parcelEntity);
+        } catch (Exception e) {
+            log.error("The operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        // Status for codes: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html
         return new ResponseEntity<NewParcelInfo>(HttpStatus.CREATED);
 
     }
