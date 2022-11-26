@@ -16,7 +16,7 @@ public class GeoCoordinateMapperTest {
     GeoCoordinate geoCoordinateDto;
     @BeforeEach
     void setUp(){
-        geoCoordinateDto = new GeoCoordinate();
+        geoCoordinateDto = GeoCoordinate.builder().lat(0.1).lon(0.2).build();
         geoCoordinateDto.setLat(80.2334);
         geoCoordinateDto.setLon(-109.234);
         geoCoordinateEntity = new GeoCoordinateEntity();

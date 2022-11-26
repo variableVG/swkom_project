@@ -2,6 +2,7 @@ package at.fhtw.swen3.persistence.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 import javax.persistence.*;
@@ -16,39 +17,49 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-//@Inheritance(strategy=InheritanceType.SINGLE_TABLE) //this solves the issue of not being able to create a warehouse table, but adds a "dtype" column to differentiate between the classes
-//@DiscriminatorValue("hop") //this is needed because of @Inheritance, we can differentiate with this value, which class enters data in the table. May be added/changed for inheriting classes later.
+@AllArgsConstructor
+@NoArgsConstructor
+@Inheritance(strategy=InheritanceType.JOINED) //this solves the issue of not being able to create a warehouse table, but adds a "dtype" column to differentiate between the classes
+@DiscriminatorValue("hop") //this is needed because of @Inheritance, we can differentiate with this value, which class enters data in the table. May be added/changed for inheriting classes later.
 // see: https://vladmihalcea.com/the-best-way-to-map-the-discriminatorcolumn-with-jpa-and-hibernate/
 @Table(name="Hop")
-
 public class HopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    protected Long id;
 
     @JsonProperty("hopType")
-    private String hopType;
+    protected String hopType;
 
     @JsonProperty("code")
-    private String code;
+    protected String code;
 
     @Pattern(regexp = "[a-zA-ZÄÖÜäöüß0-9- ]+", message = "Warehouse-description must have only upper, lowercase letters, Numbers and -")
     @NotNull(message = "Warehouse-description cannot be null")
     @NotBlank(message = "Warehouse-description cannot be blank")
     @JsonProperty("description")
-    private String description;
+    protected String description;
 
     @JsonProperty("processingDelayMins")
-    private Integer processingDelayMins;
+    protected Integer processingDelayMins;
 
     @JsonProperty("locationName")
-    private String locationName;
+    protected String locationName;
 
     @JsonProperty("locationCoordinates")
     @ManyToOne
-    private GeoCoordinateEntity locationCoordinates;
+    protected GeoCoordinateEntity locationCoordinates;
 
+
+    public HopEntity(String code, String hopType, String description, Integer processingDelayMins, String locationName, GeoCoordinateEntity locationCoordinates) {
+        this.code = code;
+        this.hopType = hopType;
+        this.description = description;
+        this.processingDelayMins = processingDelayMins;
+        this.locationName = locationName;
+        this.locationCoordinates = locationCoordinates;
+    }
 
 
     public Long getId() {

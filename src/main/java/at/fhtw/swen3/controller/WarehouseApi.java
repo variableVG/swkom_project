@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -78,6 +79,26 @@ public interface WarehouseApi {
 
     }
 
+    @Operation(
+            operationId = "importWarehouses",
+            summary = "Imports a hierarchy of Warehouse and Truck objects. ",
+            tags = { "warehouse-management" },
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Successfully loaded."),
+                    @ApiResponse(responseCode = "400", description = "The operation failed due to an error.", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+                    })
+            }
+    )
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/warehouse",
+            produces = { "application/json" },
+            consumes = { "application/json" }
+    )
+    ResponseEntity<Void> importWarehouses(
+            @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
+    );
 
     /**
      * GET /warehouse/{code} : Get a certain warehouse or truck by code
@@ -123,35 +144,5 @@ public interface WarehouseApi {
     }
 
 
-    /**
-     * POST /warehouse : Imports a hierarchy of Warehouse and Truck objects. 
-     *
-     * @param warehouse  (required)
-     * @return Successfully loaded. (status code 200)
-     *         or The operation failed due to an error. (status code 400)
-     */
-    @Operation(
-        operationId = "importWarehouses",
-        summary = "Imports a hierarchy of Warehouse and Truck objects. ",
-        tags = { "warehouse-management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successfully loaded."),
-            @ApiResponse(responseCode = "400", description = "The operation failed due to an error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/warehouse",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> importWarehouses(
-        @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
 
 }

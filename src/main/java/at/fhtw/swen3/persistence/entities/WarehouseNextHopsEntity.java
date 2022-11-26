@@ -15,7 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-//@Table(name="WarehouseNextHops") // why is it not created/resolved? makes no sense
+@Table(name="WarehouseNextHops") // why is it not created/resolved? makes no sense
 public class WarehouseNextHopsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +25,21 @@ public class WarehouseNextHopsEntity {
     @JsonProperty("traveltimeMins")
     private Integer traveltimeMins;
 
-    @ManyToOne
-    @JoinColumn(name = "hop_id")
+    @OneToOne
+    @JoinColumn(name = "next_hop_id")
     @JsonProperty("hop")
     private HopEntity hop;
 
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "warehouse_id")
+    @JsonProperty("warehouse")
+    private HopEntity warehouse;
+
+
+    /*@ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    @JsonProperty("warehouse")
+    private WarehouseEntity warehouse;*/
 
     public Long getId() {
         return id;

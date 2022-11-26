@@ -26,7 +26,7 @@ public class HopValidationTest {
                 .lon(34.4)
                 .build();
         final HopEntity hopEntity = new HopEntity();
-        hopEntity.setId(Long.valueOf(12));
+        hopEntity.setId(12L);
         hopEntity.setCode("ABCD12");
         hopEntity.setHopType("type");
         hopEntity.setDescription("Warehouse 27-12");
@@ -54,7 +54,7 @@ public class HopValidationTest {
                 .lon(34.4)
                 .build();
         final HopEntity hopEntity = new HopEntity();
-        hopEntity.setId(Long.valueOf(12));
+        hopEntity.setId(12L);
         hopEntity.setCode("ABCD12");
         hopEntity.setHopType("type");
         hopEntity.setDescription("******");

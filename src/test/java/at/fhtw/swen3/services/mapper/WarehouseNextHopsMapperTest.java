@@ -18,8 +18,7 @@ public class WarehouseNextHopsMapperTest {
     @Test
     void dtoToEntityTest(){
         log.info("TEST dtoToEntityTest in WarehouseNextHopsMapperTest");
-        GeoCoordinate geoCoordinate = new GeoCoordinate();
-        geoCoordinate.setLat(0.1); geoCoordinate.setLon(0.2);
+        GeoCoordinate geoCoordinate = GeoCoordinate.builder().lat(0.1).lon(0.2).build();
         Hop hop = new Hop();
         hop.setCode("VIGG59"); hop.setDescription("Description of Hop");
         hop.setProcessingDelayMins(3); hop.setLocationName("Vienna");

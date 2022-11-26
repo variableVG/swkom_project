@@ -33,6 +33,14 @@ public class TransferwarehouseEntity extends HopEntity {
     @JsonProperty("logisticsPartnerUrl")
     private String logisticsPartnerUrl;
 
+    public TransferwarehouseEntity(String regionGeoJson, String logisticsPartner, String logisticsPartnerUrl,
+                                   String code, String hopType, String description, Integer processingDelayMins, String locationName, GeoCoordinateEntity locationCoordinates) {
+        super(code, hopType, description, processingDelayMins, locationName, locationCoordinates);
+        this.regionGeoJson = regionGeoJson;
+        this.logisticsPartner = logisticsPartner;
+        this.logisticsPartnerUrl = logisticsPartnerUrl;
+    }
+
 
     public TransferwarehouseEntity regionGeoJson(String regionGeoJson) {
         this.regionGeoJson = regionGeoJson;

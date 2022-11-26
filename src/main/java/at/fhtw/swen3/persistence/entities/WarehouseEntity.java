@@ -3,6 +3,7 @@ package at.fhtw.swen3.persistence.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -11,30 +12,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-//@DiscriminatorValue("warehouse")
-//@Table(name="Warehouse")
+@DiscriminatorValue("warehouse")
+@Table(name="Warehouse")
 public class WarehouseEntity extends HopEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
 
     @JsonProperty("level")
     private Integer level;
 
-    @OneToMany (mappedBy = "hop")
+    @OneToMany (mappedBy = "warehouse", cascade=CascadeType.PERSIST)
     @JsonProperty("nextHops")
     @Valid
     @NotNull
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
+
+    @Builder
+    public WarehouseEntity( List<WarehouseNextHopsEntity> nextHops, Integer level,
+            String code, String hopType, String description, Integer processingDelayMins, String locationName, GeoCoordinateEntity locationCoordinates ) {
+        super(code, hopType, description, processingDelayMins, locationName, locationCoordinates);
+        this.nextHops = nextHops;
+        this.level = level;
+    }
+
 
     public WarehouseEntity level(Integer level) {
         this.level = level;
