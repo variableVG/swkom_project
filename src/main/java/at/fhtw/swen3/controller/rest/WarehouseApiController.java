@@ -2,6 +2,7 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.WarehouseApi;
+import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.dto.Error;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,8 @@ import javax.validation.Valid;
 public class WarehouseApiController implements WarehouseApi {
 
     private final NativeWebRequest request;
+    @Autowired
+    WarehouseService warehouseService;
 
     @Autowired
     public WarehouseApiController(NativeWebRequest request) {
@@ -77,8 +80,7 @@ public class WarehouseApiController implements WarehouseApi {
     ) {
 
         //TODO
-        GeoCoordinate geoCoordinate = new GeoCoordinate();
-        geoCoordinate.setLat(0.1); geoCoordinate.setLon(0.2);
+        GeoCoordinate geoCoordinate = GeoCoordinate.builder().lat(0.1).lon(0.2).build();
         Hop hop = new Hop();
         hop.setCode("VIGG59"); hop.setDescription("Description of Hop");
         hop.setProcessingDelayMins(3); hop.setLocationName("Vienna");
@@ -111,7 +113,7 @@ public class WarehouseApiController implements WarehouseApi {
             summary = "Imports a hierarchy of Warehouse and Truck objects. ",
             tags = { "warehouse-management" },
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Successfully loaded."),
+                    @ApiResponse(responseCode = "201", description = "Successfully loaded."),
                     @ApiResponse(responseCode = "400", description = "The operation failed due to an error.", content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
                     })
@@ -127,8 +129,21 @@ public class WarehouseApiController implements WarehouseApi {
     public ResponseEntity<Void> importWarehouses(
             @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
     ) {
-        //TODO
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        System.out.println("Got Warehouse");
+
+        System.out.println("Warehouse Code" + warehouse.getCode());
+        System.out.println("Warehouse Level" + warehouse.getLevel());
+        System.out.println("Warehouse Hops-size" + warehouse.getNextHops().size());
+        System.out.println("Warehouse Hop - code" + warehouse.getNextHops().get(0).getHop().getCode());
+
+        try {
+            warehouseService.importWarehouses(warehouse);
+        } catch (Exception e) {
+            log.error("Failed to store Warehouse: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        // Status for codes: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
 
@@ -165,7 +180,7 @@ public class WarehouseApiController implements WarehouseApi {
             @Parameter(name = "code", description = "", required = true) @PathVariable("code") String code
     ) {
         //TODO
-        GeoCoordinate geoCoordinate = new GeoCoordinate();
+        GeoCoordinate geoCoordinate = GeoCoordinate.builder().lat(0.1).lon(0.2).build();
         geoCoordinate.setLat(0.1); geoCoordinate.setLon(0.2);
         Hop hop = new Hop();
         hop.setCode("VIGG59"); hop.setDescription("Description of Hop");

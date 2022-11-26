@@ -28,6 +28,13 @@ public class TruckEntity extends HopEntity {
     @JsonProperty("numberPlate")
     private String numberPlate;
 
+    public TruckEntity(String regionGeoJson, String numberPlate,
+                       String code, String hopType, String description, Integer processingDelayMins, String locationName, GeoCoordinateEntity locationCoordinates) {
+        super(code, hopType, description, processingDelayMins, locationName, locationCoordinates);
+        this.regionGeoJson = regionGeoJson;
+        this.numberPlate = numberPlate;
+    }
+
 
     public TruckEntity regionGeoJson(String regionGeoJson) {
         this.regionGeoJson = regionGeoJson;

@@ -2,11 +2,14 @@ package at.fhtw.swen3.persistence.repositories;
 
 import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.HopEntity;
+import at.fhtw.swen3.persistence.entities.WarehouseEntity;
 import at.fhtw.swen3.persistence.entities.WarehouseNextHopsEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -37,6 +40,13 @@ class WarehouseNextHopsRepositoryTest {
         HopEntity newHop = hopRepository.save(hop);
 
         warehouseNextHops = WarehouseNextHopsEntity.builder().hop(newHop).traveltimeMins(34).build();
+
+        //warehouseNextHops needs to have a warehouse or hop too
+        GeoCoordinateEntity geoCoordinate2 = GeoCoordinateEntity.builder().lat(20.5).lon(16.9).build();
+        GeoCoordinateEntity newGeoCoordinateEntity2 = geoCoordinateRepository.save(geoCoordinate2);
+        WarehouseEntity warehouseEntity = WarehouseEntity.builder().level(2).nextHops(new ArrayList<>()).build()
+                .code("ABCD13").description("Description of Hop2").processingDelayMins(0).hopType("N").locationName("Vienna").locationCoordinates(newGeoCoordinateEntity2);
+        warehouseNextHops.setWarehouse(warehouseEntity);
 
     }
 
