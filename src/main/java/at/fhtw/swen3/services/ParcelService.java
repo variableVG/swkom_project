@@ -1,11 +1,14 @@
 package at.fhtw.swen3.services;
 
+import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
-import org.springframework.stereotype.Service;
+import at.fhtw.swen3.services.dto.Recipient;
 
 
 public interface ParcelService {
 
-    public NewParcelInfo submitParcel(Parcel parcel);
+    public NewParcelInfo submitParcel(ParcelEntity parcel) throws Exception;
+
+    public long submitRecipient(Recipient recipient) throws Exception;
 }

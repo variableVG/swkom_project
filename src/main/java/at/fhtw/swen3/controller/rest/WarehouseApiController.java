@@ -129,12 +129,6 @@ public class WarehouseApiController implements WarehouseApi {
     public ResponseEntity<Void> importWarehouses(
             @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
     ) {
-        System.out.println("Got Warehouse");
-
-        System.out.println("Warehouse Code" + warehouse.getCode());
-        System.out.println("Warehouse Level" + warehouse.getLevel());
-        System.out.println("Warehouse Hops-size" + warehouse.getNextHops().size());
-        System.out.println("Warehouse Hop - code" + warehouse.getNextHops().get(0).getHop().getCode());
 
         try {
             warehouseService.importWarehouses(warehouse);
