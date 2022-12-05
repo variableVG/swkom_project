@@ -2,6 +2,7 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.WarehouseApi;
+import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.dto.Error;
@@ -132,7 +133,7 @@ public class WarehouseApiController implements WarehouseApi {
 
         try {
             warehouseService.importWarehouses(warehouse);
-        } catch (Exception e) {
+        } catch (BLException e) {
             log.error("Failed to store Warehouse: "  + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

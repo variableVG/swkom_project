@@ -1,19 +1,32 @@
 package at.fhtw.swen3.services;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import at.fhtw.swen3.persistence.entities.ErrorEntity;
+import lombok.Getter;
 
-@ControllerAdvice
-public class BLException extends ResponseEntityExceptionHandler {
+@Getter
+public class BLException extends Exception {
+    
+    private Exception innerException;
+
+    private ErrorEntity errorEntity;
+
+
+    
+    public BLException(long errorId, String errorMsg, Exception e) {
+        this.innerException = e; 
+        this.errorEntity = ErrorEntity.builder().errorMessage(errorMsg).id(errorId).build();
+
+    }
+
+    @Override
+    public String getMessage() {
+        return errorEntity.getErrorMessage();
+    }
+
 
     //taken from https://www.baeldung.com/exception-handling-for-rest-with-spring
 
-    @ExceptionHandler(value
+    /*@ExceptionHandler(value
             = { IllegalArgumentException.class, IllegalStateException.class })
     protected ResponseEntity<Object> handleConflict(
             RuntimeException ex, WebRequest request) {
@@ -21,4 +34,6 @@ public class BLException extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
+*/
+
 }
