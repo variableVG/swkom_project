@@ -44,7 +44,6 @@ public class ParcelApiController implements ParcelApi {
 
     private final NativeWebRequest request;
 
-    
     @Autowired
     public ParcelApiController(NativeWebRequest request) {
         this.request = request;
