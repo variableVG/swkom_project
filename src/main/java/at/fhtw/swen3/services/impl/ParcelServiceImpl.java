@@ -90,18 +90,39 @@ public class ParcelServiceImpl implements ParcelService {
         log.info("TrackingId of the new parcel" + parcelEntity.getTrackingId());
         return newParcelInfo;
     }
+    /*
+    public NewParcelInfo getTrackingIdFromDB(){
+
+    }
+
+     */
+    @Override
+    public NewParcelInfo transferParcel(ParcelEntity parcel) throws Exception{
+        // ParcelRepository.findById(long id);
+
+
+        return null;
+    }
 
     @Override
     public long submitRecipient(Recipient recipient) throws Exception {
         RecipientEntity recipientEntity = RecipientMapper.INSTANCE.dtoToEntity(recipient);
         try {
             RecipientEntity savedRecipient = recipientRepository.save(recipientEntity);
+            log.info("Recipient with id " + savedRecipient.getId()+ "saved");
             return savedRecipient.getId();
 
         }  catch (Exception e){
             log.error("class submitRecipient, submitRecipient {}" ,e.getMessage());
             throw new Exception("The address of sender or receiver was not found.");
         }
+
+    }
+    @Override
+    public void deleteParcel(long id) throws Exception{
+        // delete parcel from the DB using parcelRepository
+        // ParcelRepository.deleteById(id);
+        log.info("Parcel with id" + id + "deleted");
 
     }
 

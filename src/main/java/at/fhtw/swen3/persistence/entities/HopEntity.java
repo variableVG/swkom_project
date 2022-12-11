@@ -13,7 +13,6 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 
-
 @Getter
 @Setter
 @Entity
