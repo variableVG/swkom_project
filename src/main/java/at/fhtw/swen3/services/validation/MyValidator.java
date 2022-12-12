@@ -15,10 +15,11 @@ public class MyValidator {
     }
 
     Validator getValidator() {
+
         return getValidatorFactory().getValidator();
     }
 
-    <T> void validate(T o) {
+    public <T> void validate(T o) {
         Validator validator = getValidator();
         Set<ConstraintViolation<T>> violations = validator.validate(o);
         violations.forEach(v -> log.error(v.getMessage()));

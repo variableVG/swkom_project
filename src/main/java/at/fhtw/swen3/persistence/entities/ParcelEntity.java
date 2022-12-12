@@ -43,7 +43,6 @@ public class ParcelEntity {
     private String trackingId;
 
     @OneToMany(mappedBy = "parcel")
-    //@JoinColumn(name="id")
     @JsonProperty("visitedHops")
     @Valid
     private List<HopArrivalEntity> visitedHops;

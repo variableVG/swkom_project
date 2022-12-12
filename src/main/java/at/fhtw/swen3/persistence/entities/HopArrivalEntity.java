@@ -33,7 +33,8 @@ public class HopArrivalEntity {
   @Column(name = "id", nullable = false)
   private Long id;
 
-  @NotNull @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$")
+  @NotNull
+  @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$", message="The code must only consist of four capital letters and any number of digits between (1 - 4)")
   @JsonProperty("code")
   private String code;
 

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-import lombok.Data;
 
 
 import javax.annotation.Generated;
@@ -28,7 +27,7 @@ public class GeoCoordinate {
   private Double lon;
 
 
-    public GeoCoordinate lat(Double lat) {
+  public GeoCoordinate lat(Double lat) {
     this.lat = lat;
     return this;
   }

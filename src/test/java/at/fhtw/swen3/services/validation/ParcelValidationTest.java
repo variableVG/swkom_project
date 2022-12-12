@@ -1,4 +1,4 @@
-package at.fhtw.swen3.persistence;
+package at.fhtw.swen3.services.validation;
 
 import at.fhtw.swen3.persistence.entities.HopArrivalEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;

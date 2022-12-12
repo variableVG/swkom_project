@@ -70,7 +70,8 @@ public class Hop {
    * Unique CODE of the hop.
    * @return code
   */
-  @NotNull @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$") 
+  @NotNull
+  @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$")
   @Schema(name = "code", description = "Unique CODE of the hop.", required = true)
   public String getCode() {
     return code;

@@ -1,13 +1,11 @@
 package at.fhtw.swen3.services.impl;
 
-import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
-import at.fhtw.swen3.persistence.entities.HopEntity;
-import at.fhtw.swen3.persistence.entities.WarehouseEntity;
-import at.fhtw.swen3.persistence.entities.WarehouseNextHopsEntity;
+import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.persistence.repositories.GeoCoordinateRepository;
 import at.fhtw.swen3.persistence.repositories.HopRepository;
 import at.fhtw.swen3.persistence.repositories.WarehouseNextHopsRepository;
 import at.fhtw.swen3.persistence.repositories.WarehouseRepository;
+import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.Warehouse;
 import at.fhtw.swen3.services.mapper.GeoCoordinateMapper;
@@ -17,8 +15,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Slf4j
@@ -52,7 +56,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public void importWarehouses(Warehouse warehouse) throws Exception {
+    public void importWarehouses(Warehouse warehouse) throws BLException {
         //Map dto to Entity
         WarehouseEntity warehouseEntity = WarehouseMapper.INSTANCE.dtoToEntity(warehouse);
 
@@ -66,6 +70,15 @@ public class WarehouseServiceImpl implements WarehouseService {
         warehouseEntity.setLocationCoordinates(GeoCoordinateMapper.INSTANCE.dtoToEntity((warehouse.getLocationCoordinates())));
 
         warehouseEntity = setCorrectHopTypes(warehouseEntity);
+
+        // TODO Validation
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<WarehouseEntity>> violations = validator.validate(warehouseEntity);
+        if (!violations.isEmpty()) {
+            //log.error();
+            throw new BLException(1L, violations.stream().map( Object::toString ).collect( Collectors.joining("\n")), null);
+        }
 
         //Save Warehouse
         try {
@@ -89,7 +102,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         } catch (Exception e){
             // https://www.javacodegeeks.com/10-best-practices-to-handle-java-exceptions.html
-            throw new Exception("Failed to store Warehouse: ", e);
+            //TODO Log
+            throw new BLException(2L, "Failed to store warehouse", e);
         }
     }
 }
