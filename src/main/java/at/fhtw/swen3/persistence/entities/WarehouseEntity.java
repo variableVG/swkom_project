@@ -7,7 +7,9 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +33,15 @@ public class WarehouseEntity extends HopEntity {
     @NotNull
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
 
+    //standard constructor for superclass type casting
+    public WarehouseEntity(Long id, String hopType, String code, @Pattern(regexp = "[a-zA-ZÄÖÜäöüß0-9- ]+",
+            message = "Warehouse-description must have only upper, lowercase letters, Numbers and -")
+    @NotNull(message = "Warehouse-description cannot be null") @NotBlank(message = "Warehouse-description cannot be blank") String description,
+                           Integer processingDelayMins, String locationName, GeoCoordinateEntity locationCoordinates, Integer level, List<WarehouseNextHopsEntity> nextHops) {
+        super(id, hopType, code, description, processingDelayMins, locationName, locationCoordinates);
+        this.level = level;
+        this.nextHops = nextHops;
+    }
 
     public WarehouseEntity level(Integer level) {
         this.level = level;

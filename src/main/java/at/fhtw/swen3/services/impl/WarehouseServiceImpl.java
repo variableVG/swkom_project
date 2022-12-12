@@ -80,6 +80,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     public HopEntity saveHop(HopEntity hop) throws BLException {
         System.out.println("Saving Hop Entity of type " + hop.getHopType());
+
         if (hop.getHopType().toLowerCase().equals("truck")) {
             System.out.println("Casting into TruckEntity");
             TruckEntity truck = (TruckEntity) hop;
@@ -90,7 +91,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         else if (hop.getHopType().toLowerCase().equals("warehouse")) {
             System.out.println("Casting into WarehouseEntity");
-            WarehouseEntity warehouse = (WarehouseEntity) hop;
+            WarehouseEntity warehouse = hop.toWarehouse();
             System.out.println("Warehouse code is " + warehouse.getCode());
             WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
             System.out.println("Warehouse successfully saved");

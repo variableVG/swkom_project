@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -221,4 +223,12 @@ public class HopEntity {
         }
         return o.toString().replace("\n", "\n    ");
     }
+
+    //MANUAL CASTING - really not fun, but it gets the job done.
+    public WarehouseEntity toWarehouse() {
+        List<WarehouseNextHopsEntity> tmpWarehouseNextHopsEntity = new ArrayList<>();
+        WarehouseEntity tmp = new WarehouseEntity(this.id, this.hopType, this.code, this.description, this.processingDelayMins, this.locationName, this.locationCoordinates, 0, tmpWarehouseNextHopsEntity);
+        return tmp;
+    }
+
 }
