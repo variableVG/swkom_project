@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
-class ParcelImplTest {
+class ParcelServiceImplTest {
 
     @Autowired
     private ParcelServiceImpl parcelImpl;
