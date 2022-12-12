@@ -2,10 +2,12 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.WarehouseApi;
+import at.fhtw.swen3.persistence.entities.WarehouseEntity;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.dto.Error;
+import at.fhtw.swen3.services.mapper.WarehouseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -132,7 +134,8 @@ public class WarehouseApiController implements WarehouseApi {
     ) {
 
         try {
-            warehouseService.importWarehouses(warehouse);
+            WarehouseEntity warehouseEntity = WarehouseMapper.INSTANCE.dtoToEntity(warehouse);
+            warehouseService.importWarehouses(warehouseEntity);
         } catch (BLException e) {
             log.error("Failed to store Warehouse: "  + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

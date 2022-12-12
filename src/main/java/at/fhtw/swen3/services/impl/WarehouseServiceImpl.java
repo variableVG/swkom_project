@@ -1,13 +1,10 @@
 package at.fhtw.swen3.services.impl;
 
 import at.fhtw.swen3.persistence.entities.*;
-import at.fhtw.swen3.persistence.repositories.GeoCoordinateRepository;
-import at.fhtw.swen3.persistence.repositories.HopRepository;
-import at.fhtw.swen3.persistence.repositories.WarehouseNextHopsRepository;
-import at.fhtw.swen3.persistence.repositories.WarehouseRepository;
+import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
-import at.fhtw.swen3.services.dto.Warehouse;
+import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.mapper.GeoCoordinateMapper;
 import at.fhtw.swen3.services.mapper.WarehouseMapper;
 import at.fhtw.swen3.services.validation.MyValidator;
@@ -21,6 +18,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,75 +33,98 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Autowired
     private HopRepository hopRepository;
     @Autowired
+    private TruckRepository truckRepository;
+    @Autowired
     private GeoCoordinateRepository geoCoordinateRepository;
     private MyValidator myValidator;
 
-    private WarehouseEntity setCorrectHopTypes(WarehouseEntity warehouse) {
-        warehouse.setHopType("warehouse");
-        ArrayList<String> allowedTypes = new ArrayList<String>(){{
-            add("hop");
-            add("transferwarehouse");
-            add("truck");
-            add("warehouse");
-        }};
-        for(WarehouseNextHopsEntity nextHop : warehouse.getNextHops()) {
-            String nextHopType = nextHop.getHop().getHopType();
-            if(!allowedTypes.contains(nextHopType)) {
-                nextHop.getHop().setHopType("hop");
-            }
+    private void resetDB() {
+        warehouseNextHopsRepository.deleteAll();
+        warehouseRepository.deleteAll();
+        hopRepository.deleteAll();
+        geoCoordinateRepository.deleteAll();
+    }
+
+    private WarehouseEntity saveWarehouse(WarehouseEntity warehouse) throws BLException {
+        //Validation:
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<WarehouseEntity>> violations = validator.validate(warehouse);
+        if (!violations.isEmpty()) {
+            System.out.println("VALIDATIONS IS NOT EMPTY");
+            //TODO: Log error for validation
+            throw new BLException(1L, violations.stream().map(Objects::toString).collect(Collectors.joining("\n")), null);
         }
-        return warehouse;
+
+        //Iterate through the list of WarehouseNextHops and store the elements.
+        for (WarehouseNextHopsEntity nextHop: warehouse.getNextHops()) {
+            HopEntity savedHop = saveHop(nextHop.getHop());
+            nextHop.getHop().setId(savedHop.getId());
+            nextHop.setWarehouse(warehouse);
+        }
+
+        //Store coordinates from warehouse
+        GeoCoordinateEntity savedCoordinates = geoCoordinateRepository.save(warehouse.getLocationCoordinates());
+        warehouse.getLocationCoordinates().setId(savedCoordinates.getId());
+
+        WarehouseEntity savedWarehouse = warehouseRepository.save(warehouse);
+        return  savedWarehouse;
+    }
+
+    private TruckEntity saveTruck(TruckEntity truck) {
+        GeoCoordinateEntity savedGeoCoordinates = geoCoordinateRepository.save(truck.getLocationCoordinates());
+        truck.getLocationCoordinates().setId(savedGeoCoordinates.getId());
+        TruckEntity savedTruck = truckRepository.save(truck);
+        return savedTruck;
+    }
+
+    public HopEntity saveHop(HopEntity hop) throws BLException {
+        System.out.println("Saving Hop Entity of type " + hop.getHopType());
+        if (hop.getHopType().toLowerCase().equals("truck")) {
+            System.out.println("Casting into TruckEntity");
+            TruckEntity truck = (TruckEntity) hop;
+            System.out.println("Truck code is " + truck.getCode());
+            TruckEntity savedTruck = saveTruck(truck);
+            System.out.println("Truck successfully saved");
+            return savedTruck;
+        }
+        else if (hop.getHopType().toLowerCase().equals("warehouse")) {
+            System.out.println("Casting into WarehouseEntity");
+            WarehouseEntity warehouse = (WarehouseEntity) hop;
+            System.out.println("Warehouse code is " + warehouse.getCode());
+            WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
+            System.out.println("Warehouse successfully saved");
+
+            return savedWarehouse;
+        }
+        else if (hop.getHopType().toLowerCase().equals("transferwarehouse")) {
+            //TODO: Store transferwarehouse
+        }
+        else {
+            //TODO: Store hop with no HopType (no child Hop)
+        }
+        return null;
     }
 
     @Override
-    public void importWarehouses(Warehouse warehouse) throws BLException {
-        //Map dto to Entity
-        WarehouseEntity warehouseEntity = WarehouseMapper.INSTANCE.dtoToEntity(warehouse);
+    public void importWarehouses(WarehouseEntity warehouse) throws BLException {
 
-        //TODO Fix Map error
-        // Map did not work properly for the attributes that warehouse inherits from HopEntity
-        warehouseEntity.setCode(warehouse.getCode());
-        warehouseEntity.setDescription(warehouse.getDescription());
-        warehouseEntity.setHopType(warehouse.getHopType());
-        warehouseEntity.setLocationName(warehouse.getLocationName());
-        warehouseEntity.setProcessingDelayMins(warehouse.getProcessingDelayMins());
-        warehouseEntity.setLocationCoordinates(GeoCoordinateMapper.INSTANCE.dtoToEntity((warehouse.getLocationCoordinates())));
-
-        warehouseEntity = setCorrectHopTypes(warehouseEntity);
-
-        // TODO Validation
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<WarehouseEntity>> violations = validator.validate(warehouseEntity);
-        if (!violations.isEmpty()) {
-            //log.error();
-            throw new BLException(1L, violations.stream().map( Object::toString ).collect( Collectors.joining("\n")), null);
+        try{
+            resetDB();
+        }
+        catch (Exception e) {
+            log.error("Failed to reset Database: " + e.getMessage());
+            throw new BLException(3L, "Failed to reset Database: ",  e);
         }
 
-        //Save Warehouse
-        try {
-            //first store each of the hops with their entities in the list warehouseNextHops
-            for(WarehouseNextHopsEntity nextHop : warehouseEntity.getNextHops()) {
-                GeoCoordinateEntity newGeoCoordinateEntity = geoCoordinateRepository.save(nextHop.getHop().getLocationCoordinates());
-                nextHop.getHop().setLocationCoordinates(newGeoCoordinateEntity);
 
-                HopEntity newHopEntity = hopRepository.save(nextHop.getHop());
-                nextHop.setHop(newHopEntity);
-
-                //We also need to assign a warehouse to the warehouseNextHops
-                nextHop.setWarehouse(warehouseEntity);
-            }
-
-            // Store coordinates from warehouse itself (inherits from HopEntity)
-            GeoCoordinateEntity newGeoCoordinateEntity = geoCoordinateRepository.save(warehouseEntity.getLocationCoordinates());
-            warehouseEntity.setLocationCoordinates(newGeoCoordinateEntity);
-
-            WarehouseEntity newWarehouseEntity = warehouseRepository.save(warehouseEntity);
-
-        } catch (Exception e){
-            // https://www.javacodegeeks.com/10-best-practices-to-handle-java-exceptions.html
-            //TODO Log
-            throw new BLException(2L, "Failed to store warehouse", e);
+        try{
+            WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
         }
+        catch (Exception e) {
+            log.error("Failed to import Warehouses: " + e.getMessage());
+            throw new BLException(2L, "Failed to import Warehouses: ",  e);
+        }
+
     }
 }
