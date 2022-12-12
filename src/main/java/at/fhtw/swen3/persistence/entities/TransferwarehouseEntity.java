@@ -4,12 +4,13 @@ package at.fhtw.swen3.persistence.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -32,15 +33,6 @@ public class TransferwarehouseEntity extends HopEntity {
 
     @JsonProperty("logisticsPartnerUrl")
     private String logisticsPartnerUrl;
-
-    public TransferwarehouseEntity(String regionGeoJson, String logisticsPartner, String logisticsPartnerUrl,
-                                   String code, String hopType, String description, Integer processingDelayMins, String locationName, GeoCoordinateEntity locationCoordinates) {
-        super(code, hopType, description, processingDelayMins, locationName, locationCoordinates);
-        this.regionGeoJson = regionGeoJson;
-        this.logisticsPartner = logisticsPartner;
-        this.logisticsPartnerUrl = logisticsPartnerUrl;
-    }
-
 
     public TransferwarehouseEntity regionGeoJson(String regionGeoJson) {
         this.regionGeoJson = regionGeoJson;

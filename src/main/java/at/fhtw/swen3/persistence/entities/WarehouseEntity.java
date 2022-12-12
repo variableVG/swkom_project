@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,14 +30,6 @@ public class WarehouseEntity extends HopEntity {
     @Valid
     @NotNull
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
-
-    @Builder
-    public WarehouseEntity( List<WarehouseNextHopsEntity> nextHops, Integer level,
-            String code, String hopType, String description, Integer processingDelayMins, String locationName, GeoCoordinateEntity locationCoordinates ) {
-        super(code, hopType, description, processingDelayMins, locationName, locationCoordinates);
-        this.nextHops = nextHops;
-        this.level = level;
-    }
 
 
     public WarehouseEntity level(Integer level) {
