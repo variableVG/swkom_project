@@ -91,7 +91,8 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         else if (hop.getHopType().toLowerCase().equals("warehouse")) {
             System.out.println("Casting into WarehouseEntity");
-            WarehouseEntity warehouse = hop.toWarehouse();
+            //WarehouseEntity warehouse = hop.toWarehouse();
+            WarehouseEntity warehouse = (WarehouseEntity) hop;
             System.out.println("Warehouse code is " + warehouse.getCode());
             WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
             System.out.println("Warehouse successfully saved");
@@ -121,6 +122,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         try{
             WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
+
         }
         catch (Exception e) {
             log.error("Failed to import Warehouses: " + e.getMessage());
