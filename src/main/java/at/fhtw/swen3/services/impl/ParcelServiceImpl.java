@@ -4,10 +4,8 @@ import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import at.fhtw.swen3.persistence.repositories.ParcelRepository;
 import at.fhtw.swen3.persistence.repositories.RecipientRepository;
-import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
-import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
 import at.fhtw.swen3.services.mapper.RecipientMapper;
@@ -17,10 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Slf4j
 @AllArgsConstructor
@@ -36,13 +36,21 @@ public class ParcelServiceImpl implements ParcelService {
 
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
-        //Map parcel to Entity
-        //ParcelEntity parcelEntity = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
-        // myValidator.validate(parcelEntity);
+        // 1. Validate parcel data
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
 
-        //generate TrackingId:
+        Set<ConstraintViolation<ParcelEntity>> violations = validator.validate(parcelEntity);
+
+        for (ConstraintViolation<ParcelEntity> violation : violations)
+        {
+            log.error(violation.getMessage());
+        }
+
+        //2. Create new unique Tracking ID
         String trackingId = RandomStringUtils.randomAlphabetic(9);
         parcelEntity.setTrackingId(trackingId.toUpperCase());
+
         parcelEntity.setState(ParcelEntity.StateEnum.PICKUP);
         parcelEntity.setFutureHops(new ArrayList<>());
         parcelEntity.setVisitedHops(new ArrayList<>());
@@ -77,16 +85,7 @@ public class ParcelServiceImpl implements ParcelService {
 
         //return what the API wants for us
         NewParcelInfo newParcelInfo = ParcelMapper.INSTANCE.parcelEntityToNewParcelInfoDto(newParcelEntity);
-        /*
-        // TODO Validation
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<ParcelEntity>> violations = validator.validate(parcelEntity);
-        if (!violations.isEmpty()) {
-            //log.error();
-            throw new BLException(1L, violations.stream().map( Object::toString ).collect( Collectors.joining("\n")), null);
-        }
-        */
+
         log.info("TrackingId of the new parcel" + parcelEntity.getTrackingId());
         return newParcelInfo;
     }
