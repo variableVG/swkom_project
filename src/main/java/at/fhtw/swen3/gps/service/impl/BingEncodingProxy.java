@@ -33,7 +33,8 @@ public class BingEncodingProxy implements GeoEncodingService {
 
         try {
             log.debug("Class BingEncodingProxy, encodeAddress() - Send request for coordinates.");
-            System.out.println("Inside first try");
+            log.info("Inside first try");
+            // System.out.println("Inside first try");
             httpRequest = HttpRequest.newBuilder().uri(new URI(uri.toString())).build();
         }
         catch(Exception e) {
@@ -49,10 +50,12 @@ public class BingEncodingProxy implements GeoEncodingService {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Response is");
-        System.out.println(response);
-        System.out.println("Directions response is ");
-        System.out.println(response.body());
+        log.info("Response is " + response);
+        // System.out.println("Response is");
+        // System.out.println(response);
+        log.info("Directions response is " + response.body());
+        // System.out.println("Directions response is ");
+        // System.out.println(response.body());
 
         //TODO Parse response and assig to coordinates
 
