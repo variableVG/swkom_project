@@ -29,8 +29,10 @@ public class ParcelServiceImpl implements ParcelService {
     @Autowired
     private final ParcelRepository repo;
 
+
     @Autowired
     public RecipientRepository recipientRepository;
+
     private MyValidator myValidator;
 
 
@@ -89,12 +91,7 @@ public class ParcelServiceImpl implements ParcelService {
         log.info("TrackingId of the new parcel" + parcelEntity.getTrackingId());
         return newParcelInfo;
     }
-    /*
-    public NewParcelInfo getTrackingIdFromDB(){
 
-    }
-
-     */
     @Override
     public NewParcelInfo transferParcel(ParcelEntity parcel) throws Exception{
         // ParcelRepository.findById(long id);
@@ -117,11 +114,13 @@ public class ParcelServiceImpl implements ParcelService {
         }
 
     }
+
     @Override
-    public void deleteParcel(long id) throws Exception{
-        // delete parcel from the DB using parcelRepository
-        // ParcelRepository.deleteById(id);
-        log.info("Parcel with id" + id + "deleted");
+     public void reportParcelDelivery(ParcelEntity parcelEntity)  {
+
+        parcelEntity.setState(ParcelEntity.StateEnum.DELIVERED);
+        repo.save(parcelEntity);
+        log.info("The state of parcel has been changed to Delivered");
 
     }
 
