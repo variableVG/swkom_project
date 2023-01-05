@@ -24,6 +24,7 @@ public class TruckEntity extends HopEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     @JsonProperty("regionGeoJson")
+    @Column(columnDefinition="text")
     private String regionGeoJson;
 
     @JsonProperty("numberPlate")

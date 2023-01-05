@@ -26,6 +26,7 @@ public class TransferwarehouseEntity extends HopEntity {
     private Long id;
 
     @JsonProperty("regionGeoJson")
+    @Column(columnDefinition="text")
     private String regionGeoJson;
 
     @JsonProperty("logisticsPartner")

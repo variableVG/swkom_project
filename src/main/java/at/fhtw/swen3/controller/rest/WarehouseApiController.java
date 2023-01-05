@@ -198,8 +198,11 @@ public class WarehouseApiController implements WarehouseApi {
             if(w.getHop() instanceof  Warehouse) {
                 checkWhatIsInWarehouse((Warehouse) w.getHop());
             }
+            else if (w.getHop() instanceof Truck) {
+                System.out.println("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Truck");
+            }
             else if (w.getHop() instanceof Hop) {
-                System.out.println("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a HopEntity");
+                System.out.println("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Hop");
             }
         }
     }

@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper
+@Mapper(uses = HopMapper.class)
 public interface WarehouseNextHopsMapper {
     WarehouseNextHopsMapper INSTANCE = Mappers.getMapper(WarehouseNextHopsMapper.class);
 

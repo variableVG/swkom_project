@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper
+@Mapper(uses = {GeoCoordinateMapper.class})
 public interface TruckMapper {
     TruckMapper INSTANCE = Mappers.getMapper(TruckMapper.class);
 
