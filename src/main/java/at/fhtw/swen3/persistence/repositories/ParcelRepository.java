@@ -1,17 +1,12 @@
 package at.fhtw.swen3.persistence.repositories;
 
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
-import at.fhtw.swen3.persistence.entities.WarehouseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 
 public interface ParcelRepository extends JpaRepository<ParcelEntity, Long> {
-    ParcelEntity findById(long id);
-    ParcelEntity save(ParcelEntity parcelEntity);
-
-     ParcelEntity deleteById(long id);
 
     //
 
@@ -20,6 +15,6 @@ public interface ParcelRepository extends JpaRepository<ParcelEntity, Long> {
      * */
 
 
-    //ParcelEntity save(ParcelEntity parcel);
+    //ParcelEntity save(ParcelEntity parcel); JpaRepository's extensions allow us to use all the functions it contains without having to rewrite them here
 
 }
