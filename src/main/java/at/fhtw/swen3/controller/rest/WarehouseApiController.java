@@ -2,10 +2,13 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.WarehouseApi;
+import at.fhtw.swen3.persistence.entities.WarehouseEntity;
+import at.fhtw.swen3.persistence.entities.WarehouseNextHopsEntity;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.dto.Error;
+import at.fhtw.swen3.services.mapper.WarehouseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -130,9 +133,10 @@ public class WarehouseApiController implements WarehouseApi {
     public ResponseEntity<Void> importWarehouses(
             @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
     ) {
-
+       checkWhatIsInWarehouse(warehouse);
         try {
-            warehouseService.importWarehouses(warehouse);
+            WarehouseEntity warehouseEntity = WarehouseMapper.INSTANCE.dtoToEntity(warehouse);
+            warehouseService.importWarehouses(warehouseEntity);
         } catch (BLException e) {
             log.error("Failed to store Warehouse: "  + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -185,6 +189,22 @@ public class WarehouseApiController implements WarehouseApi {
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         return new ResponseEntity<Hop>(hop, HttpStatus.OK);
 
+    }
+
+    public void checkWhatIsInWarehouse(Warehouse warehouse) {
+        System.out.println("Checking what is in the warehouse " + warehouse.getCode());
+        for (WarehouseNextHops w : warehouse.getNextHops()) {
+            System.out.println("WarehouseNexthops contains a Hop of Type " + w.getHop().getHopType());
+            if(w.getHop() instanceof  Warehouse) {
+                checkWhatIsInWarehouse((Warehouse) w.getHop());
+            }
+            else if (w.getHop() instanceof Truck) {
+                System.out.println("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Truck");
+            }
+            else if (w.getHop() instanceof Hop) {
+                System.out.println("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Hop");
+            }
+        }
     }
 
 

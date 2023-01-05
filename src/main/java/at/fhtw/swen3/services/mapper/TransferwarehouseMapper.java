@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper
+@Mapper(uses = {GeoCoordinateMapper.class})
 public interface TransferwarehouseMapper {
     TransferwarehouseMapper INSTANCE = Mappers.getMapper(TransferwarehouseMapper.class);
     @Mapping(source= "logisticsPartnerUrl", target="logisticsPartnerUrl")
