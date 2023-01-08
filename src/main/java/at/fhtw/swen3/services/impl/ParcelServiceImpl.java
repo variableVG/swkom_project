@@ -50,15 +50,24 @@ public class ParcelServiceImpl implements ParcelService {
         }
 
         //2. Create new unique Tracking ID
+        //TODO: Make sure trakcing ID is unique
         String trackingId = RandomStringUtils.randomAlphabetic(9);
         parcelEntity.setTrackingId(trackingId.toUpperCase());
 
-        parcelEntity.setState(ParcelEntity.StateEnum.PICKUP);
+
+        // 3.Get GPS coordinates for package sender/recipient
+
+
+        // 4. Predict Future Hops (route btw sender --> recipient)
         parcelEntity.setFutureHops(new ArrayList<>());
         parcelEntity.setVisitedHops(new ArrayList<>());
 
+        // 5. Set parcel state to PickUP
+        parcelEntity.setState(ParcelEntity.StateEnum.PICKUP);
 
-        //Save parcel in DB (repository function gives back a new object of the same class)
+
+
+        //6. Save parcel in DB (repository function gives back a new object of the same class)
         ParcelEntity newParcelEntity = null;
         try {
             if (parcelEntity.getRecipient().getId() == null) {
