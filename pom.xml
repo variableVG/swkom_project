@@ -14,8 +14,8 @@
     <name>swkom_project</name>
     <description>swkom_project</description>
     <properties>
-        <java.version>11</java.version>
-        <repackage.classifier/>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <spring-native.version>0.12.1</spring-native.version>
         <springdoc.version>1.6.8</springdoc.version>
         <swagger-ui.version>4.10.3</swagger-ui.version>
