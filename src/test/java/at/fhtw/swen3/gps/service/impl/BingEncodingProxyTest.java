@@ -19,13 +19,15 @@ class BingEncodingProxyTest {
     void encodeAddress() {
         geoEncodingService = new BingEncodingProxy();
 
-        RecipientEntity recipient = RecipientEntity.builder().name("Violeta").street("16%20Lambrechtgasse")
-                .postalCode("A-1040").city("Vienna").country("Austria").build();
+        RecipientEntity recipient = RecipientEntity.builder().name("Violeta").street("Pfeilgasse")
+                .postalCode("A-1080").city("Vienna").country("Austria").build();
 
         // I already looked for those coordinates:
-        GeoCoordinateEntity coordinates = GeoCoordinateEntity.builder().lat(48.1910153).lon(16.3640983).build();
+        GeoCoordinateEntity coordinates = GeoCoordinateEntity.builder().lat(48.2082221).lon(16.3478833).build();
 
         GeoCoordinateEntity coordinatesTest = geoEncodingService.encodeAddress(recipient);
+        System.out.println("Lat " + coordinatesTest.getLat());
+        System.out.println("Lon " + coordinatesTest.getLon());
         assertNotNull(coordinatesTest);
         assertEquals(coordinatesTest.getLat(), coordinates.getLat());
         assertEquals(coordinatesTest.getLon(), coordinates.getLon());
