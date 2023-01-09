@@ -4,6 +4,6 @@ import at.fhtw.swen3.persistence.entities.TransferwarehouseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TransferwarehouseRepository extends JpaRepository<TransferwarehouseEntity, Long> {
-    TransferwarehouseEntity findById(long id);
+
 
 }

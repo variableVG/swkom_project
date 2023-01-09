@@ -86,7 +86,7 @@ public class ParcelApiController implements ParcelApi {
             consumes = { "application/json" }
     )
     @Override
-    //@Autowired //Autowired might be needed to create inyection.
+    //@Autowired //Autowired might be needed to create injection.
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
@@ -103,6 +103,7 @@ public class ParcelApiController implements ParcelApi {
 
         try {
             ParcelEntity parcelEntity = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
+            System.out.println("ParcelEntity has been mapped, weight is " + parcelEntity.getWeight());
             parcelEntity.getRecipient().setId(recipient_id);
             parcelEntity.getSender().setId(sender_id);
             newParcelInfo = parcelImpl.submitParcel(parcelEntity);
@@ -111,7 +112,7 @@ public class ParcelApiController implements ParcelApi {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         // Status for codes: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html
-        return new ResponseEntity<NewParcelInfo>(HttpStatus.CREATED);
+        return new ResponseEntity<NewParcelInfo>(newParcelInfo, HttpStatus.CREATED);
 
     }
 
@@ -264,10 +265,13 @@ public class ParcelApiController implements ParcelApi {
     )
     @Override
     public ResponseEntity<Void> reportParcelDelivery(
-            @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId
+            @Pattern(regexp = "^[A-Z0-9]{9}$")
+            @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true)
+            @PathVariable("trackingId") String trackingId
     ) {
 
-        //TODO
+        //TODO reportParcelDelivery
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

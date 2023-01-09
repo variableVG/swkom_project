@@ -2,7 +2,6 @@ package at.fhtw.swen3.services;
 
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
-import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.Recipient;
 
 
@@ -14,7 +13,8 @@ public interface ParcelService {
 
     public long submitRecipient(Recipient recipient) throws Exception;
 
-    public void deleteParcel(long id) throws Exception;
+
+    public void reportParcelDelivery(ParcelEntity parcel);
 
 
 }
