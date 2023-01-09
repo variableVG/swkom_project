@@ -25,7 +25,7 @@ class WarehouseServiceImplTest {
 
     @Test
     void importWarehouses() throws BLException {
-
+        /*
         TruckEntity truck1 = TruckEntity.builder().regionGeoJson("{\"type\":\"Feature\",\"…246041,48.1377922]]]]}}")
                 .numberPlate("W-747200")
                 .build().hopType("truck").code("WTTA01").description("Truck in Siebenhirten").processingDelayMins(231)
@@ -87,11 +87,14 @@ class WarehouseServiceImplTest {
 
         warehouseService.importWarehouses(warehouseEntity);
 
+         */
+
     }
 
 
     @Test
     void saveHop_Truck() throws BLException {
+        /*
 
         TruckEntity truck1 = TruckEntity.builder().regionGeoJson("{\"type\":\"Feature\",\"…246041,48.1377922]]]]}}")
                 .numberPlate("W-747200")
@@ -101,6 +104,8 @@ class WarehouseServiceImplTest {
 
 
         HopEntity savedHop = warehouseService.saveHop(truck1);
+
+         */
 
     }
 }

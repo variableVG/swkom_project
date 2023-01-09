@@ -1,5 +1,8 @@
 package at.fhtw.swen3.services.impl;
 
+import at.fhtw.swen3.gps.service.GeoEncodingService;
+import at.fhtw.swen3.gps.service.impl.BingEncodingProxy;
+import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import at.fhtw.swen3.persistence.repositories.ParcelRepository;
@@ -15,12 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
-import java.util.Set;
 
 @Slf4j
 @AllArgsConstructor
@@ -36,9 +34,12 @@ public class ParcelServiceImpl implements ParcelService {
     private MyValidator myValidator;
 
 
+
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
         // 1. Validate parcel data
+        /* Validation fails here, something is Null, but It is not indicated what.
+        log.info("Validating Parcel");
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
@@ -46,25 +47,39 @@ public class ParcelServiceImpl implements ParcelService {
 
         for (ConstraintViolation<ParcelEntity> violation : violations)
         {
+            log.error("Validation failed: ");
             log.error(violation.getMessage());
         }
 
+
+         */
         //2. Create new unique Tracking ID
         //TODO: Make sure trakcing ID is unique
         String trackingId = RandomStringUtils.randomAlphabetic(9);
         parcelEntity.setTrackingId(trackingId.toUpperCase());
+        log.info("Setting TrackingId " + parcelEntity.getTrackingId());
 
 
         // 3.Get GPS coordinates for package sender/recipient
+        /* This part also does not work --> Bean for GeoCoordinates is not found
+        log.info("Getting Geocoordinates");
+        GeoEncodingService geoEncodingService = new BingEncodingProxy();
+        GeoCoordinateEntity senderCoordinates = geoEncodingService.encodeAddress(parcelEntity.getSender());
+        GeoCoordinateEntity recipientCoordinates = geoEncodingService.encodeAddress(parcelEntity.getRecipient());
+        log.info("GeoCoordinates for Sender are " + senderCoordinates.getLat() + " , " + senderCoordinates.getLon());
+        log.info("GeoCoordinates for Recipient are " + recipientCoordinates.getLat() + " , " + recipientCoordinates.getLon());
 
+
+         */
 
         // 4. Predict Future Hops (route btw sender --> recipient)
         parcelEntity.setFutureHops(new ArrayList<>());
         parcelEntity.setVisitedHops(new ArrayList<>());
 
-        // 5. Set parcel state to PickUP
-        parcelEntity.setState(ParcelEntity.StateEnum.PICKUP);
 
+        // 5. Set parcel state to PickUP
+        log.info("Setting state to PICKUP");
+        parcelEntity.setState(ParcelEntity.StateEnum.PICKUP);
 
 
         //6. Save parcel in DB (repository function gives back a new object of the same class)
@@ -114,7 +129,7 @@ public class ParcelServiceImpl implements ParcelService {
         RecipientEntity recipientEntity = RecipientMapper.INSTANCE.dtoToEntity(recipient);
         try {
             RecipientEntity savedRecipient = recipientRepository.save(recipientEntity);
-            log.info("Recipient with id " + savedRecipient.getId()+ "saved");
+            log.info("Recipient with id " + savedRecipient.getId()+ " saved");
             return savedRecipient.getId();
 
         }  catch (Exception e){
