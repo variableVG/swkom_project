@@ -150,9 +150,16 @@ public class ParcelApiController implements ParcelApi {
             @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true)
             @PathVariable("trackingId") String trackingId
     ) {
-        //TODO
+        //1. Check that trackingId exists:
 
-        return new ResponseEntity<TrackingInformation>( HttpStatus.OK);
+        TrackingInformation trackingInformation;
+        try {
+            trackingInformation = parcelImpl.trackParcel(trackingId);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<TrackingInformation>(trackingInformation, HttpStatus.OK);
     }
 
 

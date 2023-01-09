@@ -10,6 +10,7 @@ import at.fhtw.swen3.persistence.repositories.RecipientRepository;
 import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Recipient;
+import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
 import at.fhtw.swen3.services.mapper.RecipientMapper;
 import at.fhtw.swen3.services.validation.MyValidator;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.sound.midi.Track;
 import java.util.ArrayList;
 
 @Slf4j
@@ -150,6 +152,15 @@ public class ParcelServiceImpl implements ParcelService {
         repo.save(parcelEntity);
         log.info("The state of parcel has been changed to Delivered");
 
+    }
+
+    @Override
+    public TrackingInformation trackParcel(String trackingId) {
+        ParcelEntity parcelEntity = repo.findDistinctFirstByTrackingId(trackingId);
+
+        //return what the API wants for us
+        TrackingInformation trackingInformation = ParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
+        return trackingInformation;
     }
 
 

@@ -2,7 +2,9 @@ package at.fhtw.swen3.services;
 
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
+import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.Recipient;
+import at.fhtw.swen3.services.dto.TrackingInformation;
 
 
 public interface ParcelService {
@@ -17,4 +19,5 @@ public interface ParcelService {
     public void reportParcelDelivery(ParcelEntity parcel);
 
 
+    public TrackingInformation trackParcel(String trackingId);
 }
