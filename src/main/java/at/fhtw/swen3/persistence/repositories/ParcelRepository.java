@@ -17,4 +17,5 @@ public interface ParcelRepository extends JpaRepository<ParcelEntity, Long> {
 
     //ParcelEntity save(ParcelEntity parcel); JpaRepository's extensions allow us to use all the functions it contains without having to rewrite them here
 
+    public ParcelEntity findDistinctFirstByTrackingId(String trackingId);
 }
