@@ -42,9 +42,12 @@ public class WarehouseServiceImpl implements WarehouseService {
     private MyValidator myValidator;
 
     private void resetDB() {
+
         warehouseNextHopsRepository.deleteAll();
         warehouseRepository.deleteAll();
         hopRepository.deleteAll();
+        truckRepository.deleteAll();
+        transferwarehouseRepository.deleteAll();
         geoCoordinateRepository.deleteAll();
     }
 
