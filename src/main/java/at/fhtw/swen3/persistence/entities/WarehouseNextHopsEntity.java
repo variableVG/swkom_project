@@ -28,12 +28,12 @@ public class WarehouseNextHopsEntity {
     @OneToOne
     @JoinColumn(name = "next_hop_id")
     @JsonProperty("hop")
-    private HopEntity hop;
+    private HopEntity hop; // nextHop
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
     @JoinColumn(name = "warehouse_id")
     @JsonProperty("warehouse")
-    private HopEntity warehouse;
+    private HopEntity warehouse; // parent hop
 
 
     /*@ManyToOne

@@ -278,7 +278,19 @@ public class ParcelApiController implements ParcelApi {
     ) {
 
         //TODO reportParcelDelivery
+        //Get ParcelEntity
+        try {
 
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        try {
+
+
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

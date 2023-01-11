@@ -2,6 +2,7 @@ package at.fhtw.swen3.persistence.repositories;
 
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface ParcelRepository extends JpaRepository<ParcelEntity, Long> {
     //ParcelEntity save(ParcelEntity parcel); JpaRepository's extensions allow us to use all the functions it contains without having to rewrite them here
 
     public ParcelEntity findDistinctFirstByTrackingId(String trackingId);
+
 }

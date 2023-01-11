@@ -5,9 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.Polygon;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @SuperBuilder
@@ -34,6 +40,11 @@ public class TransferwarehouseEntity extends HopEntity {
 
     @JsonProperty("logisticsPartnerUrl")
     private String logisticsPartnerUrl;
+
+    @JsonProperty("regionGeo")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "regionGeo", nullable = false)
+    private Polygon regionGeo;
 
     public TransferwarehouseEntity regionGeoJson(String regionGeoJson) {
         this.regionGeoJson = regionGeoJson;
@@ -164,4 +175,7 @@ public class TransferwarehouseEntity extends HopEntity {
         }
         return o.toString().replace("\n", "\n    ");
     }
+
+
+
 }

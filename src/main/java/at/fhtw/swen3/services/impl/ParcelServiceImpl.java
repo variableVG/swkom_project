@@ -55,6 +55,8 @@ public class ParcelServiceImpl implements ParcelService {
 
 
          */
+
+
         //2. Create new unique Tracking ID
         //TODO: Make sure trakcing ID is unique
         String trackingId = RandomStringUtils.randomAlphabetic(9);
@@ -63,18 +65,12 @@ public class ParcelServiceImpl implements ParcelService {
 
 
         // 3.Get GPS coordinates for package sender/recipient
-        /* This part also does not work --> Bean for GeoCoordinates is not found
         log.info("Getting Geocoordinates");
         GeoEncodingService geoEncodingService = new BingEncodingProxy();
         GeoCoordinateEntity senderCoordinates = geoEncodingService.encodeAddress(parcelEntity.getSender());
         GeoCoordinateEntity recipientCoordinates = geoEncodingService.encodeAddress(parcelEntity.getRecipient());
         log.info("GeoCoordinates for Sender are " + senderCoordinates.getLat() + " , " + senderCoordinates.getLon());
         log.info("GeoCoordinates for Recipient are " + recipientCoordinates.getLat() + " , " + recipientCoordinates.getLon());
-
-
-         */
-
-
 
 
 
