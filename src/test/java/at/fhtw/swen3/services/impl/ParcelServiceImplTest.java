@@ -1,5 +1,6 @@
 package at.fhtw.swen3.services.impl;
 
+import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
@@ -60,6 +61,10 @@ class ParcelServiceImplTest {
 
     @Test
     void predictFutureHops() {
+
+        GeoCoordinateEntity sender = GeoCoordinateEntity.builder().lat(48.1898128).lon(16.3656104).build();
+        GeoCoordinateEntity recipient = GeoCoordinateEntity.builder().lat(48.233571).lon(16.388961).build();
+        parcelImpl.predictFutureHops(sender, recipient);
 
     }
 

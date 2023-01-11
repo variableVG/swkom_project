@@ -3,15 +3,9 @@ package at.fhtw.swen3.services.impl;
 import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.gps.service.impl.BingEncodingProxy;
 import at.fhtw.swen3.persistence.entities.*;
-import at.fhtw.swen3.persistence.repositories.HopRepository;
-import at.fhtw.swen3.persistence.repositories.ParcelRepository;
-import at.fhtw.swen3.persistence.repositories.RecipientRepository;
-import at.fhtw.swen3.persistence.repositories.TruckRepository;
+import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.ParcelService;
-import at.fhtw.swen3.services.dto.Hop;
-import at.fhtw.swen3.services.dto.NewParcelInfo;
-import at.fhtw.swen3.services.dto.Recipient;
-import at.fhtw.swen3.services.dto.TrackingInformation;
+import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
 import at.fhtw.swen3.services.mapper.RecipientMapper;
 import at.fhtw.swen3.services.validation.MyValidator;
@@ -26,9 +20,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -42,30 +34,78 @@ public class ParcelServiceImpl implements ParcelService {
     public HopRepository hopRepository;
     @Autowired
     public TruckRepository truckRepository;
+    @Autowired
+    public TransferwarehouseRepository transferwarehouseRepository;
+
 
     private MyValidator myValidator;
     private GeoEncodingService geoEncodingService;
 
     public HopEntity findNearestHop (Double lat, Double lon) {
-        /** This function returns the nearest Transferwarehouse or Truck to a coordinate */
+        /** This function returns the nearest Hop to a coordinate */
 
-        Integer hop = truckRepository.findNearestTruck(lat, lon);
-        System.out.println("Hop size is " + hop);
-
-        return null;
+        HopEntity hop= hopRepository.findNearestHop(lat, lon);
+        return hop;
     }
 
+    private HopArrivalEntity generateHopArrivalFromHop(HopEntity hop) {
+        return HopArrivalEntity.builder().code(hop.getCode()).description(hop.getDescription()).build();
+    }
 
-    public List<HopArrivalEntity> predictFutureHops(Point senderCoordinate, Point recipientCoordinate) {
+    List<HopArrivalEntity> getPathToTruck(HopEntity start, HopEntity end) {
+        List<HopArrivalEntity> answer = new ArrayList<>();
+        List<HopEntity> hops = hopRepository.getNextHops(start.getId());
+        if(hops.isEmpty()) { return answer; }
+        System.out.println("NEXT HOPS HAS SIZE " + hops.size());
+        for(HopEntity h : hops) {
+            answer.add(generateHopArrivalFromHop(h));
+            if (Objects.equals(h.getId(), end.getId())) {
+                System.out.println("FOUND IT");
+                return answer;
+            }
+            else {
+                System.out.println("Calling recursion");
+                List<HopArrivalEntity> a = getPathToTruck(h, end);
+                if (a != null) {
+                    answer.addAll(a);
+                    return answer;
+                }
+            }
+        }
+        return null;
+    }
+    public List<HopArrivalEntity> predictFutureHops(GeoCoordinateEntity senderCoordinate, GeoCoordinateEntity recipientCoordinate) {
         List<HopArrivalEntity> futureHops = new ArrayList<>();
 
-        // 1. Fin nearest truck to sender
-
-
-
-        // 2. Find warehouse to that truck
+        // 1. Find the nearest hop to sender and recipient
+        HopEntity nearestHopToSender = findNearestHop(senderCoordinate.getLat(), senderCoordinate.getLon());
+        futureHops.add(generateHopArrivalFromHop(nearestHopToSender));
+        System.out.println("Id for nearestSenderHop is " + nearestHopToSender.getId() + " with code " + nearestHopToSender.getCode());
+        HopEntity nearestHopToRecipient = findNearestHop(recipientCoordinate.getLat(), recipientCoordinate.getLon());
+        System.out.println("Id for RecipientHop is " + nearestHopToSender.getId() + " with code " + nearestHopToRecipient.getCode());
 
         // 3. Get path to the top warehouse
+        /** We go up in the pyramid/tree until the root, for that we need to find the previous hop.
+         * We do that looking in the warehouse_next_hops table, where the next_hop_id is now the current hop-id
+         * and the warehouse_id the previous hop-id, since we try to climb up the tree.
+         * */
+        HopEntity previousHop = nearestHopToRecipient;
+        while(!previousHop.getLocationName().equalsIgnoreCase("Root")) {
+            Long id = previousHop.getId();
+            previousHop = hopRepository.getPreviousHops(id);
+            futureHops.add(generateHopArrivalFromHop(previousHop));
+        }
+        //Now go down until reaching the truck corresponding to the nearestHopToRecipient
+        futureHops.addAll(getPathToTruck(previousHop, nearestHopToRecipient));
+
+
+        System.out.println("Previous Hpps size is " + futureHops.size());
+        for(HopArrivalEntity h : futureHops) {
+            System.out.println(h.toString());
+        }
+
+
+
 
         // 4. Go down to truck for the recipient
 
