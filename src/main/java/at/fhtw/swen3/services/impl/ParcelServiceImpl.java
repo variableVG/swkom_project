@@ -2,12 +2,13 @@ package at.fhtw.swen3.services.impl;
 
 import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.gps.service.impl.BingEncodingProxy;
-import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
-import at.fhtw.swen3.persistence.entities.ParcelEntity;
-import at.fhtw.swen3.persistence.entities.RecipientEntity;
+import at.fhtw.swen3.persistence.entities.*;
+import at.fhtw.swen3.persistence.repositories.HopRepository;
 import at.fhtw.swen3.persistence.repositories.ParcelRepository;
 import at.fhtw.swen3.persistence.repositories.RecipientRepository;
+import at.fhtw.swen3.persistence.repositories.TruckRepository;
 import at.fhtw.swen3.services.ParcelService;
+import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.dto.TrackingInformation;
@@ -18,9 +19,16 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
 
 import javax.sound.midi.Track;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @AllArgsConstructor
@@ -28,19 +36,46 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Autowired
     private final ParcelRepository repo;
-
-
     @Autowired
     public RecipientRepository recipientRepository;
+    @Autowired
+    public HopRepository hopRepository;
+    @Autowired
+    public TruckRepository truckRepository;
 
     private MyValidator myValidator;
+    private GeoEncodingService geoEncodingService;
+
+    public HopEntity findNearestHop (Double lat, Double lon) {
+        /** This function returns the nearest Transferwarehouse or Truck to a coordinate */
+
+        Integer hop = truckRepository.findNearestTruck(lat, lon);
+        System.out.println("Hop size is " + hop);
+
+        return null;
+    }
 
 
+    public List<HopArrivalEntity> predictFutureHops(Point senderCoordinate, Point recipientCoordinate) {
+        List<HopArrivalEntity> futureHops = new ArrayList<>();
+
+        // 1. Fin nearest truck to sender
+
+
+
+        // 2. Find warehouse to that truck
+
+        // 3. Get path to the top warehouse
+
+        // 4. Go down to truck for the recipient
+
+        return futureHops;
+    }
 
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
         // 1. Validate parcel data
-        /* Validation fails here, something is Null, but It is not indicated what.
+
         log.info("Validating Parcel");
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -54,8 +89,6 @@ public class ParcelServiceImpl implements ParcelService {
         }
 
 
-         */
-
 
         //2. Create new unique Tracking ID
         //TODO: Make sure trakcing ID is unique
@@ -66,12 +99,11 @@ public class ParcelServiceImpl implements ParcelService {
 
         // 3.Get GPS coordinates for package sender/recipient
         log.info("Getting Geocoordinates");
-        GeoEncodingService geoEncodingService = new BingEncodingProxy();
         GeoCoordinateEntity senderCoordinates = geoEncodingService.encodeAddress(parcelEntity.getSender());
         GeoCoordinateEntity recipientCoordinates = geoEncodingService.encodeAddress(parcelEntity.getRecipient());
+        recipientCoordinates.setCoordinates(); senderCoordinates.setCoordinates();
         log.info("GeoCoordinates for Sender are " + senderCoordinates.getLat() + " , " + senderCoordinates.getLon());
         log.info("GeoCoordinates for Recipient are " + recipientCoordinates.getLat() + " , " + recipientCoordinates.getLon());
-
 
 
         // 4. Predict Future Hops (route btw sender --> recipient)

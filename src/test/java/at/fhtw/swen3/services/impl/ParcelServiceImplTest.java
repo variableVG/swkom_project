@@ -1,5 +1,6 @@
 package at.fhtw.swen3.services.impl;
 
+import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
@@ -57,4 +58,14 @@ class ParcelServiceImplTest {
 
     }
 
+    @Test
+    void predictFutureHops() {
+
+    }
+
+    @Test
+    void findNearestHop() {
+        HopEntity hop = parcelImpl.findNearestHop(48.1898128, 16.3656104);
+        System.out.println("Hop is " + hop.getId());
+    }
 }
