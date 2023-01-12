@@ -21,4 +21,6 @@ public interface ParcelService {
     public TrackingInformation trackParcel(String trackingId);
 
     public boolean checkIfParcelExists(String trackingId);
+
+    public void reportParcelHop(String trackingId, String code);
 }

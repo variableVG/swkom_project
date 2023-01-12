@@ -237,7 +237,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
      public void reportParcelDelivery(ParcelEntity parcelEntity)  {
-        myValidator.validate(parcelEntity);
+
         parcelEntity.setState(ParcelEntity.StateEnum.DELIVERED);
         parcelRepository.save(parcelEntity);
         log.info("The state of parcel has been changed to Delivered");
@@ -258,6 +258,11 @@ public class ParcelServiceImpl implements ParcelService {
         ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
         if (parcelEntity == null || trackingId == null) { return false; }
         return true;
+    }
+
+    @Override
+    public void reportParcelHop(String trackingId, String code) {
+        
     }
 
 
