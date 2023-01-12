@@ -205,10 +205,32 @@ public class ParcelApiController implements ParcelApi {
             @Parameter(name = "Parcel", description = "", required = true)
             @Valid @RequestBody Parcel parcel
     ) {
-        //TODO
-        //NewParcelInfo newParcelInfo = new NewParcelInfo();
-        //newParcelInfo.setTrackingId("VYORB4HZ6");
-        return new ResponseEntity<NewParcelInfo>(HttpStatus.OK);
+        NewParcelInfo newParcelInfo = null;
+        long recipient_id = -1;
+        long sender_id = -1;
+
+        // 2. Set Recipient and Sender
+        try {
+            recipient_id = parcelImpl.submitRecipient(parcel.getRecipient());
+            sender_id = parcelImpl.submitRecipient(parcel.getSender());
+        } catch (Exception e) {
+            log.error("The address of sender or receiver was not found: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // 3. Transfer parcel
+        try {
+            ParcelEntity parcelEntity = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
+            parcelEntity.getRecipient().setId(recipient_id);
+            parcelEntity.getSender().setId(sender_id);
+            parcelEntity.setTrackingId(trackingId);
+            newParcelInfo = parcelImpl.submitParcel(parcelEntity);
+        } catch (Exception e) {
+            log.error("The operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        // Status for codes: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html
+        return new ResponseEntity<NewParcelInfo>(newParcelInfo, HttpStatus.CREATED);
 
     }
 

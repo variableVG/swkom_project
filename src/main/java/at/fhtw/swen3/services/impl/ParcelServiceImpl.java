@@ -149,11 +149,12 @@ public class ParcelServiceImpl implements ParcelService {
             log.error(violation.getMessage());
         }
 
-        //2. Create new unique Tracking ID
-        //TODO: Make sure trakcing ID is unique
-        String trackingId = createUniqueTrackingId();
-        parcelEntity.setTrackingId(trackingId.toUpperCase());
-        log.info("Setting TrackingId " + parcelEntity.getTrackingId());
+        //2. Create new unique Tracking ID (if parcel does not have a trackingId or if it has one but it has been already assigned to another parcel.
+        if((parcelEntity.getTrackingId() == null) | (checkIfParcelExists(parcelEntity.getTrackingId())) ) {
+            String trackingId = createUniqueTrackingId();
+            parcelEntity.setTrackingId(trackingId.toUpperCase());
+            log.info("Setting TrackingId " + parcelEntity.getTrackingId());
+        }
 
 
         // 3.Get GPS coordinates for package sender/recipient
@@ -220,14 +221,6 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public NewParcelInfo transferParcel(ParcelEntity parcel) throws Exception{
-        // ParcelRepository.findById(long id);
-
-
-        return null;
-    }
-
-    @Override
     public long submitRecipient(Recipient recipient) throws Exception {
         RecipientEntity recipientEntity = RecipientMapper.INSTANCE.dtoToEntity(recipient);
         try {
@@ -263,7 +256,7 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     public boolean checkIfParcelExists(String trackingId) {
         ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
-        if (parcelEntity == null) { return false; }
+        if (parcelEntity == null || trackingId == null) { return false; }
         return true;
     }
 
