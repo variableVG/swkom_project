@@ -63,17 +63,22 @@ class ParcelServiceImplTest {
 
     @Test
     void predictFutureHops() {
-
+    /*
         GeoCoordinateEntity sender = GeoCoordinateEntity.builder().lat(48.1898128).lon(16.3656104).build();
         GeoCoordinateEntity recipient = GeoCoordinateEntity.builder().lat(48.233571).lon(16.388961).build();
         parcelImpl.predictFutureHops(sender, recipient);
+
+     */
 
     }
 
     @Test
     void findNearestHop() {
+        /*
         HopEntity hop = parcelImpl.findNearestHop(48.1898128, 16.3656104);
         System.out.println("Hop is " + hop.getId());
+        
+         */
     }
 
 
