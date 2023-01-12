@@ -40,6 +40,7 @@ public class ParcelEntity {
     @JsonProperty("sender")
     private RecipientEntity sender;
     @JsonProperty("trackingId")
+    @Column(unique=true)
     private String trackingId;
 
     @OneToMany(mappedBy = "parcel")

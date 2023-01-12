@@ -44,12 +44,16 @@ public class HopArrivalEntity {
 
   @JsonProperty("dateTime")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  @NotNull @Valid
+  @Valid
   private OffsetDateTime dateTime;
 
   @ManyToOne(optional = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "parcel_id", nullable = true)
   private ParcelEntity parcel; //renamed this from parcelEntity to parcel, since the script didn't detect this field.
+
+
+  @JsonProperty("visited")
+  private boolean visited;
 
 }
 

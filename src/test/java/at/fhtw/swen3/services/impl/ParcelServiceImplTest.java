@@ -22,7 +22,7 @@ class ParcelServiceImplTest {
 
     @Test
     void submitParcelTest()  {
-        /*
+
         //1) PREPARE TEST
         //Create recipient
         Recipient recipient = Recipient.builder().name("Violeta").street("Pfeilgasse")
@@ -48,8 +48,6 @@ class ParcelServiceImplTest {
         System.out.println("Generated Id is " + newparcelInfo.getTrackingId());
         assertNotNull(newparcelInfo.getTrackingId());
 
-        */
-
 
     }
 
@@ -72,5 +70,12 @@ class ParcelServiceImplTest {
     void findNearestHop() {
         HopEntity hop = parcelImpl.findNearestHop(48.1898128, 16.3656104);
         System.out.println("Hop is " + hop.getId());
+    }
+
+    @Test
+    void createUniqueTrackingId() {
+        String id = parcelImpl.createUniqueTrackingId();
+        System.out.println(id);
+
     }
 }

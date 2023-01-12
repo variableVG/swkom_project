@@ -27,7 +27,7 @@ import java.util.*;
 public class ParcelServiceImpl implements ParcelService {
 
     @Autowired
-    private final ParcelRepository repo;
+    private final ParcelRepository parcelRepository;
     @Autowired
     public RecipientRepository recipientRepository;
     @Autowired
@@ -36,6 +36,8 @@ public class ParcelServiceImpl implements ParcelService {
     public TruckRepository truckRepository;
     @Autowired
     public TransferwarehouseRepository transferwarehouseRepository;
+    @Autowired
+    public HopArrivalRepository hopArrivalRepository;
 
 
     private MyValidator myValidator;
@@ -52,8 +54,7 @@ public class ParcelServiceImpl implements ParcelService {
         return HopArrivalEntity.builder().code(hop.getCode()).description(hop.getDescription()).build();
     }
 
-
-    List<HopEntity> getPath(HopEntity start, HopEntity end) {
+    private List<HopEntity> getPath(HopEntity start, HopEntity end) {
 
         //First get path to root:
         List<HopEntity> hops = getPathToRoot(start);
@@ -65,7 +66,8 @@ public class ParcelServiceImpl implements ParcelService {
         return hops;
 
     }
-    List<HopEntity> getPathToRoot(HopEntity hop) {
+
+    private List<HopEntity> getPathToRoot(HopEntity hop) {
         List<HopEntity> path = new ArrayList<>();
         path.add(hop);
         List<HopEntity> hops = hopRepository.getPreviousHops(hop.getId());
@@ -85,7 +87,7 @@ public class ParcelServiceImpl implements ParcelService {
         return null;
     }
 
-    List<HopEntity> getPathToTruck(HopEntity start, HopEntity end) {
+    private List<HopEntity> getPathToTruck(HopEntity start, HopEntity end) {
         List<HopEntity> path = new ArrayList<>();
         List<HopEntity> hops = hopRepository.getNextHops(start.getId());
         for(HopEntity h : hops) {
@@ -104,69 +106,52 @@ public class ParcelServiceImpl implements ParcelService {
         }
         return null;
     }
-    public List<HopArrivalEntity> predictFutureHops(GeoCoordinateEntity senderCoordinate, GeoCoordinateEntity recipientCoordinate) {
-        List<HopArrivalEntity> futureHops = new ArrayList<>();
+
+    public List<HopEntity> predictFutureHops(GeoCoordinateEntity senderCoordinate, GeoCoordinateEntity recipientCoordinate) {
 
         // 1. Find the nearest hop to sender and recipient
         HopEntity nearestHopToSender = findNearestHop(senderCoordinate.getLat(), senderCoordinate.getLon());
-        futureHops.add(generateHopArrivalFromHop(nearestHopToSender));
-        System.out.println("Id for nearestSenderHop is " + nearestHopToSender.getId() + " with code " + nearestHopToSender.getCode());
         HopEntity nearestHopToRecipient = findNearestHop(recipientCoordinate.getLat(), recipientCoordinate.getLon());
-        System.out.println("Id for RecipientHop is " + nearestHopToSender.getId() + " with code " + nearestHopToRecipient.getCode());
 
-        // 3. Get path to the top warehouse
+        // 2. Get path to the top warehouse
         /** We go up in the pyramid/tree until the root, for that we need to find the previous hop.
          * We do that looking in the warehouse_next_hops table, where the next_hop_id is now the current hop-id
          * and the warehouse_id the previous hop-id, since we try to climb up the tree.
          * */
-        /*
-        HopEntity previousHop = nearestHopToRecipient;
-        while(!previousHop.getLocationName().equalsIgnoreCase("Root")) {
-            Long id = previousHop.getId();
-            previousHop = hopRepository.getPreviousHops(id);
-            futureHops.add(generateHopArrivalFromHop(previousHop));
-        }*/
 
         List<HopEntity> futureHopsEntities = getPath(nearestHopToSender, nearestHopToRecipient);
 
-        //Now go down until reaching the truck corresponding to the nearestHopToRecipient
-        //futureHops.addAll(getPathToTruck(previousHop, nearestHopToRecipient));
-
-
-        System.out.println("Previous Hpps size is " + futureHopsEntities.size());
-        for(HopEntity h : futureHopsEntities) {
-            System.out.println(h.getDescription() + " with code " + h.getCode());
-        }
-
-
-
-
-        // 4. Go down to truck for the recipient
-
-        return futureHops;
+        return futureHopsEntities;
     }
 
+
+    public String createUniqueTrackingId() {
+        String trackingId = RandomStringUtils.randomAlphabetic(9).toUpperCase();
+        ParcelEntity parcel = parcelRepository.findDistinctFirstByTrackingId(trackingId);
+        //System.out.println("Parcel is " + parcel.toString());
+        if (parcel != null) {
+            createUniqueTrackingId();
+        }
+        return trackingId;
+    }
+    
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
         // 1. Validate parcel data
-
         log.info("Validating Parcel");
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
         Set<ConstraintViolation<ParcelEntity>> violations = validator.validate(parcelEntity);
 
-        for (ConstraintViolation<ParcelEntity> violation : violations)
-        {
+        for (ConstraintViolation<ParcelEntity> violation : violations) {
             log.error("Validation failed: ");
             log.error(violation.getMessage());
         }
 
-
-
         //2. Create new unique Tracking ID
         //TODO: Make sure trakcing ID is unique
-        String trackingId = RandomStringUtils.randomAlphabetic(9);
+        String trackingId = createUniqueTrackingId();
         parcelEntity.setTrackingId(trackingId.toUpperCase());
         log.info("Setting TrackingId " + parcelEntity.getTrackingId());
 
@@ -176,12 +161,17 @@ public class ParcelServiceImpl implements ParcelService {
         GeoCoordinateEntity senderCoordinates = geoEncodingService.encodeAddress(parcelEntity.getSender());
         GeoCoordinateEntity recipientCoordinates = geoEncodingService.encodeAddress(parcelEntity.getRecipient());
         recipientCoordinates.setCoordinates(); senderCoordinates.setCoordinates();
-        log.info("GeoCoordinates for Sender are " + senderCoordinates.getLat() + " , " + senderCoordinates.getLon());
-        log.info("GeoCoordinates for Recipient are " + recipientCoordinates.getLat() + " , " + recipientCoordinates.getLon());
-
 
         // 4. Predict Future Hops (route btw sender --> recipient)
-        parcelEntity.setFutureHops(new ArrayList<>());
+        List<HopEntity> futureHopsEntities = predictFutureHops(senderCoordinates, recipientCoordinates);
+        List<HopArrivalEntity> futureHops = new ArrayList<>();
+        //Transform the HopEntities in HopArrivalEntities
+        for(HopEntity h : futureHopsEntities) {
+            HopArrivalEntity hopArrivalEntity = HopArrivalEntity.builder().code(h.getCode()).visited(false).description(h.getDescription()).build();
+            hopArrivalEntity.setParcel(parcelEntity);
+            futureHops.add(hopArrivalEntity);
+        }
+        parcelEntity.setFutureHops(futureHops);
         parcelEntity.setVisitedHops(new ArrayList<>());
 
 
@@ -209,9 +199,14 @@ public class ParcelServiceImpl implements ParcelService {
             throw new Exception("The address of sender or receiver was not found.");
         }
 
-
         try {
-            newParcelEntity = repo.save(parcelEntity);
+            newParcelEntity = parcelRepository.save(parcelEntity);
+            //Save also the HopArrivals:
+            for(HopArrivalEntity h : parcelEntity.getFutureHops()) {
+                h.setParcel(newParcelEntity);
+                hopArrivalRepository.save(h);
+            }
+
         } catch (Exception e){
             log.error("class ParcelServiceImpl, submitParcel {}" ,e.getMessage());
             throw new Exception("The operation failed due to an error");
@@ -251,14 +246,14 @@ public class ParcelServiceImpl implements ParcelService {
      public void reportParcelDelivery(ParcelEntity parcelEntity)  {
 
         parcelEntity.setState(ParcelEntity.StateEnum.DELIVERED);
-        repo.save(parcelEntity);
+        parcelRepository.save(parcelEntity);
         log.info("The state of parcel has been changed to Delivered");
 
     }
 
     @Override
     public TrackingInformation trackParcel(String trackingId) {
-        ParcelEntity parcelEntity = repo.findDistinctFirstByTrackingId(trackingId);
+        ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
 
         //return what the API wants for us
         TrackingInformation trackingInformation = ParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
