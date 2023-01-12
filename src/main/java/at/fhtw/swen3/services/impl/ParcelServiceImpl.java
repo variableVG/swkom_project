@@ -134,7 +134,7 @@ public class ParcelServiceImpl implements ParcelService {
         }
         return trackingId;
     }
-    
+
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
         // 1. Validate parcel data

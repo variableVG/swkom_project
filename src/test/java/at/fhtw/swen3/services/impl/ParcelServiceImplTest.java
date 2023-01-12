@@ -72,10 +72,5 @@ class ParcelServiceImplTest {
         System.out.println("Hop is " + hop.getId());
     }
 
-    @Test
-    void createUniqueTrackingId() {
-        String id = parcelImpl.createUniqueTrackingId();
-        System.out.println(id);
 
-    }
 }
