@@ -22,7 +22,7 @@ public interface HopRepository extends JpaRepository<HopEntity, Long> {
             "         JOIN warehouse_next_hops ON hop.id = warehouse_next_hops.warehouse_id " +
             "WHERE (warehouse_next_hops.next_hop_id = :currentId)" +
             ";", nativeQuery = true)
-    HopEntity getPreviousHops(@Param("currentId") Long currentId);
+    List<HopEntity> getPreviousHops(@Param("currentId") Long currentId);
 
     @Query(value = "SELECT *, 0 AS clazz_ " +
             "FROM hop  " +

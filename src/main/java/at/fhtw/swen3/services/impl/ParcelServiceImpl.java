@@ -52,23 +52,53 @@ public class ParcelServiceImpl implements ParcelService {
         return HopArrivalEntity.builder().code(hop.getCode()).description(hop.getDescription()).build();
     }
 
-    List<HopArrivalEntity> getPathToTruck(HopEntity start, HopEntity end) {
-        List<HopArrivalEntity> answer = new ArrayList<>();
-        List<HopEntity> hops = hopRepository.getNextHops(start.getId());
-        if(hops.isEmpty()) { return answer; }
-        System.out.println("NEXT HOPS HAS SIZE " + hops.size());
+
+    List<HopEntity> getPath(HopEntity start, HopEntity end) {
+
+        //First get path to root:
+        List<HopEntity> hops = getPathToRoot(start);
+
+        //Then get path from root to hopEntity-end
+        HopEntity root = hops.get(hops.size()-1);
+        hops.addAll(getPathToTruck(root, end));
+
+        return hops;
+
+    }
+    List<HopEntity> getPathToRoot(HopEntity hop) {
+        List<HopEntity> path = new ArrayList<>();
+        path.add(hop);
+        List<HopEntity> hops = hopRepository.getPreviousHops(hop.getId());
+        if(hops.isEmpty()) { return path; }
         for(HopEntity h : hops) {
-            answer.add(generateHopArrivalFromHop(h));
-            if (Objects.equals(h.getId(), end.getId())) {
-                System.out.println("FOUND IT");
-                return answer;
+            if (h.getCode().equalsIgnoreCase("Root")) {
+                return path;
             }
             else {
-                System.out.println("Calling recursion");
-                List<HopArrivalEntity> a = getPathToTruck(h, end);
-                if (a != null) {
-                    answer.addAll(a);
-                    return answer;
+                List<HopEntity> tmp = getPathToRoot(h);
+                if (tmp != null) {
+                    path.addAll(tmp);
+                    return path;
+                }
+            }
+        }
+        return null;
+    }
+
+    List<HopEntity> getPathToTruck(HopEntity start, HopEntity end) {
+        List<HopEntity> path = new ArrayList<>();
+        List<HopEntity> hops = hopRepository.getNextHops(start.getId());
+        for(HopEntity h : hops) {
+            if (Objects.equals(h.getId(), end.getId())) {
+                path.add(end);
+                return path;
+            }
+            else {
+                List<HopEntity> tmp = getPathToTruck(h, end);
+                if (tmp != null) {
+                    path.add(h);
+                    path.addAll(tmp);
+                    return path;
                 }
             }
         }
@@ -89,19 +119,23 @@ public class ParcelServiceImpl implements ParcelService {
          * We do that looking in the warehouse_next_hops table, where the next_hop_id is now the current hop-id
          * and the warehouse_id the previous hop-id, since we try to climb up the tree.
          * */
+        /*
         HopEntity previousHop = nearestHopToRecipient;
         while(!previousHop.getLocationName().equalsIgnoreCase("Root")) {
             Long id = previousHop.getId();
             previousHop = hopRepository.getPreviousHops(id);
             futureHops.add(generateHopArrivalFromHop(previousHop));
-        }
+        }*/
+
+        List<HopEntity> futureHopsEntities = getPath(nearestHopToSender, nearestHopToRecipient);
+
         //Now go down until reaching the truck corresponding to the nearestHopToRecipient
-        futureHops.addAll(getPathToTruck(previousHop, nearestHopToRecipient));
+        //futureHops.addAll(getPathToTruck(previousHop, nearestHopToRecipient));
 
 
-        System.out.println("Previous Hpps size is " + futureHops.size());
-        for(HopArrivalEntity h : futureHops) {
-            System.out.println(h.toString());
+        System.out.println("Previous Hpps size is " + futureHopsEntities.size());
+        for(HopEntity h : futureHopsEntities) {
+            System.out.println(h.getDescription() + " with code " + h.getCode());
         }
 
 
