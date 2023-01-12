@@ -262,7 +262,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public void reportParcelHop(String trackingId, String code) {
-        
+
     }
 
 
