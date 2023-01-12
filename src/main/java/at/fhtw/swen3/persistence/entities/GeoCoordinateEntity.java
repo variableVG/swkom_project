@@ -54,10 +54,7 @@ public class GeoCoordinateEntity {
         this.coordinate = new Point(lat, lon);
     }
 
-    /**
-     * Longitude of the coordinate.
-     * @return lon
-     */
+
 
 
 }

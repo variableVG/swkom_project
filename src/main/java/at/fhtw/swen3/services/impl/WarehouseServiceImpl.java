@@ -60,9 +60,6 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
 
-
-
-
     private WarehouseEntity saveWarehouse(WarehouseEntity warehouse) throws BLException {
         //Validation:
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

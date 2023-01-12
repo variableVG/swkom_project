@@ -13,22 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class HopMapperTest {
     HopEntity hopEntity;
     Hop hopDto;
-    // GeoCoordinate geoCoordinatedto;
 
     @BeforeEach
     void setUp(){
         hopDto = new Hop();
         hopEntity = new HopEntity();
-        //geoCoordinatedto = new GeoCoordinate();
 
         hopDto.setHopType("FirstHoptype");
         hopDto.setCode("RM123");
         hopDto.setDescription("fast123");
         hopDto.setProcessingDelayMins(23);
         hopDto.setLocationName("Homs");
-        // geoCoordinatedto.setLon(12.3);
-        // geoCoordinatedto.setLat(34.4);
-        // hopDto.setLocationCoordinates(geoCoordinatedto);
 
     }
 
@@ -40,7 +35,6 @@ public class HopMapperTest {
         assertEquals(hopDto.getCode(), hopEntityTest.getCode());
         assertEquals(hopDto.getDescription(), hopEntityTest.getDescription());
         assertEquals(hopDto.getLocationName(), hopEntityTest.getLocationName());
-        // assertEquals(hopDto.getLocationCoordinates(), hopEntityTest.getLocationCoordinates());
         assertEquals(hopDto.getProcessingDelayMins(), hopEntityTest.getProcessingDelayMins());
 
 
@@ -54,7 +48,6 @@ public class HopMapperTest {
         assertEquals(hopEntity.getCode(), hopTest.getCode());
         assertEquals(hopEntity.getDescription(), hopTest.getDescription());
         assertEquals(hopEntity.getLocationName(), hopTest.getLocationName());
-        //assertEquals(hopEntity.getLocationCoordinates(), hopTest.getLocationCoordinates());
         assertEquals(hopEntity.getProcessingDelayMins(), hopTest.getProcessingDelayMins());
 
     }

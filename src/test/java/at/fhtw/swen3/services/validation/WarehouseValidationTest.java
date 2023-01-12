@@ -22,7 +22,7 @@ public class WarehouseValidationTest {
         log.info("TEST validationTest_warehouse");
 
         final GeoCoordinateEntity geoCoordinateEntity = GeoCoordinateEntity.builder()
-                .id(Long.valueOf(12))
+                .id(12L)
                 .lat(12.3)
                 .lon(34.4)
                 .build();
@@ -73,7 +73,7 @@ public class WarehouseValidationTest {
     public void validationTest_warehouse_shouldFail() {
         log.info("TEST validationTest_warehouse_shouldFail");
         final GeoCoordinateEntity geoCoordinateEntity = GeoCoordinateEntity.builder()
-                .id(Long.valueOf(12))
+                .id(12L)
                 .lat(12.3)
                 .lon(34.4)
                 .build();
@@ -103,7 +103,7 @@ public class WarehouseValidationTest {
                 .hopType("R")
                 .processingDelayMins(25)
                 .locationName("Aleppo")
-                .description("This is a description for WarehouseEntity in validationTest_warehouse")
+                .description("This is a description for WarehouseEntity in validationTest_warehouse_shouldFail")
                 .locationCoordinates(geoCoordinateEntity)
                 .level(25)
                 .nextHops(hops)

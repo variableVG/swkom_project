@@ -237,7 +237,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
      public void reportParcelDelivery(ParcelEntity parcelEntity)  {
-
+        myValidator.validate(parcelEntity);
         parcelEntity.setState(ParcelEntity.StateEnum.DELIVERED);
         parcelRepository.save(parcelEntity);
         log.info("The state of parcel has been changed to Delivered");
