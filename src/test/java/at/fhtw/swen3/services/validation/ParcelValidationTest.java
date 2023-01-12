@@ -45,7 +45,7 @@ public class ParcelValidationTest {
                 .country("Syrien")
                 .street("masaken")
                 .postalCode("A-1120").build();
-        parcel.setWeight(Float.valueOf(12));
+        parcel.setWeight(12f);
         parcel.setTrackingId("34");
         parcel.setRecipient(recipientEntity);
         parcel.setState(ParcelEntity.StateEnum.DELIVERED );
@@ -94,10 +94,10 @@ public class ParcelValidationTest {
                 .country("Syrien")
                 .street("masaken")
                 .postalCode("A-1120").build();
-        parcel.setWeight(Float.valueOf(-1));
+        parcel.setWeight(-1f);
         parcel.setTrackingId("34");
         parcel.setRecipient(recipientEntity);
-        parcel.setState(ParcelEntity.StateEnum.DELIVERED );
+        parcel.setState(ParcelEntity.StateEnum.DELIVERED);
         parcel.setSender(recipientEntitySender);
         parcel.setRecipient(recipientEntityRecipient);
         List<HopArrivalEntity> nextHops = new ArrayList<>();

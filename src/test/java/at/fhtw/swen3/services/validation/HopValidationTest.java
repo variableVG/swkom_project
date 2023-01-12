@@ -21,7 +21,7 @@ public class HopValidationTest {
     public void validationTest_warehouse() {
         log.info("TEST validationTest_warehouse");
         final GeoCoordinateEntity geoCoordinateEntity = GeoCoordinateEntity.builder()
-                .id(Long.valueOf(12))
+                .id(12L)
                 .lat(12.3)
                 .lon(34.4)
                 .build();
@@ -49,7 +49,7 @@ public class HopValidationTest {
     public void validationTest_warehouse_shouldFail() {
         log.info("TEST validationTest_warehouse_shouldFail");
         final GeoCoordinateEntity geoCoordinateEntity = GeoCoordinateEntity.builder()
-                .id(Long.valueOf(12))
+                .id(12L)
                 .lat(12.3)
                 .lon(34.4)
                 .build();

@@ -1,5 +1,7 @@
 package at.fhtw.swen3.services.impl;
 
+import at.fhtw.swen3.gps.service.GeoEncodingService;
+import at.fhtw.swen3.gps.service.impl.BingEncodingProxy;
 import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.BLException;
@@ -11,6 +13,11 @@ import at.fhtw.swen3.services.validation.MyValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.Polygon;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -40,6 +47,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Autowired
     private GeoCoordinateRepository geoCoordinateRepository;
     private MyValidator myValidator;
+    public GeoEncodingService geoEncodingService;
 
     private void resetDB() {
 
@@ -50,6 +58,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         transferwarehouseRepository.deleteAll();
         geoCoordinateRepository.deleteAll();
     }
+
 
     private WarehouseEntity saveWarehouse(WarehouseEntity warehouse) throws BLException {
         //Validation:
@@ -70,6 +79,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
 
         //Store coordinates from warehouse
+        warehouse.getLocationCoordinates().setCoordinates();
         GeoCoordinateEntity savedCoordinates = geoCoordinateRepository.save(warehouse.getLocationCoordinates());
         warehouse.getLocationCoordinates().setId(savedCoordinates.getId());
 
@@ -77,7 +87,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         return  savedWarehouse;
     }
 
-    private TruckEntity saveTruck(TruckEntity truck) {
+    private TruckEntity saveTruck(TruckEntity truck) throws BLException {
         GeoCoordinateEntity savedGeoCoordinates = null;
 
         try{
@@ -92,6 +102,8 @@ public class WarehouseServiceImpl implements WarehouseService {
         TruckEntity savedTruck = null;
 
         try{
+
+            truck.setRegionGeo(geoEncodingService.getRegion(truck.getRegionGeoJson()));
             savedTruck = truckRepository.save(truck);
             System.out.println("Truck "+ savedTruck.getCode() + " stored correctly");
         }
@@ -105,12 +117,13 @@ public class WarehouseServiceImpl implements WarehouseService {
             System.out.println("Description: " + truck.getDescription());
             System.out.println("Location Name: " + truck.getLocationName());
             System.out.println("Coordinates: " + truck.getLocationCoordinates().getLat() + " " + truck.getLocationCoordinates().getLon());
+            throw new BLException(3L, "Failed to store Truck in Database: ",  e);
 
         }
         return savedTruck;
     }
 
-    private TransferwarehouseEntity saveTransferwarehouse(TransferwarehouseEntity transferwarehouse) {
+    private TransferwarehouseEntity saveTransferwarehouse(TransferwarehouseEntity transferwarehouse) throws BLException {
         GeoCoordinateEntity savedGeoCoordinates = null;
 
         try{
@@ -125,6 +138,8 @@ public class WarehouseServiceImpl implements WarehouseService {
         TransferwarehouseEntity savedTransferwarehouse = null;
 
         try{
+
+            transferwarehouse.setRegionGeo(geoEncodingService.getRegion(transferwarehouse.getRegionGeoJson()));
             savedTransferwarehouse = transferwarehouseRepository.save(transferwarehouse);
             System.out.println("Transferwarehouse "+ savedTransferwarehouse.getCode() + " stored correctly");
         }
@@ -138,6 +153,7 @@ public class WarehouseServiceImpl implements WarehouseService {
             System.out.println("Description: " + transferwarehouse.getDescription());
             System.out.println("Location Name: " + transferwarehouse.getLocationName());
             System.out.println("Coordinates: " + transferwarehouse.getLocationCoordinates().getLat() + " " + transferwarehouse.getLocationCoordinates().getLon());
+            throw new BLException(3L, "Failed to store Truck in Database: ",  e);
 
         }
         return savedTransferwarehouse;
@@ -145,6 +161,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     public HopEntity saveHop(HopEntity hop) throws BLException {
         System.out.println("Saving Hop Entity of type " + hop.getHopType());
+
+        // set coordinates as Points --> this could be done in Mapping. s
+        hop.getLocationCoordinates().setCoordinates();
 
         if (hop.getHopType().toLowerCase().equals("truck")) {
             System.out.println("Casting into TruckEntity");

@@ -20,7 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @SpringBootApplication
-@SpringBootConfiguration
+// @SpringBootConfiguration // it is in SpringBootApplication
 @EnableJpaRepositories
 @ComponentScan(basePackages = {"org.openapitools", "at.fhtw.swen3.services", "at.fhtw.swen3.controller" , "at.fhtw.swen3.configuration", "at.fhtw.swen3.gps"})
 @EntityScan(basePackages = {"at.fhtw.swen3.persistence" })

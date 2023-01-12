@@ -1,5 +1,7 @@
 package at.fhtw.swen3.services.impl;
 
+import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
+import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
@@ -20,7 +22,9 @@ class ParcelServiceImplTest {
 
     @Test
     void submitParcelTest()  {
+
         /*
+
         //1) PREPARE TEST
         //Create recipient
         Recipient recipient = Recipient.builder().name("Violeta").street("Pfeilgasse")
@@ -46,7 +50,7 @@ class ParcelServiceImplTest {
         System.out.println("Generated Id is " + newparcelInfo.getTrackingId());
         assertNotNull(newparcelInfo.getTrackingId());
 
-        */
+         */
 
 
     }
@@ -56,5 +60,26 @@ class ParcelServiceImplTest {
 
 
     }
+
+    @Test
+    void predictFutureHops() {
+    /*
+        GeoCoordinateEntity sender = GeoCoordinateEntity.builder().lat(48.1898128).lon(16.3656104).build();
+        GeoCoordinateEntity recipient = GeoCoordinateEntity.builder().lat(48.233571).lon(16.388961).build();
+        parcelImpl.predictFutureHops(sender, recipient);
+
+     */
+
+    }
+
+    @Test
+    void findNearestHop() {
+        /*
+        HopEntity hop = parcelImpl.findNearestHop(48.1898128, 16.3656104);
+        System.out.println("Hop is " + hop.getId());
+        
+         */
+    }
+
 
 }

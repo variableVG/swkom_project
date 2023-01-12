@@ -3,10 +3,13 @@ package at.fhtw.swen3.gps.service.impl;
 import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
+import at.fhtw.swen3.services.BLException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.Polygon;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
@@ -17,9 +20,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
+@Component
 public class BingEncodingProxy implements GeoEncodingService {
     @Override
     public GeoCoordinateEntity encodeAddress(RecipientEntity r)  {
@@ -80,6 +85,28 @@ public class BingEncodingProxy implements GeoEncodingService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public Polygon getRegion(String regionGeoJson) {
+        ArrayList<Point> points = new ArrayList<>();
+        try {
+            JSONObject tmp = new JSONObject(regionGeoJson);
+            String geometry = tmp.get("geometry").toString();
+            JSONObject tmp2 = new JSONObject(geometry);
+            String coord = tmp2.get("coordinates").toString();
+            coord = coord.substring(2, coord.length()-2);
+            JSONArray tmp3 = new JSONArray(coord);
+            for (int i=0; i < tmp3.length(); i++) {
+                JSONArray tmp4 = new JSONArray(tmp3.get(i).toString());
+                Double lat = Double.parseDouble(tmp4.get(0).toString());
+                Double lon = Double.parseDouble(tmp4.get(1).toString());
+                Point p = new Point(lat, lon);
+                points.add(p);
+            }
+        } catch (JSONException e) {
+            System.out.println("Could not transform region");
+        }
+        return new Polygon(points);
     }
 
 }

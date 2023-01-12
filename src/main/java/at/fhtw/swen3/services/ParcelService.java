@@ -11,7 +11,6 @@ public interface ParcelService {
 
     public NewParcelInfo submitParcel(ParcelEntity parcel) throws Exception;
 
-    public NewParcelInfo transferParcel(ParcelEntity parcel) throws Exception;
 
     public long submitRecipient(Recipient recipient) throws Exception;
 
@@ -20,4 +19,8 @@ public interface ParcelService {
 
 
     public TrackingInformation trackParcel(String trackingId);
+
+    public boolean checkIfParcelExists(String trackingId);
+
+    public void reportParcelHop(String trackingId, String code);
 }
