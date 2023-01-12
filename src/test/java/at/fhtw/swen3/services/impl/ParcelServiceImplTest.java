@@ -22,6 +22,7 @@ class ParcelServiceImplTest {
 
     @Test
     void submitParcelTest()  {
+
         /*
 
         //1) PREPARE TEST
@@ -48,7 +49,7 @@ class ParcelServiceImplTest {
         // 3) CHECK RESULTS
         System.out.println("Generated Id is " + newparcelInfo.getTrackingId());
         assertNotNull(newparcelInfo.getTrackingId());
-        
+
          */
 
 

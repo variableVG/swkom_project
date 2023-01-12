@@ -103,7 +103,6 @@ public class ParcelApiController implements ParcelApi {
 
         try {
             ParcelEntity parcelEntity = ParcelMapper.INSTANCE.parcelDtoToParcelEntity(parcel);
-            System.out.println("ParcelEntity has been mapped, weight is " + parcelEntity.getWeight());
             parcelEntity.getRecipient().setId(recipient_id);
             parcelEntity.getSender().setId(sender_id);
             newParcelInfo = parcelImpl.submitParcel(parcelEntity);
@@ -151,13 +150,19 @@ public class ParcelApiController implements ParcelApi {
             @PathVariable("trackingId") String trackingId
     ) {
         //1. Check that trackingId exists:
+        if(!parcelImpl.checkIfParcelExists(trackingId)) {
+            log.error("Parcel does not exist with this tracking ID: ");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
+        // 2. Get Tracking information
         TrackingInformation trackingInformation;
         try {
             trackingInformation = parcelImpl.trackParcel(trackingId);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            log.error("The operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<TrackingInformation>(trackingInformation, HttpStatus.OK);
     }

@@ -260,5 +260,12 @@ public class ParcelServiceImpl implements ParcelService {
         return trackingInformation;
     }
 
+    @Override
+    public boolean checkIfParcelExists(String trackingId) {
+        ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
+        if (parcelEntity == null) { return false; }
+        return true;
+    }
+
 
 }
