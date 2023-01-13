@@ -260,8 +260,51 @@ public class ParcelServiceImpl implements ParcelService {
         return true;
     }
 
+    public boolean checkIfHopExists(String code) {
+        HopEntity hopEntity = hopRepository.findDistinctFirstByCode(code);
+        if (hopEntity == null || code == null) { return false; }
+        return true;
+    }
+
     @Override
     public void reportParcelHop(String trackingId, String code) {
+        // 1. Validate Data
+
+
+        // 2. Get Hop
+        HopEntity hop = hopRepository.findDistinctFirstByCode(code);
+
+        // 3. Get Parcel
+        ParcelEntity parcel = parcelRepository.findDistinctFirstByTrackingId(trackingId);
+
+
+        // 4. Remove the corresponding Hop from future hops of the parcel, and add it to visited hops of parcel.
+        ListIterator<HopArrivalEntity> iter = parcel.getFutureHops().listIterator();
+        while(iter.hasNext()){
+            HopArrivalEntity h = iter.next();
+            if(h.getCode().equals(hop.getCode())){
+                h.setVisited(true);
+                parcel.getVisitedHops().add(h);
+                iter.remove();
+            }
+        }
+
+
+        //5. Update state of Parcel:
+            // Hop is Warehouse --> Change state to "InTransport"
+            // Hop is Truck --> "InTruckDelivery"
+            // Hop is Transferwarehouse --> "Transferred"
+                // Call logistic partner API - TRANSFER (URL is part of TransferWarehouseData)
+
+        switch (hop.getHopType().toLowerCase()) {
+            case "warehouse" -> parcel.setState(ParcelEntity.StateEnum.INTRANSPORT);
+            case "truck" -> parcel.setState(ParcelEntity.StateEnum.INTRUCKDELIVERY);
+            case "transferwarehouse" -> parcel.setState(ParcelEntity.StateEnum.TRANSFERRED);
+        }
+
+        // 6. Update parcel back to the database.
+        parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().getValue());
+        transferwarehouseRepository.updateHopAsVisited(parcel.getId(), code);
 
     }
 

@@ -23,4 +23,6 @@ public interface ParcelService {
     public boolean checkIfParcelExists(String trackingId);
 
     public void reportParcelHop(String trackingId, String code);
+
+    public boolean checkIfHopExists(String code);
 }

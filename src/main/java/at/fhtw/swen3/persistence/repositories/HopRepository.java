@@ -1,6 +1,7 @@
 package at.fhtw.swen3.persistence.repositories;
 
 import at.fhtw.swen3.persistence.entities.HopEntity;
+import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.persistence.entities.WarehouseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public interface HopRepository extends JpaRepository<HopEntity, Long> {
 
+    public HopEntity findDistinctFirstByCode(String code);
     @Query(value = "SELECT *, 0 AS clazz_ " +
             "FROM hop " +
             "         JOIN geo_coordinate ON hop.location_coordinates_id = geo_coordinate.id " +
@@ -30,6 +32,8 @@ public interface HopRepository extends JpaRepository<HopEntity, Long> {
             "WHERE (warehouse_next_hops.warehouse_id = :currentId)" +
             ";", nativeQuery = true)
     List<HopEntity> getNextHops(@Param("currentId") Long currentId);
+
+
 
     /*
     @Query(value = "SELECT * "
