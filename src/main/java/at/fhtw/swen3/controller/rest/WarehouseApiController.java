@@ -2,12 +2,14 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.WarehouseApi;
+import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.WarehouseEntity;
 import at.fhtw.swen3.persistence.entities.WarehouseNextHopsEntity;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.dto.Error;
+import at.fhtw.swen3.services.mapper.HopMapper;
 import at.fhtw.swen3.services.mapper.WarehouseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -178,15 +180,22 @@ public class WarehouseApiController implements WarehouseApi {
     public ResponseEntity<Hop> getWarehouse(
             @Parameter(name = "code", description = "", required = true) @PathVariable("code") String code
     ) {
-        //TODO
-        GeoCoordinate geoCoordinate = GeoCoordinate.builder().lat(0.1).lon(0.2).build();
-        geoCoordinate.setLat(0.1); geoCoordinate.setLon(0.2);
-        Hop hop = new Hop();
-        hop.setCode("VIGG59"); hop.setDescription("Description of Hop");
-        hop.setProcessingDelayMins(3); hop.setLocationName("Vienna");
-        hop.setLocationCoordinates(geoCoordinate); hop.setHopType("Rawan");
+        HopEntity hopEntity;
+        Hop hop = null;
+        try {
+            hopEntity = warehouseService.getWarehouse(code);
+            if (hopEntity == null) {
+                log.error("No hierarchy loaded.");
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            else {
+                hop = HopMapper.INSTANCE.entityToDto(hopEntity);
+            }
+        } catch (BLException e) {
+            log.error("The export operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
         return new ResponseEntity<Hop>(hop, HttpStatus.OK);
 
     }

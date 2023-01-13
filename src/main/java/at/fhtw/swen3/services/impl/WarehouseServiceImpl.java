@@ -225,4 +225,17 @@ public class WarehouseServiceImpl implements WarehouseService {
         return warehouseEntity;
 
     }
+
+    @Override
+    public HopEntity getWarehouse(String code) throws BLException {
+        HopEntity hopEntity = null;
+        try {
+            hopEntity = hopRepository.findDistinctFirstByCode(code);
+
+        } catch (Exception e) {
+            throw new BLException(5L, "HopEntity could not be exported: ", e);
+        }
+
+        return hopEntity;
+    }
 }
