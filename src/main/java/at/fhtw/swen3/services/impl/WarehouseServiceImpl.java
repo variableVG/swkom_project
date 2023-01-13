@@ -35,6 +35,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     private TransferwarehouseRepository transferwarehouseRepository;
     @Autowired
     private GeoCoordinateRepository geoCoordinateRepository;
+    @Autowired
     private MyValidator myValidator;
     public GeoEncodingService geoEncodingService;
 
@@ -51,12 +52,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     private WarehouseEntity saveWarehouse(WarehouseEntity warehouse) throws BLException {
         //Validation:
+
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<WarehouseEntity>> violations = validator.validate(warehouse);
         if (!violations.isEmpty()) {
-            System.out.println("VALIDATIONS IS NOT EMPTY");
-            //TODO: Log error for validation
+            log.error("VALIDATIONS IS NOT EMPTY");
             throw new BLException(1L, violations.stream().map(Objects::toString).collect(Collectors.joining("\n")), null);
         }
 
@@ -130,11 +131,11 @@ public class WarehouseServiceImpl implements WarehouseService {
 
             transferwarehouse.setRegionGeo(geoEncodingService.getRegion(transferwarehouse.getRegionGeoJson()));
             savedTransferwarehouse = transferwarehouseRepository.save(transferwarehouse);
-            System.out.println("Transferwarehouse "+ savedTransferwarehouse.getCode() + " stored correctly");
+            log.info("Transferwarehouse "+ savedTransferwarehouse.getCode() + " stored correctly");
         }
         catch (Exception e) {
             log.error("Failed to store transferwarehouse: " + e.getMessage());
-            System.out.println("Transferwarehouse " + transferwarehouse.getCode() + " could not be stored: ");
+            log.error("Transferwarehouse " + transferwarehouse.getCode() + " could not be stored: ");
             System.out.println("Logistic Partner: " + transferwarehouse.getLogisticsPartner());
             System.out.println("RegionGeoJson: " + transferwarehouse.getRegionGeoJson());
             System.out.println("Hop Type: " + transferwarehouse.getHopType());
@@ -202,7 +203,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         try{
             WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
-            System.out.println("Warehouse "+ savedWarehouse.getCode() + " stored correctly");
+            log.info("Warehouse "+ savedWarehouse.getCode() + " stored correctly");
         }
         catch (Exception e) {
             log.error("Failed to import Warehouses: " + e.getMessage());
@@ -227,6 +228,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public HopEntity getWarehouse(String code) throws BLException {
+        myValidator.validate(code);
         HopEntity hopEntity = null;
         try {
             hopEntity = hopRepository.findDistinctFirstByCode(code);

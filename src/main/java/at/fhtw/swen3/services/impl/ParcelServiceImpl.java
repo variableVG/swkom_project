@@ -40,7 +40,7 @@ public class ParcelServiceImpl implements ParcelService {
     @Autowired
     public HopArrivalRepository hopArrivalRepository;
 
-
+    @Autowired
     private MyValidator myValidator;
     private GeoEncodingService geoEncodingService;
 
@@ -139,16 +139,7 @@ public class ParcelServiceImpl implements ParcelService {
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
         // 1. Validate parcel data
-        log.info("Validating Parcel");
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        Set<ConstraintViolation<ParcelEntity>> violations = validator.validate(parcelEntity);
-
-        for (ConstraintViolation<ParcelEntity> violation : violations) {
-            log.error("Validation failed: ");
-            log.error(violation.getMessage());
-        }
+        myValidator.validate(parcelEntity);
 
         //2. Create new unique Tracking ID (if parcel does not have a trackingId or if it has one but it has been already assigned to another parcel.
         if((parcelEntity.getTrackingId() == null) | (checkIfParcelExists(parcelEntity.getTrackingId())) ) {
@@ -238,6 +229,9 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
      public void reportParcelDelivery(String trackingId) throws BLException {
+
+        myValidator.validate(trackingId);
+
         try {
             // Get Parcel:
             ParcelEntity parcel = parcelRepository.findDistinctFirstByTrackingId(trackingId);
@@ -255,13 +249,16 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public TrackingInformation trackParcel(String trackingId) throws BLException {
+
+        myValidator.validate(trackingId);
+
         TrackingInformation trackingInformation;
         try {
-            System.out.println("Start function");
+            //System.out.println("Start function");
             ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
-            System.out.println("parcel found " + parcelEntity.getId());
+            log.info("parcel found " + parcelEntity.getId());
             trackingInformation = ParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
-            System.out.println("Mapper done");
+            // System.out.println("Mapper done");
         } catch (Exception e) {
             throw new BLException(1L, "Parcel could not be tracked. " , e);
         }
@@ -285,7 +282,8 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     public void reportParcelHop(String trackingId, String code) {
         // 1. Validate Data
-
+        myValidator.validate(trackingId);
+        myValidator.validate(code);
 
         // 2. Get Hop
         HopEntity hop = hopRepository.findDistinctFirstByCode(code);
