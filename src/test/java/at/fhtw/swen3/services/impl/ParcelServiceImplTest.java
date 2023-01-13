@@ -3,9 +3,11 @@ package at.fhtw.swen3.services.impl;
 import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.Recipient;
+import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -77,9 +79,22 @@ class ParcelServiceImplTest {
         /*
         HopEntity hop = parcelImpl.findNearestHop(48.1898128, 16.3656104);
         System.out.println("Hop is " + hop.getId());
-        
+
          */
     }
 
 
+    @Test
+    void trackParcel() {
+        /*
+        TrackingInformation t = null;
+        try {
+            t = parcelImpl.trackParcel("MPLMXMQGU");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        System.out.println(t.getState().getValue());
+        
+         */
+    }
 }

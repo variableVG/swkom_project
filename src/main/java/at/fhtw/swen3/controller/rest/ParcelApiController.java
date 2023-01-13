@@ -266,8 +266,22 @@ public class ParcelApiController implements ParcelApi {
             @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId,
             @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$") @Parameter(name = "code", description = "The Code of the hop (Warehouse or Truck).", required = true) @PathVariable("code") String code
     ) {
-        //TODO
+        // Check if Parcel or hop exists.
+        if((!parcelImpl.checkIfParcelExists(trackingId)) || (!parcelImpl.checkIfHopExists(code))) {
+            log.error("Parcel or Entity with those codes does not exist in the database: ");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        //report parcelHop
+        try {
+            parcelImpl.reportParcelHop(trackingId, code );
+        } catch (Exception e) {
+            log.error("The operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 
@@ -304,24 +318,21 @@ public class ParcelApiController implements ParcelApi {
             @PathVariable("trackingId") String trackingId
     ) {
 
-        //TODO reportParcelDelivery
-        //Get ParcelEntity
-        try {
-
-        } catch (Exception e) {
-            log.error("The operation failed due to an error"  + e.getMessage());
+        // Check if Parcel or hop exists.
+        if(!parcelImpl.checkIfParcelExists(trackingId)) {
+            log.error("Parcel does not exist with this tracking ID.");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         try {
-
-
-
+            parcelImpl.reportParcelDelivery(trackingId);
         } catch (Exception e) {
-            log.error("Parcel does not exist with this tracking ID."  + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            log.error("The operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        log.info("Report that a Parcel has been delivered at it's final destination address.");
+
         return new ResponseEntity<>(HttpStatus.OK);
+
 
     }
 

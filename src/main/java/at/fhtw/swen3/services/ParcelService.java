@@ -15,12 +15,14 @@ public interface ParcelService {
     public long submitRecipient(Recipient recipient) throws Exception;
 
 
-    public void reportParcelDelivery(ParcelEntity parcel);
+    public void reportParcelDelivery(String trackingId) throws BLException;
 
 
-    public TrackingInformation trackParcel(String trackingId);
+    public TrackingInformation trackParcel(String trackingId) throws BLException;
 
     public boolean checkIfParcelExists(String trackingId);
 
     public void reportParcelHop(String trackingId, String code);
+
+    public boolean checkIfHopExists(String code);
 }

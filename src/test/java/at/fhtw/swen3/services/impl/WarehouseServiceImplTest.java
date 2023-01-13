@@ -108,4 +108,11 @@ class WarehouseServiceImplTest {
          */
 
     }
+
+    @Test
+    void exportWarehouses() {
+        //WarehouseEntity h = warehouseService.exportWarehouses();
+        //System.out.println(h.getLocationName());
+        //System.out.println(h.getNextHops().size());
+    }
 }

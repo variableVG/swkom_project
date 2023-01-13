@@ -44,16 +44,15 @@ public class ParcelEntity {
     @Column(unique=true)
     private String trackingId;
 
-    @OneToMany(mappedBy = "parcel")
-    @Where(clause = "visited = true")
     @JsonProperty("visitedHops")
+    @Where(clause = "visited = true")
+    @OneToMany(mappedBy = "parcel",  cascade=CascadeType.PERSIST, fetch =  FetchType.EAGER)
     @Valid
     private List<HopArrivalEntity> visitedHops;
 
-    @OneToMany(mappedBy = "parcel")
-    @Where(clause =  "visited = false")
-    //@JoinColumn(name="future_hops_id")
     @JsonProperty("futureHops")
+    @Where(clause =  "visited = false")
+    @OneToMany(mappedBy = "parcel", cascade=CascadeType.PERSIST, fetch =  FetchType.EAGER)
     @Valid
     private List<HopArrivalEntity> futureHops;
 
@@ -100,6 +99,7 @@ public class ParcelEntity {
     }
 
     @JsonProperty("state")
+    @Enumerated(EnumType.STRING)
     private StateEnum state;
 
 

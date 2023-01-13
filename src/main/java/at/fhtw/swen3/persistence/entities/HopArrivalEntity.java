@@ -47,7 +47,7 @@ public class HopArrivalEntity {
   @Valid
   private OffsetDateTime dateTime;
 
-  @ManyToOne(optional = true, fetch = FetchType.LAZY)
+  @ManyToOne(optional = true, fetch =  FetchType.EAGER, cascade=CascadeType.PERSIST)
   @JoinColumn(name = "parcel_id", nullable = true)
   private ParcelEntity parcel; //renamed this from parcelEntity to parcel, since the script didn't detect this field.
 
