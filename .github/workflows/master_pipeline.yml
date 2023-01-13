@@ -48,8 +48,8 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
           use_existing_version_if_available: false
-          application_name: swkom
-          environment_name: Swkom-env-1
+          application_name: swkom3
+          environment_name: Swkom3-env
           version_label: ${{github.SHA}}
           region: us-east-1
           deployment_package: swkom_project-0.0.1-SNAPSHOT.jar
