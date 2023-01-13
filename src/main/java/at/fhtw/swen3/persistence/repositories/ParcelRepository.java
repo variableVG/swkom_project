@@ -2,6 +2,7 @@ package at.fhtw.swen3.persistence.repositories;
 
 import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.services.dto.Parcel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,8 +25,11 @@ public interface ParcelRepository extends JpaRepository<ParcelEntity, Long> {
 
     public ParcelEntity findDistinctFirstByTrackingId(String trackingId);
 
-
-
+/*    @Query(value = "SELECT * " +
+            "FROM parcel " +
+            "WHERE (tracking_id = :id);"
+            , nativeQuery = true)
+    ParcelEntity findByTrackingId(@Param("tracking_id") String tracking_id);*/
     @Transactional
     @Modifying
     @Query(value = "UPDATE parcel " +

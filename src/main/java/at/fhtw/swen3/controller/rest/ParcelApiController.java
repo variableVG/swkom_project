@@ -318,24 +318,21 @@ public class ParcelApiController implements ParcelApi {
             @PathVariable("trackingId") String trackingId
     ) {
 
-        //TODO reportParcelDelivery
-        //Get ParcelEntity
-        try {
-
-        } catch (Exception e) {
-            log.error("The operation failed due to an error"  + e.getMessage());
+        // Check if Parcel or hop exists.
+        if(!parcelImpl.checkIfParcelExists(trackingId)) {
+            log.error("Parcel does not exist with this tracking ID.");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         try {
-
-
-
+            parcelImpl.reportParcelDelivery(trackingId);
         } catch (Exception e) {
-            log.error("Parcel does not exist with this tracking ID."  + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            log.error("The operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        log.info("Report that a Parcel has been delivered at it's final destination address.");
+
         return new ResponseEntity<>(HttpStatus.OK);
+
 
     }
 

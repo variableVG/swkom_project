@@ -206,7 +206,6 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         catch (Exception e) {
             log.error("Failed to import Warehouses: " + e.getMessage());
-
             throw new BLException(2L, "Failed to import Warehouse" + warehouse.getCode() + " : ",  e);
         }
 

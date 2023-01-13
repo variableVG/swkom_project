@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -65,6 +67,7 @@ public class TrackingInformation {
   }
 
   @JsonProperty("state")
+  @Enumerated(EnumType.STRING)
   private StateEnum state;
 
   @JsonProperty("visitedHops")

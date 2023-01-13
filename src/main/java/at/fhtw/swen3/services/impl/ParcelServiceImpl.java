@@ -4,6 +4,7 @@ import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.gps.service.impl.BingEncodingProxy;
 import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.persistence.repositories.*;
+import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.*;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
@@ -236,20 +237,35 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-     public void reportParcelDelivery(ParcelEntity parcelEntity)  {
+     public void reportParcelDelivery(String trackingId) throws BLException {
+        try {
+            // Get Parcel:
+            ParcelEntity parcel = parcelRepository.findDistinctFirstByTrackingId(trackingId);
+            //Change State of Parcel
+            parcel.setState(ParcelEntity.StateEnum.DELIVERED);
+            parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().getValue());
+            log.info("The state of parcel has been changed to Delivered");
 
-        parcelEntity.setState(ParcelEntity.StateEnum.DELIVERED);
-        parcelRepository.save(parcelEntity);
-        log.info("The state of parcel has been changed to Delivered");
+        } catch (Exception e) {
+            throw new BLException(2L, "Failed to change state to delivered for Parcel " + trackingId + " : ",  e);
+        }
+
 
     }
 
     @Override
-    public TrackingInformation trackParcel(String trackingId) {
-        ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
-
+    public TrackingInformation trackParcel(String trackingId) throws BLException {
+        TrackingInformation trackingInformation;
+        try {
+            System.out.println("Start function");
+            ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
+            System.out.println("parcel found " + parcelEntity.getId());
+            trackingInformation = ParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
+            System.out.println("Mapper done");
+        } catch (Exception e) {
+            throw new BLException(1L, "Parcel could not be tracked. " , e);
+        }
         //return what the API wants for us
-        TrackingInformation trackingInformation = ParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
         return trackingInformation;
     }
 
