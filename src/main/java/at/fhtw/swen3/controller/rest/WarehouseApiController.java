@@ -82,21 +82,21 @@ public class WarehouseApiController implements WarehouseApi {
     public ResponseEntity<Warehouse> exportWarehouses(
 
     ) {
-
-        //TODO
-        GeoCoordinate geoCoordinate = GeoCoordinate.builder().lat(0.1).lon(0.2).build();
-        Hop hop = new Hop();
-        hop.setCode("VIGG59"); hop.setDescription("Description of Hop");
-        hop.setProcessingDelayMins(3); hop.setLocationName("Vienna");
-        hop.setLocationCoordinates(geoCoordinate); hop.setHopType("Rawan");
-
-        List<WarehouseNextHops> nextHops = new ArrayList<>();
-        nextHops.add(WarehouseNextHops.builder()
-                .hop(hop).traveltimeMins(4)
-                .build());
-        Warehouse warehouse = Warehouse.builder()
-                        .level(1).nextHops(nextHops).build();
-        /////////////////////////////////////////////////////////////////////////////////////
+        WarehouseEntity warehouseEntiy;
+        Warehouse warehouse = null;
+        try {
+             warehouseEntiy = warehouseService.exportWarehouses();
+             if (warehouseEntiy == null) {
+                 log.error("No hierarchy loaded.");
+                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+             }
+             else {
+                warehouse = WarehouseMapper.INSTANCE.entityToDto(warehouseEntiy);
+             }
+        } catch (BLException e) {
+            log.error("The export operation failed due to an error: "  + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
 
         return new ResponseEntity<Warehouse>(warehouse, HttpStatus.OK);

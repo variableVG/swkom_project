@@ -1,30 +1,19 @@
 package at.fhtw.swen3.services.impl;
 
 import at.fhtw.swen3.gps.service.GeoEncodingService;
-import at.fhtw.swen3.gps.service.impl.BingEncodingProxy;
 import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
-import at.fhtw.swen3.services.dto.*;
-import at.fhtw.swen3.services.mapper.GeoCoordinateMapper;
-import at.fhtw.swen3.services.mapper.WarehouseMapper;
 import at.fhtw.swen3.services.validation.MyValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.data.geo.Point;
-import org.springframework.data.geo.Polygon;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -217,16 +206,23 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         catch (Exception e) {
             log.error("Failed to import Warehouses: " + e.getMessage());
-            System.out.println("Warehouse " + warehouse.getCode() + " could not be stored: ");
-            System.out.println("hotType: " + warehouse.getHopType());
-            System.out.println("Coordinates: " + warehouse.getLocationCoordinates());
-            System.out.println("Description: " + warehouse.getDescription());
-            System.out.println("LocationName: " + warehouse.getLocationName());
-            System.out.println("Level: " + warehouse.getLevel());
-            System.out.println("ProcessingDelayMinss: " + warehouse.getProcessingDelayMins());
 
             throw new BLException(2L, "Failed to import Warehouse" + warehouse.getCode() + " : ",  e);
         }
+
+    }
+
+    @Override
+    public WarehouseEntity exportWarehouses() throws BLException {
+        WarehouseEntity warehouseEntity = null;
+        try {
+            warehouseEntity = warehouseRepository.getRoot();
+
+        } catch (Exception e) {
+            throw new BLException(5L, "Warehouse could not be exported: ", e);
+        }
+
+        return warehouseEntity;
 
     }
 }

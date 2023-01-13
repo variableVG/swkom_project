@@ -33,6 +33,13 @@ public interface HopRepository extends JpaRepository<HopEntity, Long> {
             ";", nativeQuery = true)
     List<HopEntity> getNextHops(@Param("currentId") Long currentId);
 
+    @Query(value = "SELECT *, 0 AS clazz_ " +
+            "FROM warehouse  " +
+            "         JOIN hop ON hop.id = warehouse.id " +
+            "WHERE (warehouse.level = 0)" +
+            ";", nativeQuery = true)
+    HopEntity getRoot();
+
 
 
     /*
