@@ -42,7 +42,6 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Autowired
     private MyValidator myValidator;
-
     private GeoEncodingService geoEncodingService;
 
     public HopEntity findNearestHop (Double lat, Double lon) {
