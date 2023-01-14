@@ -228,6 +228,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public HopEntity getWarehouse(String code) throws BLException {
+
         myValidator.validate(code);
         HopEntity hopEntity = null;
         try {
