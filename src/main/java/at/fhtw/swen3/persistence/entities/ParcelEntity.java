@@ -2,15 +2,12 @@ package at.fhtw.swen3.persistence.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-//import at.fhtw.swen3.services.dto.Recipient;
-// import at.fhtw.swen3.services.dto.TrackingInformation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.annotations.Where;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;

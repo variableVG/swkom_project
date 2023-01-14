@@ -18,11 +18,11 @@ public class TruckMapperTest {
                 .numberPlate("XY 123AB").code("ABC").hopType("truck").description("This is a test")
                 .build();
 
-        System.out.println("TruckDto created with  number plate " + truckDto.getNumberPlate());
+        log.info("TruckDto created with number plate " + truckDto.getNumberPlate());
 
         TruckEntity truckEntityTest = TruckMapper.INSTANCE.dtoToEntity(truckDto);
 
-        System.out.println("TruckEntity created with  number plate " + truckDto.getNumberPlate());
+        log.info("TruckEntity created with number plate " + truckDto.getNumberPlate());
 
         assertEquals(truckEntityTest.getNumberPlate(), truckDto.getNumberPlate());
         assertEquals(truckEntityTest.getRegionGeoJson(), truckDto.getRegionGeoJson());

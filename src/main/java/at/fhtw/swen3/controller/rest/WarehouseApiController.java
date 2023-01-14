@@ -4,7 +4,6 @@ package at.fhtw.swen3.controller.rest;
 import at.fhtw.swen3.controller.WarehouseApi;
 import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.WarehouseEntity;
-import at.fhtw.swen3.persistence.entities.WarehouseNextHopsEntity;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.*;
@@ -26,9 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.NativeWebRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 import javax.validation.Valid;
@@ -201,17 +197,17 @@ public class WarehouseApiController implements WarehouseApi {
     }
 
     public void checkWhatIsInWarehouse(Warehouse warehouse) {
-        System.out.println("Checking what is in the warehouse " + warehouse.getCode());
+        log.debug("Checking what is in the warehouse " + warehouse.getCode());
         for (WarehouseNextHops w : warehouse.getNextHops()) {
-            System.out.println("WarehouseNexthops contains a Hop of Type " + w.getHop().getHopType());
+            log.debug("WarehouseNexthops contains a Hop of Type " + w.getHop().getHopType());
             if(w.getHop() instanceof  Warehouse) {
                 checkWhatIsInWarehouse((Warehouse) w.getHop());
             }
             else if (w.getHop() instanceof Truck) {
-                System.out.println("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Truck");
+                log.debug("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Truck");
             }
             else if (w.getHop() instanceof Hop) {
-                System.out.println("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Hop");
+                log.debug("Hop " + w.getHop().getCode() + " of type " + w.getHop().getHopType() +" is recognized as a Hop");
             }
         }
     }

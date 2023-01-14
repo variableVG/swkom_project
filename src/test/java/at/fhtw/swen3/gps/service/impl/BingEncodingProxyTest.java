@@ -3,13 +3,14 @@ package at.fhtw.swen3.gps.service.impl;
 import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Slf4j
 @SpringBootTest
 class BingEncodingProxyTest {
 
@@ -26,8 +27,8 @@ class BingEncodingProxyTest {
         GeoCoordinateEntity coordinates = GeoCoordinateEntity.builder().lat(48.2082221).lon(16.3478833).build();
 
         GeoCoordinateEntity coordinatesTest = geoEncodingService.encodeAddress(recipient);
-        System.out.println("Lat " + coordinatesTest.getLat());
-        System.out.println("Lon " + coordinatesTest.getLon());
+        log.info("Lat " + coordinatesTest.getLat());
+        log.info("Lon " + coordinatesTest.getLon());
         assertNotNull(coordinatesTest);
         assertEquals(coordinatesTest.getLat(), coordinates.getLat());
         assertEquals(coordinatesTest.getLon(), coordinates.getLon());

@@ -3,7 +3,6 @@ package at.fhtw.swen3.gps.service.impl;
 import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
-import at.fhtw.swen3.services.BLException;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,17 +10,14 @@ import org.json.JSONObject;
 import org.springframework.data.geo.Point;
 import org.springframework.data.geo.Polygon;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Component
@@ -104,7 +100,7 @@ public class BingEncodingProxy implements GeoEncodingService {
                 points.add(p);
             }
         } catch (JSONException e) {
-            System.out.println("Could not transform region");
+            log.error("Could not transform region");
         }
         return new Polygon(points);
     }

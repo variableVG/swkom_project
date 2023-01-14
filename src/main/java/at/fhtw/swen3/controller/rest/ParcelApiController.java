@@ -33,7 +33,6 @@ import javax.validation.constraints.Pattern;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-18T13:20:22.807446Z[Etc/UTC]")
 @Controller
-//@Component("parcel")
 @Slf4j
 public class ParcelApiController implements ParcelApi {
 

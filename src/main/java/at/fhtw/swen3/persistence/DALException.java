@@ -15,9 +15,7 @@ import lombok.Getter;
 public class DALException extends Exception {
 
     private Exception innerException;
-
     private ErrorEntity errorEntity;
-
 
     public DALException(long errorId, String errorMsg, Exception e) {
         this.innerException = e;
@@ -29,23 +27,4 @@ public class DALException extends Exception {
     public String getMessage() {
         return errorEntity.getErrorMessage();
     }
-
 }
-/*
-@ControllerAdvice
-public class DALException extends ResponseEntityExceptionHandler {
-
-    //taken from https://www.baeldung.com/exception-handling-for-rest-with-spring
-
-    @ExceptionHandler(value
-            = { IllegalArgumentException.class, IllegalStateException.class })
-    protected ResponseEntity<Object> handleConflict(
-            RuntimeException ex, WebRequest request) {
-        String bodyOfResponse = "This should be application specific";
-        return handleExceptionInternal(ex, bodyOfResponse,
-                new HttpHeaders(), HttpStatus.CONFLICT, request);
-    }
-}
-
-
- */
