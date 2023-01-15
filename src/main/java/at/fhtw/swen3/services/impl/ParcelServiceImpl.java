@@ -236,7 +236,7 @@ public class ParcelServiceImpl implements ParcelService {
             ParcelEntity parcel = parcelRepository.findDistinctFirstByTrackingId(trackingId);
             //Change State of Parcel
             parcel.setState(ParcelEntity.StateEnum.DELIVERED);
-            parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().getValue());
+            parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().name());
             log.info("The state of parcel has been changed to Delivered");
 
         } catch (Exception e) {
@@ -316,7 +316,7 @@ public class ParcelServiceImpl implements ParcelService {
         }
 
         // 6. Update parcel back to the database.
-        parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().getValue());
+        parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().name());
         transferwarehouseRepository.updateHopAsVisited(parcel.getId(), code);
 
     }
