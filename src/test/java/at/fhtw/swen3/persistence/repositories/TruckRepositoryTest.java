@@ -24,8 +24,8 @@ class TruckRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        /*
         GeoCoordinateEntity geoCoordinate = GeoCoordinateEntity.builder().lat(48.129885504996).lon(16.3111537799009).build();
+        geoCoordinate.setCoordinates();
         GeoCoordinateEntity newGeoCoordinateEntity = geoCoordinateRepository.save(geoCoordinate);
 
         truckEntity = TruckEntity.builder()
@@ -35,19 +35,12 @@ class TruckRepositoryTest {
                 .description("Truck in Siebenhirten").processingDelayMins(231)
                 .locationName("Siebenhirten").code("WTTA01").hopType("truck")
                 .locationCoordinates(newGeoCoordinateEntity).build();
-
-         */
-
     }
 
     @Test
     void saveTest_checkIdIsNotNull() {
-        /*
-        TruckEntity truckEntityTest = repo.save(truckEntity);
-        assertNotNull(truckEntityTest.getId());
-
-         */
-
+        /*TruckEntity truckEntityTest = repo.save(truckEntity);
+        assertNotNull(truckEntityTest.getId());*/
     }
 
 }

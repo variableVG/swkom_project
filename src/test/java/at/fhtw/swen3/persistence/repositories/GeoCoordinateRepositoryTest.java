@@ -29,28 +29,24 @@ class GeoCoordinateRepositoryTest {
         geoCoordinateEntity = GeoCoordinateEntity.builder()
                 .lon(56.3)
                 .lat(45.6).build();
+        geoCoordinateEntity.setCoordinates();
     }
 
-    @Test
+/*    @Test
     void saveTest_checkIdIsNotNull() {
-        /*
         GeoCoordinateEntity geoCoordinateEntityTest = repo.save(geoCoordinateEntity);
         assertNotNull(geoCoordinateEntityTest.getId());
 
-         */
-    }
-
+    }*/
 
     @Test
     void findById_checkIsNotNull() {
-        /*
         //We first need to store the GeoCoordinateEntity, so it has an Id (otherwise it will not generate an Id).
         GeoCoordinateEntity geoCoordinateEntityTest = repo.save(geoCoordinateEntity);
         //Then call the findById() method with the Id of the stored Geocoordinate.
         Optional<GeoCoordinateEntity> actualGeoCoordinate = repo.findById(geoCoordinateEntityTest.getId());
         assertNotNull(actualGeoCoordinate);
 
-         */
     }
 
 

@@ -22,6 +22,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
@@ -138,10 +139,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
-        // 1. Validate parcel data
-        myValidator.validate(parcelEntity);
-
-        //2. Create new unique Tracking ID (if parcel does not have a trackingId or if it has one but it has been already assigned to another parcel.
+        //1. Create new unique Tracking ID (if parcel does not have a trackingId or if it has one but it has been already assigned to another parcel.
         if((parcelEntity.getTrackingId() == null) | (checkIfParcelExists(parcelEntity.getTrackingId())) ) {
             String trackingId = createUniqueTrackingId();
             parcelEntity.setTrackingId(trackingId.toUpperCase());
@@ -149,13 +147,13 @@ public class ParcelServiceImpl implements ParcelService {
         }
 
 
-        // 3.Get GPS coordinates for package sender/recipient
+        // 2.Get GPS coordinates for package sender/recipient
         log.info("Getting Geocoordinates");
         GeoCoordinateEntity senderCoordinates = geoEncodingService.encodeAddress(parcelEntity.getSender());
         GeoCoordinateEntity recipientCoordinates = geoEncodingService.encodeAddress(parcelEntity.getRecipient());
         recipientCoordinates.setCoordinates(); senderCoordinates.setCoordinates();
 
-        // 4. Predict Future Hops (route btw sender --> recipient)
+        // 3. Predict Future Hops (route btw sender --> recipient)
         List<HopEntity> futureHopsEntities = predictFutureHops(senderCoordinates, recipientCoordinates);
         List<HopArrivalEntity> futureHops = new ArrayList<>();
         //Transform the HopEntities in HopArrivalEntities
@@ -168,12 +166,13 @@ public class ParcelServiceImpl implements ParcelService {
         parcelEntity.setVisitedHops(new ArrayList<>());
 
 
-        // 5. Set parcel state to PickUP
+        // 4. Set parcel state to PickUP
         log.info("Setting state to PICKUP");
         parcelEntity.setState(ParcelEntity.StateEnum.PICKUP);
 
-
-        //6. Save parcel in DB (repository function gives back a new object of the same class)
+        // 5. After everything for the ParcelEntity is set, validate before saving to the Database
+        myValidator.validate(parcelEntity);
+        // 6. Save parcel in DB (repository function gives back a new object of the same class)
         ParcelEntity newParcelEntity = null;
         try {
             if (parcelEntity.getRecipient().getId() == null) {

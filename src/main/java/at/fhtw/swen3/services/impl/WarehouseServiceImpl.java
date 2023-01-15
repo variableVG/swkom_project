@@ -51,15 +51,6 @@ public class WarehouseServiceImpl implements WarehouseService {
 
 
     private WarehouseEntity saveWarehouse(WarehouseEntity warehouse) throws BLException {
-        //Validation:
-
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<WarehouseEntity>> violations = validator.validate(warehouse);
-        if (!violations.isEmpty()) {
-            log.error("VALIDATIONS IS NOT EMPTY");
-            throw new BLException(1L, violations.stream().map(Objects::toString).collect(Collectors.joining("\n")), null);
-        }
 
         //Iterate through the list of WarehouseNextHops and store the elements.
         for (WarehouseNextHopsEntity nextHop: warehouse.getNextHops()) {
@@ -72,6 +63,9 @@ public class WarehouseServiceImpl implements WarehouseService {
         warehouse.getLocationCoordinates().setCoordinates();
         GeoCoordinateEntity savedCoordinates = geoCoordinateRepository.save(warehouse.getLocationCoordinates());
         warehouse.getLocationCoordinates().setId(savedCoordinates.getId());
+
+        // validating the warehouse before saving it in the DB
+        myValidator.validate(warehouse);
 
         WarehouseEntity savedWarehouse = warehouseRepository.save(warehouse);
         return  savedWarehouse;
