@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface WarehouseRepository extends JpaRepository<WarehouseEntity, Long> {
 
-    // WarehouseEntity save(WarehouseEntity warehouseEntity);
-
     @Query(value = "SELECT *, 0 AS clazz_ " +
             "FROM warehouse  " +
             "         JOIN hop ON hop.id = warehouse.id " +

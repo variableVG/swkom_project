@@ -22,6 +22,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
@@ -40,7 +41,7 @@ public class ParcelServiceImpl implements ParcelService {
     @Autowired
     public HopArrivalRepository hopArrivalRepository;
 
-
+    @Autowired
     private MyValidator myValidator;
     private GeoEncodingService geoEncodingService;
 
@@ -138,19 +139,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     public NewParcelInfo submitParcel(ParcelEntity parcelEntity) throws Exception {
 
-        // 1. Validate parcel data
-        log.info("Validating Parcel");
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        Set<ConstraintViolation<ParcelEntity>> violations = validator.validate(parcelEntity);
-
-        for (ConstraintViolation<ParcelEntity> violation : violations) {
-            log.error("Validation failed: ");
-            log.error(violation.getMessage());
-        }
-
-        //2. Create new unique Tracking ID (if parcel does not have a trackingId or if it has one but it has been already assigned to another parcel.
+        //1. Create new unique Tracking ID (if parcel does not have a trackingId or if it has one but it has been already assigned to another parcel.
         if((parcelEntity.getTrackingId() == null) | (checkIfParcelExists(parcelEntity.getTrackingId())) ) {
             String trackingId = createUniqueTrackingId();
             parcelEntity.setTrackingId(trackingId.toUpperCase());
@@ -158,13 +147,13 @@ public class ParcelServiceImpl implements ParcelService {
         }
 
 
-        // 3.Get GPS coordinates for package sender/recipient
+        // 2.Get GPS coordinates for package sender/recipient
         log.info("Getting Geocoordinates");
         GeoCoordinateEntity senderCoordinates = geoEncodingService.encodeAddress(parcelEntity.getSender());
         GeoCoordinateEntity recipientCoordinates = geoEncodingService.encodeAddress(parcelEntity.getRecipient());
         recipientCoordinates.setCoordinates(); senderCoordinates.setCoordinates();
 
-        // 4. Predict Future Hops (route btw sender --> recipient)
+        // 3. Predict Future Hops (route btw sender --> recipient)
         List<HopEntity> futureHopsEntities = predictFutureHops(senderCoordinates, recipientCoordinates);
         List<HopArrivalEntity> futureHops = new ArrayList<>();
         //Transform the HopEntities in HopArrivalEntities
@@ -177,12 +166,13 @@ public class ParcelServiceImpl implements ParcelService {
         parcelEntity.setVisitedHops(new ArrayList<>());
 
 
-        // 5. Set parcel state to PickUP
+        // 4. Set parcel state to PickUP
         log.info("Setting state to PICKUP");
         parcelEntity.setState(ParcelEntity.StateEnum.PICKUP);
 
-
-        //6. Save parcel in DB (repository function gives back a new object of the same class)
+        // 5. After everything for the ParcelEntity is set, validate before saving to the Database
+        myValidator.validate(parcelEntity);
+        // 6. Save parcel in DB (repository function gives back a new object of the same class)
         ParcelEntity newParcelEntity = null;
         try {
             if (parcelEntity.getRecipient().getId() == null) {
@@ -238,12 +228,15 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
      public void reportParcelDelivery(String trackingId) throws BLException {
+
+        myValidator.validate(trackingId);
+
         try {
             // Get Parcel:
             ParcelEntity parcel = parcelRepository.findDistinctFirstByTrackingId(trackingId);
             //Change State of Parcel
             parcel.setState(ParcelEntity.StateEnum.DELIVERED);
-            parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().getValue());
+            parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().name());
             log.info("The state of parcel has been changed to Delivered");
 
         } catch (Exception e) {
@@ -255,13 +248,16 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public TrackingInformation trackParcel(String trackingId) throws BLException {
+
+        myValidator.validate(trackingId);
+
         TrackingInformation trackingInformation;
         try {
-            System.out.println("Start function");
+            //System.out.println("Start function");
             ParcelEntity parcelEntity = parcelRepository.findDistinctFirstByTrackingId(trackingId);
-            System.out.println("parcel found " + parcelEntity.getId());
+            log.info("parcel found " + parcelEntity.getId());
             trackingInformation = ParcelMapper.INSTANCE.parcelEntityToTrackingInformationDto(parcelEntity);
-            System.out.println("Mapper done");
+            // System.out.println("Mapper done");
         } catch (Exception e) {
             throw new BLException(1L, "Parcel could not be tracked. " , e);
         }
@@ -285,7 +281,8 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     public void reportParcelHop(String trackingId, String code) {
         // 1. Validate Data
-
+        myValidator.validate(trackingId);
+        myValidator.validate(code);
 
         // 2. Get Hop
         HopEntity hop = hopRepository.findDistinctFirstByCode(code);
@@ -319,7 +316,7 @@ public class ParcelServiceImpl implements ParcelService {
         }
 
         // 6. Update parcel back to the database.
-        parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().getValue());
+        parcelRepository.updateParcelStatus(parcel.getId(), parcel.getState().name());
         transferwarehouseRepository.updateHopAsVisited(parcel.getId(), code);
 
     }

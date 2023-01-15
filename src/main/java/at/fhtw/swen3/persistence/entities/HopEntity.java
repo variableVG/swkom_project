@@ -10,8 +10,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -21,9 +19,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Inheritance(strategy=InheritanceType.JOINED) //this solves the issue of not being able to create a warehouse table, but adds a "dtype" column to differentiate between the classes
-@DiscriminatorValue("hop") //this is needed because of @Inheritance, we can differentiate with this value, which class enters data in the table. May be added/changed for inheriting classes later.
-// see: https://vladmihalcea.com/the-best-way-to-map-the-discriminatorcolumn-with-jpa-and-hibernate/
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorValue("hop")
 @Table(name="Hop")
 public class HopEntity {
     @Id
@@ -223,12 +220,4 @@ public class HopEntity {
         }
         return o.toString().replace("\n", "\n    ");
     }
-
-    //MANUAL CASTING - really not fun, but it gets the job done.
-    public WarehouseEntity toWarehouse() {
-        List<WarehouseNextHopsEntity> tmpWarehouseNextHopsEntity = new ArrayList<>();
-        WarehouseEntity tmp = new WarehouseEntity(this.id, this.hopType, this.code, this.description, this.processingDelayMins, this.locationName, this.locationCoordinates, 0, tmpWarehouseNextHopsEntity);
-        return tmp;
-    }
-
 }

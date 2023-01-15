@@ -25,8 +25,6 @@ class ParcelServiceImplTest {
     @Test
     void submitParcelTest()  {
 
-        /*
-
         //1) PREPARE TEST
         //Create recipient
         Recipient recipient = Recipient.builder().name("Violeta").street("Pfeilgasse")
@@ -52,9 +50,6 @@ class ParcelServiceImplTest {
         System.out.println("Generated Id is " + newparcelInfo.getTrackingId());
         assertNotNull(newparcelInfo.getTrackingId());
 
-         */
-
-
     }
 
     @Test
@@ -65,36 +60,31 @@ class ParcelServiceImplTest {
 
     @Test
     void predictFutureHops() {
-    /*
         GeoCoordinateEntity sender = GeoCoordinateEntity.builder().lat(48.1898128).lon(16.3656104).build();
+        sender.setCoordinates();
         GeoCoordinateEntity recipient = GeoCoordinateEntity.builder().lat(48.233571).lon(16.388961).build();
+        recipient.setCoordinates();
         parcelImpl.predictFutureHops(sender, recipient);
-
-     */
 
     }
 
     @Test
     void findNearestHop() {
-        /*
         HopEntity hop = parcelImpl.findNearestHop(48.1898128, 16.3656104);
-        System.out.println("Hop is " + hop.getId());
+        log.debug("Hop is " + hop.getId());
 
-         */
     }
 
 
     @Test
     void trackParcel() {
-        /*
-        TrackingInformation t = null;
+/*        TrackingInformation t = null;
         try {
             t = parcelImpl.trackParcel("MPLMXMQGU");
         } catch (Exception e) {
-            System.out.println(e);
+            log.debug(String.valueOf(e));
         }
-        System.out.println(t.getState().getValue());
-        
-         */
+        log.debug(t.getState().getValue());
+        */
     }
 }

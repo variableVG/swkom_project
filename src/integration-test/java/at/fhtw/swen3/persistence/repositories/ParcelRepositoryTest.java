@@ -23,7 +23,6 @@ class ParcelRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        /*
         RecipientEntity recipient = RecipientEntity.builder().name("Violeta").street("Straße A")
                 .postalCode("A-1200").city("Vienna").country("Austria").build();
 
@@ -41,16 +40,13 @@ class ParcelRepositoryTest {
                 .futureHops(new ArrayList<>()).visitedHops(new ArrayList<>()).state(ParcelEntity.StateEnum.PICKUP)
                 .build();
 
-         */
 
     }
     @Test
     void saveTest_checkIdIsNotNull() {
-        /*
         ParcelEntity parcelTest = repo.save(parcel);
         assertNotNull(parcelTest.getId());
 
-         */
     }
 
 }

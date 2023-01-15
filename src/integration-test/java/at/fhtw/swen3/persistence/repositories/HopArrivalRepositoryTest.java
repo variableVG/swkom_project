@@ -24,11 +24,9 @@ class HopArrivalRepositoryTest {
 
     @Test
     void saveTest() {
-        /*
         HopArrivalEntity hopArrivalEntitytest = repo.save(hopArrivalEntity);
         assertNotNull(hopArrivalEntitytest.getId());
 
-         */
 
     }
 

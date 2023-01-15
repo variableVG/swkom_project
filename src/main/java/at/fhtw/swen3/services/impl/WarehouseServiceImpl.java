@@ -35,6 +35,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     private TransferwarehouseRepository transferwarehouseRepository;
     @Autowired
     private GeoCoordinateRepository geoCoordinateRepository;
+    @Autowired
     private MyValidator myValidator;
     public GeoEncodingService geoEncodingService;
 
@@ -50,15 +51,6 @@ public class WarehouseServiceImpl implements WarehouseService {
 
 
     private WarehouseEntity saveWarehouse(WarehouseEntity warehouse) throws BLException {
-        //Validation:
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<WarehouseEntity>> violations = validator.validate(warehouse);
-        if (!violations.isEmpty()) {
-            System.out.println("VALIDATIONS IS NOT EMPTY");
-            //TODO: Log error for validation
-            throw new BLException(1L, violations.stream().map(Objects::toString).collect(Collectors.joining("\n")), null);
-        }
 
         //Iterate through the list of WarehouseNextHops and store the elements.
         for (WarehouseNextHopsEntity nextHop: warehouse.getNextHops()) {
@@ -71,6 +63,9 @@ public class WarehouseServiceImpl implements WarehouseService {
         warehouse.getLocationCoordinates().setCoordinates();
         GeoCoordinateEntity savedCoordinates = geoCoordinateRepository.save(warehouse.getLocationCoordinates());
         warehouse.getLocationCoordinates().setId(savedCoordinates.getId());
+
+        // validating the warehouse before saving it in the DB
+        myValidator.validate(warehouse);
 
         WarehouseEntity savedWarehouse = warehouseRepository.save(warehouse);
         return  savedWarehouse;
@@ -98,14 +93,14 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         catch (Exception e) {
             log.error("Failed to store Truck: " + e.getMessage());
-            System.out.println("Truck " + truck.getCode() + " could not be stored: ");
-            System.out.println("Number Plate: " + truck.getNumberPlate());
-            System.out.println("RegionGeoJson: " + truck.getRegionGeoJson());
-            System.out.println("Hop Type: " + truck.getHopType());
-            System.out.println("ProcessingDelay: " + truck.getProcessingDelayMins());
-            System.out.println("Description: " + truck.getDescription());
-            System.out.println("Location Name: " + truck.getLocationName());
-            System.out.println("Coordinates: " + truck.getLocationCoordinates().getLat() + " " + truck.getLocationCoordinates().getLon());
+            log.info("Truck " + truck.getCode() + " could not be stored: ");
+            log.info("Number Plate: " + truck.getNumberPlate());
+            log.info("RegionGeoJson: " + truck.getRegionGeoJson());
+            log.info("Hop Type: " + truck.getHopType());
+            log.info("ProcessingDelay: " + truck.getProcessingDelayMins());
+            log.info("Description: " + truck.getDescription());
+            log.info("Location Name: " + truck.getLocationName());
+            log.info("Coordinates: " + truck.getLocationCoordinates().getLat() + " " + truck.getLocationCoordinates().getLon());
             throw new BLException(3L, "Failed to store Truck in Database: ",  e);
 
         }
@@ -120,7 +115,6 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         catch (Exception e) {
             log.error("Failed to store LocationCoordinates from truck " + transferwarehouse.getCode() + ": " + e.getMessage());
-            System.out.println("LocationCoordinates from truck  " + transferwarehouse.getCode() + " could not be stored: ");
         }
 
         transferwarehouse.getLocationCoordinates().setId(savedGeoCoordinates.getId());
@@ -130,18 +124,18 @@ public class WarehouseServiceImpl implements WarehouseService {
 
             transferwarehouse.setRegionGeo(geoEncodingService.getRegion(transferwarehouse.getRegionGeoJson()));
             savedTransferwarehouse = transferwarehouseRepository.save(transferwarehouse);
-            System.out.println("Transferwarehouse "+ savedTransferwarehouse.getCode() + " stored correctly");
+            log.info("Transferwarehouse "+ savedTransferwarehouse.getCode() + " stored correctly");
         }
         catch (Exception e) {
             log.error("Failed to store transferwarehouse: " + e.getMessage());
-            System.out.println("Transferwarehouse " + transferwarehouse.getCode() + " could not be stored: ");
-            System.out.println("Logistic Partner: " + transferwarehouse.getLogisticsPartner());
-            System.out.println("RegionGeoJson: " + transferwarehouse.getRegionGeoJson());
-            System.out.println("Hop Type: " + transferwarehouse.getHopType());
-            System.out.println("ProcessingDelay: " + transferwarehouse.getProcessingDelayMins());
-            System.out.println("Description: " + transferwarehouse.getDescription());
-            System.out.println("Location Name: " + transferwarehouse.getLocationName());
-            System.out.println("Coordinates: " + transferwarehouse.getLocationCoordinates().getLat() + " " + transferwarehouse.getLocationCoordinates().getLon());
+            log.error("Transferwarehouse " + transferwarehouse.getCode() + " could not be stored: ");
+            log.info("Logistic Partner: " + transferwarehouse.getLogisticsPartner());
+            log.info("RegionGeoJson: " + transferwarehouse.getRegionGeoJson());
+            log.info("Hop Type: " + transferwarehouse.getHopType());
+            log.info("ProcessingDelay: " + transferwarehouse.getProcessingDelayMins());
+            log.info("Description: " + transferwarehouse.getDescription());
+            log.info("Location Name: " + transferwarehouse.getLocationName());
+            log.info("Coordinates: " + transferwarehouse.getLocationCoordinates().getLat() + " " + transferwarehouse.getLocationCoordinates().getLon());
             throw new BLException(3L, "Failed to store Truck in Database: ",  e);
 
         }
@@ -149,41 +143,42 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     public HopEntity saveHop(HopEntity hop) throws BLException {
-        System.out.println("Saving Hop Entity of type " + hop.getHopType());
+        log.info("Saving Hop Entity of type " + hop.getHopType());
 
         // set coordinates as Points --> this could be done in Mapping. s
         hop.getLocationCoordinates().setCoordinates();
 
-        if (hop.getHopType().toLowerCase().equals("truck")) {
-            System.out.println("Casting into TruckEntity");
-            TruckEntity truck = (TruckEntity) hop;
-            System.out.println("Truck code is " + truck.getCode());
-            TruckEntity savedTruck = saveTruck(truck);
-            System.out.println("Truck successfully saved");
-            return savedTruck;
-        }
-        else if (hop.getHopType().toLowerCase().equals("warehouse")) {
-            System.out.println("Casting into WarehouseEntity");
-            //WarehouseEntity warehouse = hop.toWarehouse();
-            WarehouseEntity warehouse = (WarehouseEntity) hop;
-            System.out.println("Warehouse code is " + warehouse.getCode());
-            WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
-            System.out.println("Warehouse successfully saved");
-
-            return savedWarehouse;
-        }
-        else if (hop.getHopType().toLowerCase().equals("transferwarehouse")) {
-            System.out.println("Casting into Transferwarehouse");
-            TransferwarehouseEntity transferwarehouse = (TransferwarehouseEntity) hop;
-            System.out.println("Transferwarehouse code is " + transferwarehouse.getCode());
-            TransferwarehouseEntity savedTransferwarehouse = saveTransferwarehouse(transferwarehouse);
-            System.out.println("Transferwarehouse successfully saved");
-            return savedTransferwarehouse;
-        }
-        else {
-            //TODO: Store hop with no HopType (no child Hop)
-            System.out.println("Hop has no HopType");
-            System.out.println("Hop " + hop.getCode() + " has type " + hop.getHopType());
+        switch (hop.getHopType().toLowerCase()) {
+            case "truck" -> {
+                log.info("Casting into TruckEntity");
+                TruckEntity truck = (TruckEntity) hop;
+                log.info("Truck code is " + truck.getCode());
+                TruckEntity savedTruck = saveTruck(truck);
+                log.info("Truck successfully saved");
+                return savedTruck;
+            }
+            case "warehouse" -> {
+                log.info("Casting into WarehouseEntity");
+                //WarehouseEntity warehouse = hop.toWarehouse();
+                WarehouseEntity warehouse = (WarehouseEntity) hop;
+                log.info("Warehouse code is " + warehouse.getCode());
+                WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
+                log.info("Warehouse successfully saved");
+                return savedWarehouse;
+            }
+            case "transferwarehouse" -> {
+                log.info("Casting into Transferwarehouse");
+                TransferwarehouseEntity transferwarehouse = (TransferwarehouseEntity) hop;
+                log.info("Transferwarehouse code is " + transferwarehouse.getCode());
+                TransferwarehouseEntity savedTransferwarehouse = saveTransferwarehouse(transferwarehouse);
+                log.info("Transferwarehouse successfully saved");
+                return savedTransferwarehouse;
+            }
+            default -> {
+                //TODO: Store hop with no HopType (no child Hop)
+                log.info("Hop has no HopType");
+                log.info("Hop " + hop.getCode() + " has type " + hop.getHopType());
+            }
         }
         return null;
     }
@@ -202,7 +197,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         try{
             WarehouseEntity savedWarehouse = saveWarehouse(warehouse);
-            System.out.println("Warehouse "+ savedWarehouse.getCode() + " stored correctly");
+            log.info("Warehouse "+ savedWarehouse.getCode() + " stored correctly");
         }
         catch (Exception e) {
             log.error("Failed to import Warehouses: " + e.getMessage());
@@ -227,6 +222,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public HopEntity getWarehouse(String code) throws BLException {
+
+        myValidator.validate(code);
         HopEntity hopEntity = null;
         try {
             hopEntity = hopRepository.findDistinctFirstByCode(code);

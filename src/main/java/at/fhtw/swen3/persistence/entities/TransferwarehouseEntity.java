@@ -1,19 +1,12 @@
 package at.fhtw.swen3.persistence.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.data.geo.Point;
 import org.springframework.data.geo.Polygon;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Objects;
 
 @SuperBuilder
@@ -22,8 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="TransferWarehouse") //this might cause issues, but it was an error in the script run of the lecturer, so its a solution for now
-//@DiscriminatorValue("transferwarehouse")
+@Table(name="TransferWarehouse")
 public class TransferwarehouseEntity extends HopEntity {
 
     @Id

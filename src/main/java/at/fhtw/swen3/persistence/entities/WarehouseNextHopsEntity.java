@@ -3,7 +3,6 @@ package at.fhtw.swen3.persistence.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,7 +14,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="WarehouseNextHops") // why is it not created/resolved? makes no sense
+@Table(name="WarehouseNextHops")
 public class WarehouseNextHopsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,12 +33,6 @@ public class WarehouseNextHopsEntity {
     @JoinColumn(name = "warehouse_id")
     @JsonProperty("warehouse")
     private HopEntity warehouse; // parent hop
-
-
-    /*@ManyToOne
-    @JoinColumn(name = "warehouse_id")
-    @JsonProperty("warehouse")
-    private WarehouseEntity warehouse;*/
 
     public Long getId() {
         return id;

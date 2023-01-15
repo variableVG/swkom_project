@@ -22,9 +22,9 @@ class HopRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        /*
 
         GeoCoordinateEntity geoCoordinate = GeoCoordinateEntity.builder().lat(23.5).lon(56.9).build();
+        geoCoordinate.setCoordinates();
         GeoCoordinateEntity newGeoCoordinateEntity = geoCoordinateRepository.save(geoCoordinate);
 
         hop = new HopEntity();
@@ -33,17 +33,14 @@ class HopRepositoryTest {
         hop.setLocationCoordinates(newGeoCoordinateEntity); hop.setHopType("V");
 
 
-         */
 
     }
 
     @Test
     void saveTest_checkIdNotNull() {
-        /*
         HopEntity newHop = hopRepository.save(hop);
         assertNotNull(newHop.getId());
 
-         */
 
     }
 

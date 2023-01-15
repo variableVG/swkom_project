@@ -29,22 +29,9 @@ class ErrorRepositoryTest {
 
     @Test
     void saveTest() {
-        /*
         log.info("TEST saveTest in ErrorRepositoryTest");
         ErrorEntity errorEntityTest = repo.save(errorEntity);
         assertEquals(errorEntity.getErrorMessage(), errorEntityTest.getErrorMessage());
-        */
 
     }
-
-    /*
-    @Test
-
-    void findById() {
-        var actualError = repo.findById(errorEntity.getId());
-        assertEquals(errorEntity, actualError);
-    }
-
-     */
-
 }

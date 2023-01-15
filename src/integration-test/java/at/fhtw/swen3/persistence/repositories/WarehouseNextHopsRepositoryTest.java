@@ -29,14 +29,13 @@ class WarehouseNextHopsRepositoryTest {
 
     @BeforeEach
     void SetUp() {
-        /*
-        GeoCoordinateEntity geoCoordinate = GeoCoordinateEntity.builder().lat(23.5).lon(56.9).build();
-        GeoCoordinateEntity newGeoCoordinateEntity = geoCoordinateRepository.save(geoCoordinate);
+        /*GeoCoordinateEntity geoCoordinate = GeoCoordinateEntity.builder().lat(23.5).lon(56.9).build();
+        geoCoordinate.setCoordinates();
 
         HopEntity hop = new HopEntity();
         hop.setCode("ABCD12"); hop.setDescription("Description of Hop");
         hop.setProcessingDelayMins(3); hop.setLocationName("Vienna");
-        hop.setLocationCoordinates(newGeoCoordinateEntity); hop.setHopType("V");
+        hop.setLocationCoordinates(geoCoordinate); hop.setHopType("V");
 
         HopEntity newHop = hopRepository.save(hop);
 
@@ -44,22 +43,18 @@ class WarehouseNextHopsRepositoryTest {
 
         //warehouseNextHops needs to have a warehouse or hop too
         GeoCoordinateEntity geoCoordinate2 = GeoCoordinateEntity.builder().lat(20.5).lon(16.9).build();
+        geoCoordinate2.setCoordinates();
         GeoCoordinateEntity newGeoCoordinateEntity2 = geoCoordinateRepository.save(geoCoordinate2);
         WarehouseEntity warehouseEntity = WarehouseEntity.builder().level(2).nextHops(new ArrayList<>()).build()
                 .code("ABCD13").description("Description of Hop2").processingDelayMins(0).hopType("N").locationName("Vienna").locationCoordinates(newGeoCoordinateEntity2);
-        warehouseNextHops.setWarehouse(warehouseEntity);
-
-         */
+        warehouseNextHops.setWarehouse(warehouseEntity);*/
 
     }
 
     @Test
     void save_checkIdNotNull() {
-        /*
-        WarehouseNextHopsEntity newWarehouseNextHopsEntity = repo.save(warehouseNextHops);
-        assertNotNull(newWarehouseNextHopsEntity.getId());
-
-         */
+        /*WarehouseNextHopsEntity newWarehouseNextHopsEntity = repo.save(warehouseNextHops);
+        assertNotNull(newWarehouseNextHopsEntity.getId());*/
 
     }
 

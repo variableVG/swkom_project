@@ -7,6 +7,7 @@ import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.Warehouse;
 import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import at.fhtw.swen3.services.impl.WarehouseServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 @SpringBootTest
 class WarehouseServiceImplTest {
 
@@ -25,7 +27,6 @@ class WarehouseServiceImplTest {
 
     @Test
     void importWarehouses() throws BLException {
-        /*
         TruckEntity truck1 = TruckEntity.builder().regionGeoJson("{\"type\":\"Feature\",\"…246041,48.1377922]]]]}}")
                 .numberPlate("W-747200")
                 .build().hopType("truck").code("WTTA01").description("Truck in Siebenhirten").processingDelayMins(231)
@@ -87,14 +88,12 @@ class WarehouseServiceImplTest {
 
         warehouseService.importWarehouses(warehouseEntity);
 
-         */
 
     }
 
 
     @Test
     void saveHop_Truck() throws BLException {
-        /*
 
         TruckEntity truck1 = TruckEntity.builder().regionGeoJson("{\"type\":\"Feature\",\"…246041,48.1377922]]]]}}")
                 .numberPlate("W-747200")
@@ -105,14 +104,5 @@ class WarehouseServiceImplTest {
 
         HopEntity savedHop = warehouseService.saveHop(truck1);
 
-         */
-
-    }
-
-    @Test
-    void exportWarehouses() {
-        //WarehouseEntity h = warehouseService.exportWarehouses();
-        //System.out.println(h.getLocationName());
-        //System.out.println(h.getNextHops().size());
     }
 }
