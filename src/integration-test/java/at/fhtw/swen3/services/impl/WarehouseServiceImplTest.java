@@ -2,20 +2,12 @@ package at.fhtw.swen3.services.impl;
 
 import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.services.BLException;
-import at.fhtw.swen3.services.dto.GeoCoordinate;
-import at.fhtw.swen3.services.dto.Hop;
-import at.fhtw.swen3.services.dto.Warehouse;
-import at.fhtw.swen3.services.dto.WarehouseNextHops;
-import at.fhtw.swen3.services.impl.WarehouseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest

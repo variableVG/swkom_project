@@ -3,7 +3,6 @@ package at.fhtw.swen3.services.impl;
 import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
-import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.Recipient;
@@ -78,13 +77,12 @@ class ParcelServiceImplTest {
 
     @Test
     void trackParcel() {
-/*        TrackingInformation t = null;
+        TrackingInformation t = null;
         try {
-            t = parcelImpl.trackParcel("MPLMXMQGU");
+            t = parcelImpl.trackParcel("HLQMLPWLP");
         } catch (Exception e) {
             log.debug(String.valueOf(e));
         }
         log.debug(t.getState().getValue());
-        */
     }
 }
