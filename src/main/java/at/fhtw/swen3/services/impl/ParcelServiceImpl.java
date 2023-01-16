@@ -1,7 +1,6 @@
 package at.fhtw.swen3.services.impl;
 
 import at.fhtw.swen3.gps.service.GeoEncodingService;
-import at.fhtw.swen3.gps.service.impl.BingEncodingProxy;
 import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.BLException;
@@ -14,15 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Point;
-
-import javax.sound.midi.Track;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
