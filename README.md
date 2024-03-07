@@ -11,7 +11,7 @@ This is an example of building a OpenAPI-enabled server in Java using the Spring
 The underlying library integrating OpenAPI to Spring Boot is [springdoc](https://springdoc.org).
 Springdoc will generate an OpenAPI v3 specification based on the generated Controller and Model classes.
 The specification is available to download using the following url:
-http://localhost:8080/v3/api-docs/
+XXX
 
 Start your server as a simple java application
 
